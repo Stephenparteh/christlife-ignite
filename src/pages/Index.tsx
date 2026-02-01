@@ -15,6 +15,9 @@ import {
 } from "lucide-react";
 import heroImage from "@/assets/hero-main.jpg";
 import bibleStudyImage from "@/assets/bible-study-hero.jpg";
+import groupPhoto1 from "@/assets/group1.jpeg";
+import groupPhoto3 from "@/assets/group3.jpeg";
+
 
 const Index = () => {
   const coreValues = [
@@ -82,7 +85,7 @@ const Index = () => {
       {/* Hero Section */}
       <section 
         className="relative h-screen flex items-center justify-center text-center bg-cover bg-center"
-        style={{ backgroundImage: `url(${heroImage})` }}
+        style={{ backgroundImage: `url(${groupPhoto1})` }}
       >
         <div className="hero-overlay"></div>
         <div className="relative z-10 max-w-4xl mx-auto px-4">
@@ -91,10 +94,10 @@ const Index = () => {
               Discovering • Following • Sharing Christ
             </Badge>
             <h1 className="text-4xl md:text-6xl font-heading font-bold text-primary-foreground mb-6">
-              Welcome to <span className="animate-glow">Christ Life</span>
+              We are <span >Christ Life</span>
             </h1>
             <p className="text-xl md:text-2xl text-primary-foreground/90 mb-4 leading-relaxed">
-              "For I know the plans I have for you," declares the Lord, 
+              "For I know the plans I have for you,"declares the Lord, 
               "plans to prosper you and not to harm you, to give you hope and a future."
             </p>
             <p className="text-lg text-primary-foreground/80 mb-8 italic">
@@ -119,8 +122,8 @@ const Index = () => {
       </section>
 
       {/* Who We Are Highlight */}
-      <section className="py-16 bg-gradient-to-r from-secondary to-muted">
-        <div className="container mx-auto px-4 text-center">
+      {/* <section className="py-16 bg-gradient-to-r from-secondary to-muted row">
+        <div className="container mx-auto px-4 text-center col-md-8">
           <div className="max-w-3xl mx-auto">
             <h2 className="text-3xl md:text-4xl font-heading font-bold text-primary mb-6">
               Who We Are
@@ -131,19 +134,39 @@ const Index = () => {
               to build fellowship and faith in our community.
             </p>
           </div>
-        </div>
-      </section>
+          
+        </div><div className="col-md-2">hi</div>
+      </section> */}
+            <div className="grid md:grid-cols-2 gap-8 text-primary-foreground bg-gradient-to-r from-secondary to-muted py-8 px-8">
+              <div className="text-center align-middle p-6 ">
+                <h2 className="text-3xl md:text-4xl font-heading font-semibold mb-4 text-accent mt-5">
+                  Who We Are
+                </h2>
+                <p className="text-xl leading-relaxed text-accent">
+                  Christ Life is a Christian youth group dedicated to discovering, following, 
+              and sharing Christ. We meet weekly for Bible studies and organize events 
+              to build fellowship and faith in our community.
+                </p> <p className="text-xl leading-relaxed text-accent">
+                  Christ Life is a Christian youth group dedicated to discovering, following, 
+              and sharing Christ. We meet weekly for Bible studies and organize events 
+              to build fellowship and faith in our community.
+                </p>
+              </div>
+              <div className="text-left">
+<img src="/src/assets/group2.jpeg" className="img-fluid rounded-lg shadow-lg h-86 w-full object-cover" alt="" />
+              </div>
+            </div>
 
       {/* Mission & Vision (FISION) */}
       <section 
         className="py-20 bg-cover bg-center relative"
-        style={{ backgroundImage: `url(${bibleStudyImage})` }}
+        style={{ backgroundImage: `url(${groupPhoto3})` }}
       >
         <div className="hero-overlay bg-primary/70"></div>
         <div className="relative z-10 container mx-auto px-4 text-center">
           <div className="max-w-4xl mx-auto">
             <Badge variant="secondary" className="mb-4 text-accent bg-accent-foreground/20">
-              Our FISION
+              Our VISION
             </Badge>
             <h2 className="text-3xl md:text-5xl font-heading font-bold text-primary-foreground mb-8">
               Restoring Relationships

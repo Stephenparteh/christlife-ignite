@@ -3,6 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
 import christLifeLogo from "@/assets/christ-life-logo.png";
+import Logo from "@/assets/logo.jpeg";
 
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -29,7 +30,7 @@ const Navigation = () => {
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-3">
             <img 
-              src={christLifeLogo} 
+              src={Logo} 
               alt="Christ Life Logo" 
               className="w-10 h-10 rounded-full"
             />
