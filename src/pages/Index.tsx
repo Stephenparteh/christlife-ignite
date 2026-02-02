@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { 
@@ -16,6 +17,7 @@ import {
 import heroImage from "@/assets/hero-main.jpg";
 import bibleStudyImage from "@/assets/bible-study-hero.jpg";
 import groupPhoto1 from "@/assets/group1.jpeg";
+import groupPhoto2 from "@/assets/group2.jpeg";
 import groupPhoto3 from "@/assets/group3.jpeg";
 
 
@@ -108,14 +110,18 @@ const Index = () => {
                 <MessageCircle className="mr-2 h-5 w-5" />
                 Join Bible Study
               </Button>
+              
               <Button 
                 size="lg" 
                 variant="secondary" 
                 className="btn-accent text-lg px-8 py-6"
               >
+                <Link to="/events" className="flex items-center">
                 <Calendar className="mr-2 h-5 w-5" />
                 See Events
+                </Link>
               </Button>
+              
             </div>
           </div>
         </div>
@@ -153,7 +159,7 @@ const Index = () => {
                 </p>
               </div>
               <div className="text-left">
-<img src="/src/assets/group2.jpeg" className="img-fluid rounded-lg shadow-lg h-86 w-full object-cover" alt="" />
+<img src={groupPhoto2} className="img-fluid rounded-lg shadow-lg h-86 w-full object-cover" alt="" />
               </div>
             </div>
 
@@ -265,8 +271,10 @@ const Index = () => {
 
           <div className="text-center mt-8">
             <Button variant="outline" size="lg" className="group">
+              <Link to="/events" className="flex items-center">
               View All Events
               <ChevronRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+              </Link>
             </Button>
           </div>
         </div>
