@@ -17,7 +17,7 @@ import heroImage1 from "@/assets/group1.jpeg";
 const About = () => {
   const leadership = [
     {
-      name: "Pastor Michael Johnson",
+      name: "Pastor Phil Smith",
       role: "Youth Pastor & Founder",
       description:
         "Leading with passion for youth ministry and biblical teaching.",
