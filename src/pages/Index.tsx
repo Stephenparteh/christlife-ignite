@@ -293,10 +293,7 @@ const Index = () => {
 
           <div className="grid md:grid-cols-3 gap-8">
             {coreValues.map((value, index) => (
-              <Card
-                key={index}
-                className="card-gradient card-hover text-center"
-              >
+              <Card key={index} className="card-gradient text-center">
                 <CardContent className="p-8">
                   <value.icon className="h-16 w-16 text-primary mx-auto mb-6" />
                   <h3 className="text-2xl font-heading font-bold text-primary mb-4">
@@ -389,8 +386,10 @@ const Index = () => {
                 variant="outline"
                 className="text-lg px-8 py-6 border-primary text-primary hover:bg-primary hover:text-primary-foreground"
               >
-                <Users className="mr-2 h-5 w-5" />
-                Get Involved
+                <Link to="/get-involved" className="flex items-center">
+                  <Users className="mr-2 h-5 w-5" />
+                  Get Involved
+                </Link>
               </Button>
             </div>
           </div>
