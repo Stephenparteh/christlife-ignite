@@ -139,14 +139,14 @@ const Index = () => {
       </section> */}
             <div className="grid md:grid-cols-2 gap-8 text-primary-foreground bg-gradient-to-r from-secondary to-muted py-8 px-8">
               <div className="text-center align-middle p-6 ">
-                <h2 className="text-3xl md:text-4xl font-heading font-semibold mb-4 text-accent mt-5">
+                <h2 className="text-3xl md:text-4xl font-heading font-semibold mb-4 text-primary mt-5">
                   Who We Are
                 </h2>
-                <p className="text-xl leading-relaxed text-accent">
+                <p className="text-xl leading-relaxed text-black">
                   Christ Life is a Christian youth group dedicated to discovering, following, 
               and sharing Christ. We meet weekly for Bible studies and organize events 
               to build fellowship and faith in our community.
-                </p> <p className="text-xl leading-relaxed text-accent">
+                </p> <p className="text-xl leading-relaxed text-black">
                   Christ Life is a Christian youth group dedicated to discovering, following, 
               and sharing Christ. We meet weekly for Bible studies and organize events 
               to build fellowship and faith in our community.
