@@ -150,11 +150,10 @@ const Events = () => {
                     Featured Event
                   </Badge>
                   <h3 className="text-2xl md:text-3xl font-heading font-bold mb-4">
-                    Christmas Bible Picnic
+                    Prayer Picnic
                   </h3>
                   <p className="text-lg text-primary-foreground/90 mb-4 leading-relaxed">
-                    Join us for a special Christmas celebration with food, fellowship, 
-                    games, and outdoor worship. All families and friends welcome!
+                    Spritual renewal, youth fellowship and unity.
                   </p>
                   <div className="flex flex-wrap gap-4 text-primary-foreground/80 mb-6">
                     <div className="flex items-center gap-2">

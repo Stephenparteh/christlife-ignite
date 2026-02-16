@@ -45,21 +45,9 @@ const Index = () => {
   const testimonials = [
     {
       quote:
-        "Christ Life has transformed my faith journey. The community here is like family.",
-      author: "Sarah M.",
-      role: "Member since 2023",
-    },
-    {
-      quote:
-        "Through Bible studies and fellowship, I've grown closer to God and made lifelong friends.",
-      author: "David K.",
-      role: "Youth Leader",
-    },
-    {
-      quote:
-        "The support and encouragement I receive here helps me live out my faith daily.",
-      author: "Maria L.",
-      role: "New Member",
+        "Being part of Christ's life has helped strengthen my communication and relationship with God",
+      author: "Thomas surprise Dugbeh Jr.",
+      role: "Member",
     },
   ];
 
@@ -72,18 +60,11 @@ const Index = () => {
       description: "Join us for deep Bible study and discussion",
     },
     {
-      title: "Bible Picnic",
-      date: "Dec 15, 2024",
-      time: "2:00 - 6:00 PM",
+      title: "Prayer Picnic",
+      date: "March 16, 2026",
+      time: "1:00 - 6:00 PM",
       type: "Outdoor",
-      description: "Fellowship, food, and fun in God's creation",
-    },
-    {
-      title: "Game Day",
-      date: "Dec 22, 2024",
-      time: "4:00 - 8:00 PM",
-      type: "Indoor",
-      description: "Board games, video games, and fellowship",
+      description: "Fellowship, prayer, and worship in God's creation",
     },
   ];
 
@@ -101,7 +82,7 @@ const Index = () => {
               variant="secondary"
               className="mb-4 text-primary bg-primary-foreground/90"
             >
-              Discovering • Following • Sharing Christ
+              Digitally • Discovering • Following • Sharing Christ
             </Badge>
             <h1 className="text-4xl md:text-6xl font-heading font-bold text-primary-foreground mb-6">
               We are <span>Christ Life</span>
@@ -115,8 +96,14 @@ const Index = () => {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button size="lg" className="btn-hero text-lg px-8 py-6">
-                <MessageCircle className="mr-2 h-5 w-5" />
-                Join Bible Study
+                <Link
+                  to={"https://meet.google.com/see-egjy-ruo"}
+                  className="flex items-center"
+                  target="_blank"
+                >
+                  <MessageCircle className="mr-2 h-5 w-5" />
+                  Join Bible Study
+                </Link>
               </Button>
 
               <Button
@@ -142,10 +129,10 @@ const Index = () => {
               Who We Are
             </h2>
             <p className="text-lg md:text-xl text-foreground leading-relaxed">
-              Christ Life is a Christian youth group dedicated to discovering,
-              following, and sharing Christ. We meet weekly for Bible studies
-              and organize events to build fellowship and faith in our
-              community.
+              Christ Life is a Christian youth group dedicated to digitally,
+              discovering, following, and sharing Christ. We meet weekly for
+              Bible studies and organize events to build fellowship and faith in
+              our community.
             </p>
           </div>
 
@@ -353,7 +340,7 @@ const Index = () => {
           <div className="max-w-3xl mx-auto">
             <Lightbulb className="h-12 w-12 mx-auto mb-6" />
             <h2 className="text-2xl font-heading font-bold mb-6">
-              Scripture of the Week
+              Scripture of the Month
             </h2>
             <blockquote className="text-xl md:text-2xl leading-relaxed mb-4">
               "Trust in the Lord with all your heart and lean not on your own
@@ -378,8 +365,14 @@ const Index = () => {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button size="lg" className="btn-hero text-lg px-8 py-6">
-                <MessageCircle className="mr-2 h-5 w-5" />
-                Join Bible Study
+                <Link
+                  to={"https://meet.google.com/see-egjy-ruo"}
+                  className="flex items-center"
+                  target="_blank"
+                >
+                  <MessageCircle className="mr-2 h-5 w-5" />
+                  Join Bible Study
+                </Link>
               </Button>
               <Button
                 size="lg"

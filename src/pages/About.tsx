@@ -10,29 +10,17 @@ import {
   MessageCircle,
 } from "lucide-react";
 import heroImage1 from "@/assets/group1.jpeg";
+import prayingPhoto1 from "@/assets/praying1.jpeg";
+import prayingPhoto2 from "@/assets/praying2.jpeg";
+import prayingPhoto3 from "@/assets/praying3.jpeg";
 
 const About = () => {
   const leadership = [
     {
-      name: "Pastor Phil Smith",
-      role: "Youth Pastor & Founder",
+      name: "Phil",
+      role: "CEO & Founder",
       description:
         "Leading with passion for youth ministry and biblical teaching.",
-    },
-    {
-      name: "Sarah Williams",
-      role: "Worship Leader",
-      description: "Guiding our community in worship and spiritual growth.",
-    },
-    {
-      name: "David Chen",
-      role: "Bible Study Coordinator",
-      description: "Organizing and facilitating our weekly Bible studies.",
-    },
-    {
-      name: "Maria Rodriguez",
-      role: "Outreach Director",
-      description: "Coordinating community service and evangelism efforts.",
     },
   ];
 
@@ -40,16 +28,16 @@ const About = () => {
     <div className="min-h-screen bg-background overflow-hidden">
       {/* Hero Section - Full width with organic shape */}
       <section className="relative min-h-[70vh] flex items-center">
-        <div 
+        <div
           className="absolute inset-0 bg-cover bg-center"
           style={{ backgroundImage: `url(${heroImage1})` }}
         />
         <div className="absolute inset-0 bg-gradient-to-br from-primary/90 via-primary/80 to-primary-light/70" />
-        
+
         {/* Decorative blob */}
         <div className="absolute -bottom-20 -right-20 w-96 h-96 bg-accent/20 rounded-full blur-3xl" />
         <div className="absolute top-20 -left-20 w-72 h-72 bg-primary-light/30 rounded-full blur-3xl" />
-        
+
         <div className="relative z-10 container mx-auto px-4 py-20">
           <div className="max-w-3xl">
             <Badge
@@ -72,7 +60,7 @@ const About = () => {
       {/* Who We Are - Split section */}
       <section className="py-24 lg:py-32 relative">
         <div className="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-primary/5 to-transparent" />
-        
+
         <div className="container mx-auto px-4">
           <div className="grid lg:grid-cols-2 gap-16 lg:gap-24 items-center">
             {/* Text Side */}
@@ -112,26 +100,30 @@ const About = () => {
             {/* Stats Side - Organic floating cards */}
             <div className="order-1 lg:order-2 relative">
               <div className="absolute -z-10 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-accent/10 rounded-full blur-3xl" />
-              
+
               <div className="grid grid-cols-2 gap-6">
                 <div className="bg-white rounded-3xl p-8 shadow-xl shadow-primary/5 hover:shadow-2xl hover:shadow-primary/10 transition-all duration-500 hover:-translate-y-1">
                   <Users className="h-10 w-10 text-primary mb-4" />
-                  <h3 className="text-4xl font-bold text-foreground mb-1">200+</h3>
+                  <h3 className="text-4xl font-bold text-foreground mb-1">
+                    200+
+                  </h3>
                   <p className="text-muted-foreground">Active Members</p>
                 </div>
-                
+
                 <div className="bg-gradient-to-br from-primary to-primary-light rounded-3xl p-8 shadow-xl shadow-primary/20 hover:shadow-2xl transition-all duration-500 hover:-translate-y-1 mt-8">
                   <BookOpen className="h-10 w-10 text-white mb-4" />
                   <h3 className="text-4xl font-bold text-white mb-1">2x</h3>
                   <p className="text-white/80">Weekly Studies</p>
                 </div>
-                
+
                 <div className="bg-accent/10 rounded-3xl p-8 hover:bg-accent/20 transition-all duration-500 hover:-translate-y-1">
                   <Heart className="h-10 w-10 text-primary mb-4" />
-                  <h3 className="text-4xl font-bold text-foreground mb-1">5+</h3>
+                  <h3 className="text-4xl font-bold text-foreground mb-1">
+                    5+
+                  </h3>
                   <p className="text-muted-foreground">Community Events</p>
                 </div>
-                
+
                 <div className="bg-white rounded-3xl p-8 shadow-xl shadow-primary/5 hover:shadow-2xl hover:shadow-primary/10 transition-all duration-500 hover:-translate-y-1 -mt-4">
                   <Cross className="h-10 w-10 text-primary mb-4" />
                   <h3 className="text-4xl font-bold text-foreground mb-1">1</h3>
@@ -149,7 +141,7 @@ const About = () => {
         <div className="absolute inset-0 bg-gradient-to-br from-primary via-primary to-primary-light" />
         <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-accent/20 rounded-full blur-3xl translate-x-1/2 -translate-y-1/2" />
         <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-primary-light/40 rounded-full blur-3xl -translate-x-1/2 translate-y-1/2" />
-        
+
         <div className="relative z-10 container mx-auto px-4">
           <div className="text-center mb-20">
             <Badge
@@ -193,10 +185,10 @@ const About = () => {
                 Our Vision
               </h3>
               <p className="text-white/80 leading-relaxed text-lg">
-                To see a generation of young believers who are deeply rooted
-                in Christ, actively serving their communities, and boldly
-                sharing the Gospel. We envision a movement of transformed
-                lives that impacts families, schools, and neighborhoods.
+                To see a generation of young believers who are deeply rooted in
+                Christ, actively serving their communities, and boldly sharing
+                the Gospel. We envision a movement of transformed lives that
+                impacts families, schools, and neighborhoods.
               </p>
             </div>
           </div>
@@ -229,17 +221,17 @@ const About = () => {
                 Weekly Bible Studies
               </h3>
               <p className="text-lg text-muted-foreground leading-relaxed">
-                In-depth study of Scripture every Tuesday and Thursday,
-                building biblical knowledge and spiritual maturity.
+                In-depth study of Scripture every Tuesday and Thursday, building
+                biblical knowledge and spiritual maturity.
               </p>
             </div>
             <div className="flex-1 w-full">
-              <div className="aspect-video bg-gradient-to-br from-muted to-muted/50 rounded-3xl relative overflow-hidden">
-                <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-accent/5" />
-                <div className="absolute bottom-8 left-8 right-8">
-                  <div className="h-3 w-3/4 bg-primary/20 rounded-full mb-3" />
-                  <div className="h-3 w-1/2 bg-primary/10 rounded-full" />
-                </div>
+              <div className="aspect-video rounded-3xl overflow-hidden shadow-lg shadow-primary/10">
+                <img
+                  src={prayingPhoto1}
+                  alt="Weekly Bible Study"
+                  className="w-full h-full object-cover"
+                />
               </div>
             </div>
           </div>
@@ -259,12 +251,12 @@ const About = () => {
               </p>
             </div>
             <div className="flex-1 w-full">
-              <div className="aspect-video bg-gradient-to-br from-accent/20 to-accent/5 rounded-3xl relative overflow-hidden">
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="w-24 h-24 bg-accent/30 rounded-full" />
-                  <div className="absolute w-16 h-16 bg-primary/20 rounded-full translate-x-12 -translate-y-8" />
-                  <div className="absolute w-12 h-12 bg-accent/40 rounded-full -translate-x-16 translate-y-6" />
-                </div>
+              <div className="aspect-video rounded-3xl overflow-hidden shadow-lg shadow-primary/10">
+                <img
+                  src={prayingPhoto2}
+                  alt="Weekly Bible Study"
+                  className="w-full h-full object-cover"
+                />
               </div>
             </div>
           </div>
@@ -284,12 +276,12 @@ const About = () => {
               </p>
             </div>
             <div className="flex-1 w-full">
-              <div className="aspect-video bg-gradient-to-br from-primary/10 to-primary/5 rounded-3xl relative overflow-hidden">
-                <div className="absolute inset-0">
-                  <div className="absolute top-8 left-8 w-32 h-2 bg-primary/20 rounded-full" />
-                  <div className="absolute top-14 left-8 w-24 h-2 bg-primary/15 rounded-full" />
-                  <div className="absolute bottom-8 right-8 w-20 h-20 border-4 border-primary/20 rounded-full" />
-                </div>
+              <div className="aspect-video rounded-3xl overflow-hidden shadow-lg shadow-primary/10">
+                <img
+                  src={prayingPhoto3}
+                  alt="Weekly Bible Study"
+                  className="w-full h-full object-cover"
+                />
               </div>
             </div>
           </div>
@@ -299,7 +291,7 @@ const About = () => {
       {/* Core Values - Flowing horizontal layout */}
       <section className="py-24 lg:py-32 bg-gradient-to-b from-muted/50 to-background relative overflow-hidden">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-primary/5 rounded-full blur-3xl" />
-        
+
         <div className="container mx-auto px-4 relative z-10">
           <div className="text-center mb-20">
             <span className="text-primary font-semibold tracking-wider uppercase text-sm mb-4 block">
@@ -394,9 +386,9 @@ const About = () => {
               <div
                 key={index}
                 className={`group relative p-8 rounded-3xl transition-all duration-500 hover:-translate-y-1 ${
-                  index % 2 === 0 
-                    ? 'bg-gradient-to-br from-white to-muted/30 shadow-xl shadow-primary/5 hover:shadow-2xl hover:shadow-primary/10' 
-                    : 'bg-gradient-to-br from-primary/5 to-accent/5 hover:from-primary/10 hover:to-accent/10'
+                  index % 2 === 0
+                    ? "bg-gradient-to-br from-white to-muted/30 shadow-xl shadow-primary/5 hover:shadow-2xl hover:shadow-primary/10"
+                    : "bg-gradient-to-br from-primary/5 to-accent/5 hover:from-primary/10 hover:to-accent/10"
                 }`}
               >
                 <div className="flex items-start gap-6">
@@ -407,7 +399,10 @@ const About = () => {
                     <h3 className="text-xl font-heading font-bold text-foreground mb-1">
                       {member.name}
                     </h3>
-                    <Badge variant="outline" className="mb-3 text-xs border-primary/20 text-primary">
+                    <Badge
+                      variant="outline"
+                      className="mb-3 text-xs border-primary/20 text-primary"
+                    >
                       {member.role}
                     </Badge>
                     <p className="text-muted-foreground leading-relaxed">
@@ -425,7 +420,7 @@ const About = () => {
       <section className="py-24 lg:py-32 bg-gradient-to-b from-muted/30 to-background relative overflow-hidden">
         <div className="absolute -top-40 -right-40 w-80 h-80 bg-accent/10 rounded-full blur-3xl" />
         <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-primary/10 rounded-full blur-3xl" />
-        
+
         <div className="container mx-auto px-4 relative z-10">
           <div className="text-center mb-20">
             <span className="text-primary font-semibold tracking-wider uppercase text-sm mb-4 block">

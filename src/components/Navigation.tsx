@@ -29,9 +29,9 @@ const Navigation = () => {
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-3">
-            <img 
-              src={Logo} 
-              alt="Christ Life Logo" 
+            <img
+              src={Logo}
+              alt="Christ Life Logo"
               className="w-10 h-10 rounded-full"
             />
             <span className="font-heading font-bold text-xl text-primary">
@@ -54,13 +54,10 @@ const Navigation = () => {
                 {item.name}
               </Link>
             ))}
-            <Button 
-              asChild 
-              className="ml-4 btn-hero"
-            >
-              <a 
-                href="https://chat.whatsapp.com/join" 
-                target="_blank" 
+            <Button asChild className="ml-4 btn-hero">
+              <a
+                href="https://chat.whatsapp.com/join"
+                target="_blank"
                 rel="noopener noreferrer"
               >
                 Join WhatsApp
@@ -76,7 +73,11 @@ const Navigation = () => {
               onClick={() => setIsOpen(!isOpen)}
               className="text-foreground hover:text-primary"
             >
-              {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+              {isOpen ? (
+                <X className="h-6 w-6" />
+              ) : (
+                <Menu className="h-6 w-6" />
+              )}
             </Button>
           </div>
         </div>
@@ -100,14 +101,14 @@ const Navigation = () => {
                 </Link>
               ))}
               <div className="pt-2">
-                <Button 
-                  asChild 
+                <Button
+                  asChild
                   className="w-full btn-hero"
                   onClick={() => setIsOpen(false)}
                 >
-                  <a 
-                    href="https://chat.whatsapp.com/join" 
-                    target="_blank" 
+                  <a
+                    href="https://chat.whatsapp.com/join"
+                    target="_blank"
                     rel="noopener noreferrer"
                   >
                     Join WhatsApp Group
