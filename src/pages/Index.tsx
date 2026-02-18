@@ -64,7 +64,15 @@ const Index = () => {
       date: "March 16, 2026",
       time: "1:00 - 6:00 PM",
       type: "Outdoor",
-      description: "Fellowship, prayer, and worship in God's creation",
+      description: "Spiritual renewal, youth fellowship, and unity",
+    },
+    {
+      title: "Orphan Outreach Day",
+      date: "March 28, 2026",
+      // time: "1:00 - 6:00 PM",
+      type: "Outdoor",
+      description:
+        "Showing compassion, provide support, and share Christ's love.",
     },
   ];
 

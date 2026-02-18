@@ -1,7 +1,7 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { 
+import {
   BookOpen,
   Clock,
   Users,
@@ -12,9 +12,10 @@ import {
   Play,
   Lightbulb,
   Heart,
-  ChevronRight
+  ChevronRight,
 } from "lucide-react";
 import bibleStudyImage from "@/assets/bible-study-hero.jpg";
+import groupImg1 from "@/assets/group1.jpeg";
 
 const BibleStudy = () => {
   const recentThemes = [
@@ -22,73 +23,83 @@ const BibleStudy = () => {
       title: "The Armor of God",
       reference: "Ephesians 6:10-18",
       date: "December 5, 2024",
-      description: "Exploring spiritual warfare and the protective armor God provides for believers.",
-      duration: "60 minutes"
+      description:
+        "Exploring spiritual warfare and the protective armor God provides for believers.",
+      duration: "60 minutes",
     },
     {
       title: "Walking in Faith",
-      reference: "Hebrews 11:1-16", 
+      reference: "Hebrews 11:1-16",
       date: "December 3, 2024",
-      description: "Understanding what it means to live by faith rather than sight.",
-      duration: "60 minutes"
+      description:
+        "Understanding what it means to live by faith rather than sight.",
+      duration: "60 minutes",
     },
     {
       title: "Love One Another",
       reference: "1 John 4:7-21",
       date: "November 28, 2024",
-      description: "God's command to love and how it transforms our relationships.",
-      duration: "60 minutes"
+      description:
+        "God's command to love and how it transforms our relationships.",
+      duration: "60 minutes",
     },
     {
       title: "The Great Commission",
       reference: "Matthew 28:16-20",
-      date: "November 26, 2024", 
-      description: "Our calling to make disciples and spread the Gospel to all nations.",
-      duration: "60 minutes"
-    }
+      date: "November 26, 2024",
+      description:
+        "Our calling to make disciples and spread the Gospel to all nations.",
+      duration: "60 minutes",
+    },
   ];
 
   const studyFeatures = [
     {
       icon: BookOpen,
       title: "Verse-by-Verse Study",
-      description: "Deep dive into Scripture with careful analysis and application"
+      description:
+        "Deep dive into Scripture with careful analysis and application",
     },
     {
       icon: Users,
       title: "Interactive Discussion",
-      description: "Share insights and learn from fellow believers in small groups"
+      description:
+        "Share insights and learn from fellow believers in small groups",
     },
     {
       icon: Heart,
       title: "Prayer & Worship",
-      description: "Begin and end each study with prayer and worship time"
+      description: "Begin and end each study with prayer and worship time",
     },
     {
       icon: Lightbulb,
       title: "Practical Application",
-      description: "Learn how to apply biblical truths to daily life situations"
-    }
+      description:
+        "Learn how to apply biblical truths to daily life situations",
+    },
   ];
 
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section 
+      <section
         className="relative py-20 bg-cover bg-center"
-        style={{ backgroundImage: `url(${bibleStudyImage})` }}
+        style={{ backgroundImage: `url(${groupImg1})` }}
       >
         <div className="hero-overlay"></div>
         <div className="relative z-10 container mx-auto px-4 text-center">
-          <Badge variant="secondary" className="mb-4 text-accent bg-accent-foreground/20">
+          <Badge
+            variant="secondary"
+            className="mb-4 text-accent bg-accent-foreground/20"
+          >
             Bible Study
           </Badge>
           <h1 className="text-4xl md:text-6xl font-heading font-bold text-primary-foreground mb-6">
             Grow in God's Word
           </h1>
           <p className="text-xl md:text-2xl text-primary-foreground/90 max-w-3xl mx-auto leading-relaxed mb-8">
-            Join us twice weekly for in-depth Bible study, fellowship, and spiritual growth 
-            in a supportive community environment.
+            Join us twice weekly for in-depth Bible study, fellowship, and
+            spiritual growth in a supportive community environment.
           </p>
           <Button size="lg" className="btn-accent text-lg px-8 py-6">
             <MessageCircle className="mr-2 h-5 w-5" />
@@ -119,18 +130,18 @@ const BibleStudy = () => {
                 <div className="space-y-3 mb-6">
                   <div className="flex items-center justify-center gap-2 text-lg">
                     <Clock className="h-5 w-5 text-accent" />
-                    <span className="font-semibold text-accent">10:00 - 11:00 PM</span>
+                    <span className="font-semibold text-accent">
+                      10:00 - 11:00 PM
+                    </span>
                   </div>
                   <p className="text-muted-foreground">
                     Google Meet / WhatsApp Group
                   </p>
                   <p className="text-foreground">
-                    Focus on Old Testament studies and historical context
+                    {/* Focus on Old Testament studies and historical context */}
                   </p>
                 </div>
-                <Button className="btn-hero w-full">
-                  Get Tuesday Link
-                </Button>
+                <Button className="btn-hero w-full">Get Tuesday Link</Button>
               </CardContent>
             </Card>
 
@@ -138,23 +149,23 @@ const BibleStudy = () => {
               <CardContent className="p-8 text-center">
                 <Calendar className="h-16 w-16 text-primary mx-auto mb-6" />
                 <h3 className="text-2xl font-heading font-bold text-primary mb-4">
-                  Thursday Study
+                  Thursday Prayer
                 </h3>
                 <div className="space-y-3 mb-6">
                   <div className="flex items-center justify-center gap-2 text-lg">
                     <Clock className="h-5 w-5 text-accent" />
-                    <span className="font-semibold text-accent">10:00 - 11:00 PM</span>
+                    <span className="font-semibold text-accent">
+                      10:00 - 11:00 PM
+                    </span>
                   </div>
                   <p className="text-muted-foreground">
                     Google Meet / WhatsApp Group
                   </p>
-                  <p className="text-foreground">
+                  {/* <p className="text-foreground">
                     Focus on New Testament teachings and practical application
-                  </p>
+                  </p> */}
                 </div>
-                <Button className="btn-hero w-full">
-                  Get Thursday Link
-                </Button>
+                <Button className="btn-hero w-full">Get Thursday Link</Button>
               </CardContent>
             </Card>
           </div>
@@ -164,13 +175,13 @@ const BibleStudy = () => {
       {/* How to Join */}
       <section className="py-16 bg-muted">
         <div className="container mx-auto px-4">
-          <div className="max-w-3xl mx-auto text-center">
+          <div className="max-w-5xl mx-auto text-center">
             <h2 className="text-3xl md:text-4xl font-heading font-bold text-primary mb-6">
               How to Join Our Bible Studies
             </h2>
             <p className="text-lg text-muted-foreground mb-8">
-              Getting started is simple! Follow these easy steps to begin your journey 
-              with our Bible study community.
+              Getting started is simple! Follow these easy steps to begin your
+              journey with our Bible study community.
             </p>
 
             <Card className="card-gradient">
@@ -184,7 +195,7 @@ const BibleStudy = () => {
                       1. Join WhatsApp Group
                     </h3>
                     <p className="text-sm text-foreground">
-                      Click the link to join our WhatsApp group where we share 
+                      Click the link to join our WhatsApp group where we share
                       study materials and meeting links.
                     </p>
                   </div>
@@ -197,7 +208,7 @@ const BibleStudy = () => {
                       2. Check the Schedule
                     </h3>
                     <p className="text-sm text-foreground">
-                      Mark your calendar for Tuesdays and Thursdays at 10 PM. 
+                      Mark your calendar for Tuesdays and Thursdays at 10 PM.
                       Choose one or join both sessions!
                     </p>
                   </div>
@@ -210,8 +221,8 @@ const BibleStudy = () => {
                       3. Join the Study
                     </h3>
                     <p className="text-sm text-foreground">
-                      Click the Google Meet link shared in the group and 
-                      join us for Bible study and fellowship.
+                      Click the Google Meet link shared in the group and join us
+                      for Bible study and fellowship.
                     </p>
                   </div>
                 </div>
@@ -236,13 +247,17 @@ const BibleStudy = () => {
               What to Expect
             </h2>
             <p className="text-lg text-muted-foreground">
-              Our Bible studies are designed to be engaging, educational, and transformative
+              Our Bible studies are designed to be engaging, educational, and
+              transformative
             </p>
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             {studyFeatures.map((feature, index) => (
-              <Card key={index} className="card-gradient card-hover text-center">
+              <Card
+                key={index}
+                className="card-gradient card-hover text-center"
+              >
                 <CardContent className="p-6">
                   <feature.icon className="h-12 w-12 text-primary mx-auto mb-4" />
                   <h3 className="text-lg font-heading font-bold text-primary mb-3">
@@ -259,7 +274,7 @@ const BibleStudy = () => {
       </section>
 
       {/* Recent Themes */}
-      <section className="py-16 bg-muted">
+      {/* <section className="py-16 bg-muted">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-heading font-bold text-primary mb-4">
@@ -278,17 +293,19 @@ const BibleStudy = () => {
                     <div className="flex-1">
                       <div className="flex flex-wrap items-center gap-2 mb-3">
                         <Badge variant="outline">{theme.reference}</Badge>
-                        <span className="text-sm text-muted-foreground">{theme.date}</span>
+                        <span className="text-sm text-muted-foreground">
+                          {theme.date}
+                        </span>
                       </div>
-                      
+
                       <h3 className="text-xl font-heading font-bold text-primary mb-2">
                         {theme.title}
                       </h3>
-                      
+
                       <p className="text-foreground leading-relaxed mb-3">
                         {theme.description}
                       </p>
-                      
+
                       <div className="flex items-center gap-4 text-sm text-muted-foreground">
                         <div className="flex items-center gap-1">
                           <Clock className="h-4 w-4" />
@@ -300,7 +317,7 @@ const BibleStudy = () => {
                         </div>
                       </div>
                     </div>
-                    
+
                     <div className="flex flex-col gap-2 md:w-auto">
                       <Button variant="outline" size="sm">
                         <Download className="mr-2 h-4 w-4" />
@@ -324,20 +341,23 @@ const BibleStudy = () => {
             </Button>
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* Scripture Highlight */}
       <section className="py-20 bg-gradient-to-r from-primary to-primary-light text-primary-foreground">
         <div className="container mx-auto px-4 text-center">
           <div className="max-w-4xl mx-auto">
             <Lightbulb className="h-16 w-16 mx-auto mb-8 text-accent" />
-            <Badge variant="secondary" className="mb-6 text-accent bg-accent-foreground/20">
+            <Badge
+              variant="secondary"
+              className="mb-6 text-accent bg-accent-foreground/20"
+            >
               This Week's Focus Verse
             </Badge>
             <blockquote className="text-2xl md:text-4xl font-heading leading-relaxed mb-6">
-              "All Scripture is God-breathed and is useful for teaching, rebuking, 
-              correcting and training in righteousness, so that the servant of God 
-              may be thoroughly equipped for every good work."
+              "All Scripture is God-breathed and is useful for teaching,
+              rebuking, correcting and training in righteousness, so that the
+              servant of God may be thoroughly equipped for every good work."
             </blockquote>
             <p className="text-xl font-medium text-primary-foreground/90">
               - 2 Timothy 3:16-17
@@ -347,7 +367,7 @@ const BibleStudy = () => {
       </section>
 
       {/* Past Teachings Archive */}
-      <section className="py-16 bg-background">
+      {/* <section className="py-16 bg-background">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-heading font-bold text-primary mb-4">
@@ -405,7 +425,7 @@ const BibleStudy = () => {
             </Card>
           </div>
         </div>
-      </section>
+      </section> */}
     </div>
   );
 };
