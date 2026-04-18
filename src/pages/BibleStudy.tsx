@@ -344,7 +344,7 @@ const BibleStudy = () => {
       </section> */}
 
       {/* Scripture Highlight */}
-      <section className="py-20 bg-gradient-to-r from-primary to-primary-light text-primary-foreground">
+      {/* <section className="py-20 bg-gradient-to-r from-primary to-primary-light text-primary-foreground">
         <div className="container mx-auto px-4 text-center">
           <div className="max-w-4xl mx-auto">
             <Lightbulb className="h-16 w-16 mx-auto mb-8 text-accent" />
@@ -364,7 +364,7 @@ const BibleStudy = () => {
             </p>
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* Past Teachings Archive */}
       {/* <section className="py-16 bg-background">

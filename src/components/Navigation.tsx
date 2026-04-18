@@ -16,7 +16,7 @@ const Navigation = () => {
     { name: "Bible Study", path: "/bible-study" },
     { name: "Gallery", path: "/gallery" },
     { name: "Contact", path: "/contact" },
-    { name: "Get Involved", path: "/get-involved" },
+    // { name: "Get Involved", path: "/get-involved" },
   ];
 
   const isActivePath = (path: string) => {

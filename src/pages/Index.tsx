@@ -60,13 +60,6 @@ const Index = () => {
       description: "Join us for deep Bible study and discussion",
     },
     {
-      title: "Prayer Picnic",
-      date: "March 16, 2026",
-      time: "1:00 - 6:00 PM",
-      type: "Outdoor",
-      description: "Spiritual renewal, youth fellowship, and unity",
-    },
-    {
       title: "Orphan Outreach Day",
       date: "March 28, 2026",
       // time: "1:00 - 6:00 PM",
@@ -153,7 +146,6 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Mission & Vision (FISION) */}
       <section
         className="py-20 bg-cover bg-center relative"
         style={{ backgroundImage: `url(${groupPhoto3})` }}
@@ -228,8 +220,10 @@ const Index = () => {
         </div>
       </section>
 
+      {/* Mission & Vision (FISION) */}
+
       {/* Upcoming Events Preview */}
-      <section className="py-16 bg-muted">
+      {/* <section className="py-16 bg-muted">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-heading font-bold text-primary mb-4">
@@ -271,7 +265,7 @@ const Index = () => {
             </Button>
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* Core Values */}
       {/* <section className="py-16 bg-background">
@@ -381,7 +375,7 @@ const Index = () => {
                   Join Bible Study
                 </Link>
               </Button>
-              <Button
+              {/* <Button
                 size="lg"
                 variant="outline"
                 className="text-lg px-8 py-6 border-primary text-primary hover:bg-primary hover:text-primary-foreground"
@@ -390,7 +384,7 @@ const Index = () => {
                   <Users className="mr-2 h-5 w-5" />
                   Get Involved
                 </Link>
-              </Button>
+              </Button> */}
             </div>
           </div>
         </div>

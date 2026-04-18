@@ -289,7 +289,7 @@ const About = () => {
       </section>
 
       {/* Core Values - Flowing horizontal layout */}
-      <section className="py-24 lg:py-32 bg-gradient-to-b from-muted/50 to-background relative overflow-hidden">
+      {/* <section className="py-24 lg:py-32 bg-gradient-to-b from-muted/50 to-background relative overflow-hidden">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-primary/5 rounded-full blur-3xl" />
 
         <div className="container mx-auto px-4 relative z-10">
@@ -306,7 +306,6 @@ const About = () => {
           </div>
 
           <div className="max-w-6xl mx-auto">
-            {/* Value 1 - Faith */}
             <div className="flex flex-col md:flex-row items-start gap-8 mb-16 pb-16 border-b border-border/50">
               <div className="flex-shrink-0">
                 <div className="w-24 h-24 rounded-full bg-gradient-to-br from-primary to-primary-light flex items-center justify-center shadow-2xl shadow-primary/30">
@@ -325,7 +324,6 @@ const About = () => {
               </div>
             </div>
 
-            {/* Value 2 - Love */}
             <div className="flex flex-col md:flex-row-reverse items-start gap-8 mb-16 pb-16 border-b border-border/50">
               <div className="flex-shrink-0">
                 <div className="w-24 h-24 rounded-full bg-gradient-to-br from-accent to-accent/80 flex items-center justify-center shadow-2xl shadow-accent/30">
@@ -344,7 +342,6 @@ const About = () => {
               </div>
             </div>
 
-            {/* Value 3 - Service */}
             <div className="flex flex-col md:flex-row items-start gap-8">
               <div className="flex-shrink-0">
                 <div className="w-24 h-24 rounded-full bg-gradient-to-br from-primary-light to-primary flex items-center justify-center shadow-2xl shadow-primary/30">
@@ -364,7 +361,7 @@ const About = () => {
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* Meet the Team - Organic flowing layout */}
       <section className="py-24 lg:py-32 bg-background relative">
@@ -417,7 +414,7 @@ const About = () => {
       </section>
 
       {/* Impact Stories - Full width with large typography */}
-      <section className="py-24 lg:py-32 bg-gradient-to-b from-muted/30 to-background relative overflow-hidden">
+      {/* <section className="py-24 lg:py-32 bg-gradient-to-b from-muted/30 to-background relative overflow-hidden">
         <div className="absolute -top-40 -right-40 w-80 h-80 bg-accent/10 rounded-full blur-3xl" />
         <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-primary/10 rounded-full blur-3xl" />
 
@@ -435,7 +432,6 @@ const About = () => {
           </div>
 
           <div className="flex flex-col lg:flex-row items-stretch gap-8 max-w-5xl mx-auto">
-            {/* Impact 1 */}
             <div className="flex-1 bg-white rounded-3xl p-10 shadow-xl shadow-primary/5 hover:shadow-2xl hover:shadow-primary/10 transition-all duration-500 group">
               <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-primary/10 to-primary/5 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-500">
                 <Users className="h-8 w-8 text-primary" />
@@ -448,7 +444,6 @@ const About = () => {
               </p>
             </div>
 
-            {/* Impact 2 */}
             <div className="flex-1 bg-gradient-to-br from-primary to-primary-light rounded-3xl p-10 shadow-xl shadow-primary/30 transition-all duration-500 group lg:-mt-4 lg:mb-4">
               <div className="w-16 h-16 rounded-2xl bg-white/20 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-500">
                 <BookOpen className="h-8 w-8 text-white" />
@@ -461,7 +456,6 @@ const About = () => {
               </p>
             </div>
 
-            {/* Impact 3 */}
             <div className="flex-1 bg-white rounded-3xl p-10 shadow-xl shadow-primary/5 hover:shadow-2xl hover:shadow-primary/10 transition-all duration-500 group">
               <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-accent/20 to-accent/10 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-500">
                 <Heart className="h-8 w-8 text-primary" />
@@ -475,7 +469,7 @@ const About = () => {
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
     </div>
   );
 };
