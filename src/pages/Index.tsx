@@ -78,7 +78,6 @@ const Index = () => {
 
   return (
     <div className="min-h-screen">
-      {/* Hero Section */}
       <section
         className="relative h-screen flex items-center justify-center text-center bg-cover bg-center"
         style={{ backgroundImage: `url(${groupPhoto1})` }}
