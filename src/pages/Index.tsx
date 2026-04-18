@@ -274,7 +274,7 @@ const Index = () => {
       </section>
 
       {/* Core Values */}
-      <section className="py-16 bg-background">
+      {/* <section className="py-16 bg-background">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-heading font-bold text-primary mb-4">
@@ -301,7 +301,7 @@ const Index = () => {
             ))}
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* Testimonies Slider */}
       <section className="py-16 bg-gradient-to-r from-primary to-primary-light text-primary-foreground">
@@ -322,7 +322,7 @@ const Index = () => {
                 className="bg-primary-foreground/10 border-primary-foreground/20 card-hover"
               >
                 <CardContent className="p-6">
-                  <Star className="h-6 w-6 text-accent mb-4 fill-current" />
+                  {/* <Star className="h-6 w-6 text-accent mb-4 fill-current" /> */}
                   <blockquote className="text-primary-foreground/90 mb-4 italic leading-relaxed">
                     "{testimonial.quote}"
                   </blockquote>
@@ -342,7 +342,7 @@ const Index = () => {
       </section>
 
       {/* Scripture of the Week */}
-      <section className="py-16 bg-accent text-accent-foreground">
+      {/* <section className="py-16 bg-accent text-accent-foreground">
         <div className="container mx-auto px-4 text-center">
           <div className="max-w-3xl mx-auto">
             <Lightbulb className="h-12 w-12 mx-auto mb-6" />
@@ -357,7 +357,7 @@ const Index = () => {
             <p className="text-lg font-medium">- Proverbs 3:5-6</p>
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* Call to Join */}
       <section className="py-20 bg-gradient-to-r from-secondary via-muted to-secondary">
