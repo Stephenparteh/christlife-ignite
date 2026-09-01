@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -11,12 +12,17 @@ import {
   Heart,
   Download,
   ExternalLink,
+  ChevronLeft,
+  X,
   ChevronRight,
   Instagram,
   Facebook,
 } from "lucide-react";
 import heroImage from "@/assets/hero-main.jpg";
 import groupImg1 from "@/assets/group1.jpeg";
+import groupPhoto1 from "@/assets/group1.jpeg";
+import groupPhoto2 from "@/assets/group1.jpeg";
+import groupPhoto3 from "@/assets/group1.jpeg";
 
 import img1 from "@/assets/group1.jpeg";
 import img2 from "@/assets/group2.jpeg";
@@ -27,6 +33,31 @@ import img6 from "@/assets/praying3.jpeg";
 
 const Gallery = () => {
   const images = [img1, img2, img3, img4, img5, img6];
+  const [selectedAlbum, setSelectedAlbum] = useState<number | null>(null);
+  const [selectedPhoto, setSelectedPhoto] = useState(0);
+  const albums = [
+    {
+      id: 1,
+      title: "Christ Life Community Gathering",
+      date: "August 2026",
+      coverImage: groupImg1,
+      photos: [groupImg1, groupPhoto1, groupPhoto3],
+    },
+    {
+      id: 2,
+      title: "Fellowship & Fun Day",
+      date: "July 2026",
+      coverImage: groupPhoto1,
+      photos: [groupPhoto1, groupImg1, groupPhoto3],
+    },
+    {
+      id: 3,
+      title: "Bible Study & Fellowship",
+      date: "June 2026",
+      coverImage: groupPhoto3,
+      photos: [groupPhoto3, groupImg1, groupPhoto1],
+    },
+  ];
   const photoAlbums = [
     {
       title: "Thanksgiving Barbecue 2024",
@@ -133,14 +164,9 @@ const Gallery = () => {
         // style={{ backgroundImage: `url(${heroImage})` }}
         style={{ backgroundImage: `url(${groupImg1})` }}
       >
-        <div className="hero-overlay"></div>
+        <div className="absolute inset-0 bg-black/45"></div>
+
         <div className="relative z-10 container mx-auto px-4 text-center">
-          <Badge
-            variant="secondary"
-            className="mb-4 text-accent bg-accent-foreground/20"
-          >
-            Gallery
-          </Badge>
           <h1 className="text-4xl md:text-6xl font-heading font-bold text-primary-foreground mb-6">
             Memories & Moments
           </h1>
@@ -151,151 +177,137 @@ const Gallery = () => {
         </div>
       </section>
 
-      {/* Photo Albums */}
-      {/* <section className="py-16 bg-background">
+      {/* Gallery Albums */}
+      <section className="py-20 bg-background">
         <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-heading font-bold text-primary mb-4">
-              Event Photo Albums
+          {/* Section Heading */}
+          <div className="max-w-3xl mx-auto text-center mb-14">
+            {/* <p className="text-primary font-semibold tracking-[0.15em] uppercase text-sm mb-3">
+              Our Gallery
+            </p> */}
+
+            <h2 className="text-3xl md:text-5xl font-heading font-bold text-foreground mb-5">
+              Moments We’ve Shared
             </h2>
-            <p className="text-lg text-muted-foreground">
-              Browse through our collection of event photos organized by
-              category
+
+            <p className="text-lg text-muted-foreground leading-relaxed">
+              Explore photos from our Bible studies, fellowship gatherings,
+              outreach programs, and other Christ Life events.
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {photoAlbums.map((album, index) => (
-              <Card
-                key={index}
-                className="card-gradient card-hover overflow-hidden"
+          {/* Albums */}
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+            {albums.map((album) => (
+              <button
+                key={album.id}
+                type="button"
+                onClick={() => {
+                  setSelectedAlbum(album.id);
+                  setSelectedPhoto(0);
+                }}
+                className="group text-left"
               >
-                <div className="aspect-video bg-primary/10 flex items-center justify-center relative">
-                  <album.icon className="h-16 w-16 text-primary" />
-                  <div className="absolute top-4 right-4">
-                    <Badge
-                      variant={getCategoryBadge(album.category)}
-                      className="text-xs"
-                    >
-                      {album.category}
-                    </Badge>
-                  </div>
-                  <div className="absolute bottom-4 left-4 bg-background/90 px-2 py-1 rounded text-xs font-medium">
-                    <Camera className="inline h-3 w-3 mr-1" />
-                    {album.photos} photos
-                  </div>
-                </div>
-                <CardContent className="p-6">
-                  <h3 className="text-lg font-heading font-bold text-primary mb-2">
-                    {album.title}
-                  </h3>
-                  <p className="text-sm text-muted-foreground mb-3">
-                    {album.date}
-                  </p>
-                  <p className="text-foreground text-sm leading-relaxed mb-4">
-                    {album.description}
-                  </p>
-                  <Button variant="outline" size="sm" className="w-full group">
-                    View Album
-                    <ExternalLink className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
-                  </Button>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section> */}
-
-      {/* Video Highlights */}
-      {/* <section className="py-16 bg-muted">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-heading font-bold text-primary mb-4">
-              Video Highlights
-            </h2>
-            <p className="text-lg text-muted-foreground">
-              Watch inspiring moments and testimonies from our community
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-6">
-            {videoHighlights.map((video, index) => (
-              <Card
-                key={index}
-                className="card-gradient card-hover overflow-hidden"
-              >
-                <div className="aspect-video bg-primary/10 flex items-center justify-center relative group cursor-pointer">
-                  <Play className="h-16 w-16 text-primary group-hover:scale-110 transition-transform" />
-                  <div className="absolute inset-0 bg-primary/20 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                  <div className="absolute bottom-4 left-4 bg-background/90 px-2 py-1 rounded text-xs font-medium">
-                    {video.duration}
-                  </div>
-                  <div className="absolute bottom-4 right-4 bg-background/90 px-2 py-1 rounded text-xs">
-                    {video.views} views
-                  </div>
-                </div>
-                <CardContent className="p-6">
-                  <h3 className="text-lg font-heading font-bold text-primary mb-2">
-                    {video.title}
-                  </h3>
-                  <p className="text-foreground text-sm leading-relaxed mb-4">
-                    {video.description}
-                  </p>
-                  <Button variant="outline" size="sm" className="w-full group">
-                    <Play className="mr-2 h-4 w-4" />
-                    Watch Video
-                  </Button>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-
-          <div className="text-center mt-8">
-            <Button variant="outline" size="lg">
-              View All Videos
-              <ChevronRight className="ml-2 h-4 w-4" />
-            </Button>
-          </div>
-        </div>
-      </section> */}
-
-      {/* Featured Gallery Grid */}
-      <section className="py-16 bg-background">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-heading font-bold text-primary mb-4">
-              Featured Moments
-            </h2>
-            <p className="text-lg text-muted-foreground">
-              A selection of our favorite photos from recent events
-            </p>
-          </div>
-
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            {images.map((img, index) => (
-              <Card
-                key={index}
-                className="card-hover overflow-hidden cursor-pointer group"
-              >
-                <div className="aspect-square relative">
+                <div className="relative overflow-hidden rounded-2xl aspect-[4/3] mb-5">
                   <img
-                    src={img}
-                    alt="Gallery"
-                    className="w-full h-full object-cover"
+                    src={album.coverImage}
+                    alt={album.title}
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                   />
-                  <div className="absolute inset-0 bg-primary/20 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+
+                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300" />
+
+                  <div className="absolute bottom-4 left-4 bg-black/60 text-white text-sm px-3 py-1.5 rounded-full backdrop-blur-sm">
+                    {album.photos.length} Photos
+                  </div>
                 </div>
-              </Card>
+
+                <h3 className="text-xl font-heading font-bold text-foreground mb-2 group-hover:text-primary transition-colors">
+                  {album.title}
+                </h3>
+
+                <p className="text-sm text-muted-foreground">{album.date}</p>
+              </button>
             ))}
           </div>
-
-          {/* <div className="text-center mt-8">
-            <Button size="lg" className="btn-hero">
-              <Download className="mr-2 h-5 w-5" />
-              Download Full Gallery
-            </Button>
-          </div> */}
         </div>
+
+        {selectedAlbum !== null && (
+          <div className="fixed inset-0 z-50 bg-black/95 flex items-center justify-center">
+            {(() => {
+              const album = albums.find((item) => item.id === selectedAlbum);
+
+              if (!album) return null;
+
+              return (
+                <>
+                  {/* Close */}
+                  <button
+                    type="button"
+                    onClick={() => setSelectedAlbum(null)}
+                    className="absolute top-6 right-6 z-50 text-white hover:text-white/70 transition-colors"
+                    aria-label="Close gallery"
+                  >
+                    <X className="h-8 w-8" />
+                  </button>
+
+                  {/* Album title */}
+                  <div className="absolute top-6 left-6 z-50">
+                    <h3 className="text-white text-lg md:text-xl font-semibold">
+                      {album.title}
+                    </h3>
+
+                    <p className="text-white/60 text-sm">
+                      {selectedPhoto + 1} of {album.photos.length}
+                    </p>
+                  </div>
+
+                  {/* Main image */}
+                  <div className="w-full h-full flex items-center justify-center px-16 py-20">
+                    <img
+                      src={album.photos[selectedPhoto]}
+                      alt={`${album.title} photo ${selectedPhoto + 1}`}
+                      className="max-w-full max-h-full object-contain"
+                    />
+                  </div>
+
+                  {/* Previous */}
+                  {album.photos.length > 1 && (
+                    <button
+                      type="button"
+                      onClick={() =>
+                        setSelectedPhoto(
+                          (selectedPhoto - 1 + album.photos.length) %
+                            album.photos.length,
+                        )
+                      }
+                      className="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors"
+                      aria-label="Previous photo"
+                    >
+                      <ChevronLeft className="h-6 w-6" />
+                    </button>
+                  )}
+
+                  {/* Next */}
+                  {album.photos.length > 1 && (
+                    <button
+                      type="button"
+                      onClick={() =>
+                        setSelectedPhoto(
+                          (selectedPhoto + 1) % album.photos.length,
+                        )
+                      }
+                      className="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors"
+                      aria-label="Next photo"
+                    >
+                      <ChevronRight className="h-6 w-6" />
+                    </button>
+                  )}
+                </>
+              );
+            })()}
+          </div>
+        )}
       </section>
 
       {/* Social Media Integration */}

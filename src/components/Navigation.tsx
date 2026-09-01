@@ -1,8 +1,8 @@
+
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
-import christLifeLogo from "@/assets/christ-life-logo.png";
 import Logo from "@/assets/logo.jpeg";
 
 const Navigation = () => {
@@ -16,47 +16,67 @@ const Navigation = () => {
     { name: "Bible Study", path: "/bible-study" },
     { name: "Gallery", path: "/gallery" },
     { name: "Contact", path: "/contact" },
-    // { name: "Get Involved", path: "/get-involved" },
   ];
 
-  const isActivePath = (path: string) => {
-    return location.pathname === path;
-  };
+  const isActivePath = (path: string) => location.pathname === path;
 
   return (
-    <nav className="bg-background/95 backdrop-blur-sm border-b border-border sticky top-0 z-50 shadow-sm">
+    <nav className="bg-white sticky top-0 z-50 border-b border-border">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
+        <div className="flex items-center justify-between h-[76px]">
           {/* Logo */}
-          <Link to="/" className="flex items-center space-x-3">
+          <Link
+            to="/"
+            className="flex items-center gap-3"
+            onClick={() => setIsOpen(false)}
+          >
             <img
               src={Logo}
               alt="Christ Life Logo"
-              className="w-10 h-10 rounded-full"
+              className="w-11 h-11 rounded-full object-cover"
             />
+
             <span className="font-heading font-bold text-xl text-primary">
               Christ Life
             </span>
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-1">
-            {navItems.map((item) => (
-              <Link
-                key={item.name}
-                to={item.path}
-                className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
-                  isActivePath(item.path)
-                    ? "text-primary bg-primary/10"
-                    : "text-foreground hover:text-primary hover:bg-primary/5"
-                }`}
-              >
-                {item.name}
-              </Link>
-            ))}
-            <Button asChild className="ml-4 btn-hero">
+          <div className="hidden md:flex items-center gap-7">
+            <div className="flex items-center gap-6">
+              {navItems.map((item) => {
+                const active = isActivePath(item.path);
+
+                return (
+                  <Link
+                    key={item.name}
+                    to={item.path}
+                    className={`relative py-2 text-sm font-medium transition-colors ${
+                      active
+                        ? "text-primary"
+                        : "text-foreground/75 hover:text-primary"
+                    }`}
+                  >
+                    {item.name}
+
+                    {/* Active indicator */}
+                    <span
+                      className={`absolute left-0 right-0 -bottom-1 h-[2px] bg-primary transition-all duration-300 ${
+                        active ? "opacity-100 scale-100" : "opacity-0 scale-50"
+                      }`}
+                    />
+                  </Link>
+                );
+              })}
+            </div>
+
+            {/* WhatsApp CTA */}
+            <Button
+              asChild
+              className="ml-2 bg-primary text-primary-foreground hover:bg-primary/90 rounded-full px-5"
+            >
               <a
-                href="https://chat.whatsapp.com/join"
+                href="https://whatsapp.com/channel/0029VbAhuJw1XquNoRtWzl44"
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -66,50 +86,55 @@ const Navigation = () => {
           </div>
 
           {/* Mobile Menu Button */}
-          <div className="md:hidden">
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={() => setIsOpen(!isOpen)}
-              className="text-foreground hover:text-primary"
-            >
-              {isOpen ? (
-                <X className="h-6 w-6" />
-              ) : (
-                <Menu className="h-6 w-6" />
-              )}
-            </Button>
-          </div>
+          <button
+            type="button"
+            onClick={() => setIsOpen(!isOpen)}
+            className="md:hidden p-2 text-foreground hover:text-primary transition-colors"
+            aria-label={isOpen ? "Close menu" : "Open menu"}
+          >
+            {isOpen ? (
+              <X className="h-6 w-6" />
+            ) : (
+              <Menu className="h-6 w-6" />
+            )}
+          </button>
         </div>
 
         {/* Mobile Navigation */}
         {isOpen && (
-          <div className="md:hidden">
-            <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-card border-t border-border">
-              {navItems.map((item) => (
-                <Link
-                  key={item.name}
-                  to={item.path}
-                  onClick={() => setIsOpen(false)}
-                  className={`block px-3 py-2 rounded-md text-base font-medium transition-colors ${
-                    isActivePath(item.path)
-                      ? "text-primary bg-primary/10"
-                      : "text-foreground hover:text-primary hover:bg-primary/5"
-                  }`}
-                >
-                  {item.name}
-                </Link>
-              ))}
-              <div className="pt-2">
+          <div className="md:hidden border-t border-border">
+            <div className="py-5">
+              <div className="flex flex-col">
+                {navItems.map((item) => {
+                  const active = isActivePath(item.path);
+
+                  return (
+                    <Link
+                      key={item.name}
+                      to={item.path}
+                      onClick={() => setIsOpen(false)}
+                      className={`py-4 text-base font-medium border-b border-border/60 transition-colors ${
+                        active
+                          ? "text-primary"
+                          : "text-foreground hover:text-primary"
+                      }`}
+                    >
+                      {item.name}
+                    </Link>
+                  );
+                })}
+              </div>
+
+              <div className="pt-5">
                 <Button
                   asChild
-                  className="w-full btn-hero"
-                  onClick={() => setIsOpen(false)}
+                  className="w-full bg-primary text-primary-foreground hover:bg-primary/90 rounded-full"
                 >
                   <a
                     href="https://chat.whatsapp.com/join"
                     target="_blank"
                     rel="noopener noreferrer"
+                    onClick={() => setIsOpen(false)}
                   >
                     Join WhatsApp Group
                   </a>

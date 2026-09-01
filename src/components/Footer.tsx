@@ -1,12 +1,11 @@
+
 import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { Heart, Facebook, Instagram, Twitter, Youtube } from "lucide-react";
-import christLifeLogo from "@/assets/christ-life-logo.png";
+import { Heart, Facebook } from "lucide-react";
 import Logo from "@/assets/logo.jpeg";
 
 const Footer = () => {
   const quickLinks = [
-    { name: "About Us", path: "/about" },
+    { name: "About", path: "/about" },
     { name: "Events", path: "/events" },
     { name: "Bible Study", path: "/bible-study" },
     { name: "Gallery", path: "/gallery" },
@@ -15,129 +14,96 @@ const Footer = () => {
   ];
 
   return (
-    <footer className="bg-primary text-primary-foreground">
-      <div className="container mx-auto px-4 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {/* Logo & Mission */}
-          <div className="space-y-4">
-            <div className="flex items-center space-x-3">
-              <img
-                src={Logo}
-                alt="Christ Life Logo"
-                className="w-12 h-12 rounded-full"
-              />
-              <span className="font-heading font-bold text-xl">
-                Christ Life
-              </span>
-            </div>
-            <p className="text-primary-foreground/90 leading-relaxed">
-              A Christian youth group dedicated to discovering, following, and
-              sharing Christ through Bible studies, fellowship, and community
-              events.
-            </p>
-            <Button asChild variant="secondary" className="btn-accent">
-              <a
-                href="https://whatsapp.com/channel/0029VbAhuJw1XquNoRtWzl44"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Join Our WhatsApp
-              </a>
-            </Button>
-          </div>
+    <footer className="bg-primary text-white">
+      <div className="container mx-auto px-4">
+        {/* Main Footer */}
+        <div className="py-16 lg:py-20">
+          <div className="max-w-5xl mx-auto">
+            <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-10">
+              {/* Brand */}
+              <div className="max-w-xl">
+                <div className="flex items-center gap-3 mb-6">
+                  <img
+                    src={Logo}
+                    alt="Christ Life Logo"
+                    className="w-14 h-14 rounded-full object-cover"
+                  />
 
-          {/* Quick Links */}
-          <div className="space-y-4">
-            <h3 className="font-heading font-semibold text-lg">Quick Links</h3>
-            <ul className="space-y-2">
-              {quickLinks.map((link) => (
-                <li key={link.name}>
-                  <Link
-                    to={link.path}
-                    className="text-primary-foreground/80 hover:text-primary-foreground transition-colors"
-                  >
-                    {link.name}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
+                  <span className="text-xl font-heading font-bold">
+                    Christ Life
+                  </span>
+                </div>
 
-          {/* Bible Studies Schedule */}
-          <div className="space-y-4">
-            <h3 className="font-heading font-semibold text-lg">
-              Bible Studies
-            </h3>
-            <div className="space-y-3 text-primary-foreground/90">
-              <div>
-                <p className="font-medium">Tuesdays & Thursdays</p>
-                <p className="text-sm">10:00 - 11:00 PM</p>
-                <p className="text-sm">Via Google Meet/WhatsApp</p>
+                <h2 className="text-3xl md:text-5xl font-heading font-bold leading-tight">
+                  Discover Christ.
+                  <br />
+                  Follow Christ.
+                  <br />
+                  Share Christ.
+                </h2>
+
+                <p className="mt-6 text-white/75 max-w-md leading-relaxed">
+                  A community growing together in faith, fellowship, and the
+                  love of Christ.
+                </p>
               </div>
-              <p className="text-sm">
-                Join our WhatsApp group to receive meeting links and study
-                materials.
-              </p>
-            </div>
-          </div>
 
-          {/* Contact & Social */}
-          <div className="space-y-4">
-            <h3 className="font-heading font-semibold text-lg">
-              Stay Connected
-            </h3>
-            <div className="space-y-3 text-primary-foreground/90">
-              <p>Email: pjsaydyu@gmail.com</p>
-              <p>WhatsApp: +(231) 778282210</p>
-            </div>
-            <div className="flex space-x-3">
-              <a
-                href="https://www.facebook.com/share/1DDubvaPmz/?milbextid=wwXlfr"
-                className="text-primary-foreground/80 hover:text-primary-foreground transition-colors"
-                aria-label="Facebook"
-                target="blank"
-              >
-                <Facebook className="h-5 w-5" />
-              </a>
-              {/* <a
-                href="#"
-                className="text-primary-foreground/80 hover:text-primary-foreground transition-colors"
-                aria-label="Instagram"
-              >
-                <Instagram className="h-5 w-5" />
-              </a>
-              <a
-                href="#"
-                className="text-primary-foreground/80 hover:text-primary-foreground transition-colors"
-                aria-label="Twitter"
-              >
-                <Twitter className="h-5 w-5" />
-              </a>
-              <a
-                href="#"
-                className="text-primary-foreground/80 hover:text-primary-foreground transition-colors"
-                aria-label="YouTube"
-              >
-                <Youtube className="h-5 w-5" />
-              </a> */}
+              {/* Connect */}
+              <div className="md:text-right">
+                <p className="text-sm font-semibold uppercase tracking-[0.2em] text-white/60 mb-4">
+                  Stay Connected
+                </p>
+
+                <div className="space-y-2">
+                  <a
+                    href="mailto:pjsaydyu@gmail.com"
+                    className="block text-lg hover:text-white/75 transition-colors"
+                  >
+                    pjsaydyu@gmail.com
+                  </a>
+
+                  <a
+                    href="tel:+231778282210"
+                    className="block text-lg hover:text-white/75 transition-colors"
+                  >
+                    +231 778 282 210
+                  </a>
+                </div>
+
+                <a
+                  href="https://www.facebook.com/share/1DDubvaPmz/?milbextid=wwXlfr"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Facebook"
+                  className="inline-flex items-center gap-2 mt-5 text-sm text-white/75 hover:text-white transition-colors"
+                >
+                  <Facebook className="h-4 w-4" />
+                  Facebook
+                </a>
+              </div>
             </div>
           </div>
         </div>
 
         {/* Bottom Bar */}
-        <div className="border-t border-primary-foreground/20 mt-8 pt-6 text-center text-primary-foreground/80">
-          <p className="flex items-center justify-center gap-2 text-sm">
-            Made with <Heart className="h-4 w-4 text-accent fill-current" /> by{" "}
-            <Link
-              to="https://stephenpartehportfolio.com"
-              className="text-primary-foreground hover:text-primary underline"
-              target="/blank"
-            >
-              {" "}
-              Stephen Parteh
-            </Link>
-            © 2026 - Discovering, Following, Sharing Christ
-          </p>
+        <div className="border-t border-white/15 py-6">
+          <div className="max-w-5xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3 text-sm text-white/60">
+            <p>© 2026 Christ Life. All rights reserved.</p>
+
+            <p className="flex items-center gap-1.5">
+              Made with
+              <Heart className="h-4 w-4 text-white fill-current" />
+              by{" "}
+              <a
+                href="https://stephenpartehportfolio.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-white hover:text-white/75 transition-colors"
+              >
+                Stephen Parteh
+              </a>
+            </p>
+          </div>
         </div>
       </div>
     </footer>
