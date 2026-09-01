@@ -26,62 +26,19 @@ import "swiper/css";
 import "swiper/css/navigation";
 
 const Index = () => {
-  const coreValues = [
-    {
-      icon: Cross,
-      title: "Faith",
-      description:
-        "Deepening our relationship with Jesus Christ through prayer, worship, and study.",
-    },
-    {
-      icon: Heart,
-      title: "Love",
-      description:
-        "Showing Christ's love through compassion, kindness, and genuine care for one another.",
-    },
-    {
-      icon: Users,
-      title: "Service",
-      description:
-        "Serving our community and sharing the Gospel through actions and outreach.",
-    },
-  ];
-
+ 
   const testimonials = [
     {
       quote:
-        "Being part of Christ's life has helped strengthen my communication and relationship with God",
-      author: "Thomas surprise Dugbeh Jr.",
+        "Joining Christ life has strengthened my faith, my prayer life, and my relationship with God. The sermons and the people here have encouraged me a lot. I'm growing, and I'm thankful for how God is using this organization in my life 🙏",
+      author: "Emily Emily",
       role: "Member",
     },
     {
       quote:
-        "Christ's life has helped strengthen my communication and relationship with God",
-      author: "Dugbeh Jr.",
+        "Being part of Christ's life has helped strengthen my communication and relationship with God",
+      author: "Thomas Surprise Dugbeh Jr.",
       role: "Member",
-    },
-    {
-      quote: "relationship with God",
-      author: "surprise",
-      role: "Member",
-    },
-  ];
-
-  const upcomingEvents = [
-    {
-      title: "Weekly Bible Study",
-      date: "Every Tue & Thu",
-      time: "10:00 - 11:00 PM",
-      type: "Online",
-      description: "Join us for deep Bible study and discussion",
-    },
-    {
-      title: "Orphan Outreach Day",
-      date: "March 28, 2026",
-      // time: "1:00 - 6:00 PM",
-      type: "Outdoor",
-      description:
-        "Showing compassion, provide support, and share Christ's love.",
     },
   ];
 
@@ -190,8 +147,11 @@ const Index = () => {
                 </h3>
 
                 <p className="text-lg leading-relaxed text-white/90">
-                  Fostering discipleship and deepening our connection with Jesus
-                  Christ through prayer, worship, and biblical study.
+                  Christ‑Life exists to use digital platforms and multiply
+                  disciples of Jesus Christ. Our mission is to help youth
+                  discover Christ, follow Him, and share Him — both online and
+                  in person — through Bible studies, prayers, outreach, and
+                  creative engagement.
                 </p>
               </div>
 
@@ -202,8 +162,9 @@ const Index = () => {
                 </h3>
 
                 <p className="text-lg leading-relaxed text-white/90">
-                  Building authentic community through fellowship, outreach, and
-                  supporting each other in our faith journey.
+                  To leverage digital platforms to awaken faith in
+                  non-believers, activate lukewarm believers, and multiply
+                  Christ-followers everywhere.
                 </p>
               </div>
             </div>
@@ -280,7 +241,7 @@ const Index = () => {
 
                 <div>
                   <p className="text-xl font-semibold text-foreground mb-2">
-                    Bible Study
+                    Prayer
                   </p>
                   <p className="text-muted-foreground">
                     10:00 - 11:00 PM · Google Meet / WhatsApp
@@ -293,7 +254,7 @@ const Index = () => {
                     size="lg"
                   >
                     <MessageCircle className="mr-2 h-5 w-5" />
-                    Join Study
+                    Join Prayer
                   </Button>
                 </div>
               </div>
@@ -301,83 +262,6 @@ const Index = () => {
           </div>
         </div>
       </section>
-
-      {/* Mission & Vision (FISION) */}
-
-      {/* Upcoming Events Preview */}
-      {/* <section className="py-16 bg-muted">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-heading font-bold text-primary mb-4">
-              Upcoming Events
-            </h2>
-            <p className="text-lg text-muted-foreground">
-              Join us for fellowship, fun, and faith-building activities
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-6">
-            {upcomingEvents.map((event, index) => (
-              <Card key={index} className="card-gradient card-hover">
-                <CardContent className="p-6">
-                  <Badge variant="outline" className="mb-3">
-                    {event.type}
-                  </Badge>
-                  <h3 className="text-xl font-heading font-bold text-primary mb-2">
-                    {event.title}
-                  </h3>
-                  <div className="space-y-1 mb-4 text-sm text-muted-foreground">
-                    <p className="font-medium">{event.date}</p>
-                    <p>{event.time}</p>
-                  </div>
-                  <p className="text-foreground leading-relaxed">
-                    {event.description}
-                  </p>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-
-          <div className="text-center mt-8">
-            <Button variant="outline" size="lg" className="group">
-              <Link to="/events" className="flex items-center">
-                View All Events
-                <ChevronRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
-              </Link>
-            </Button>
-          </div>
-        </div>
-      </section> */}
-
-      {/* Core Values */}
-      {/* <section className="py-16 bg-background">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-heading font-bold text-primary mb-4">
-              Our Core Values
-            </h2>
-            <p className="text-lg text-muted-foreground">
-              The foundation of our community and faith
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-8">
-            {coreValues.map((value, index) => (
-              <Card key={index} className="card-gradient text-center">
-                <CardContent className="p-8">
-                  <value.icon className="h-16 w-16 text-primary mx-auto mb-6" />
-                  <h3 className="text-2xl font-heading font-bold text-primary mb-4">
-                    {value.title}
-                  </h3>
-                  <p className="text-foreground leading-relaxed">
-                    {value.description}
-                  </p>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section> */}
 
       {/* Life Transformations */}
       <section className="py-20 bg-secondary">
@@ -447,15 +331,6 @@ const Index = () => {
                 >
                   <ChevronLeft className="h-5 w-5" />
                 </button>
-
-                {/* Counter */}
-                {/* <div className="text-sm text-muted-foreground">
-                  <span className="text-primary font-semibold">1</span>
-                  <span className="mx-2">/</span>
-                  <span>{testimonials.length}</span>
-                </div> */}
-
-                {/* Next */}
                 <button
                   className="testimonial-next h-11 w-11 rounded-full border border-primary/30 text-primary flex items-center justify-center transition-all duration-200 hover:bg-primary hover:text-white"
                   aria-label="Next testimonial"
@@ -467,24 +342,6 @@ const Index = () => {
           </div>
         </div>
       </section>
-
-      {/* Scripture of the Week */}
-      {/* <section className="py-16 bg-accent text-accent-foreground">
-        <div className="container mx-auto px-4 text-center">
-          <div className="max-w-3xl mx-auto">
-            <Lightbulb className="h-12 w-12 mx-auto mb-6" />
-            <h2 className="text-2xl font-heading font-bold mb-6">
-              Scripture of the Month
-            </h2>
-            <blockquote className="text-xl md:text-2xl leading-relaxed mb-4">
-              "Trust in the Lord with all your heart and lean not on your own
-              understanding; in all your ways submit to him, and he will make
-              your paths straight."
-            </blockquote>
-            <p className="text-lg font-medium">- Proverbs 3:5-6</p>
-          </div>
-        </div>
-      </section> */}
 
       {/* Call to Join */}
       <section className="py-20 bg-background">

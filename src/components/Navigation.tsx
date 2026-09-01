@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -76,7 +75,7 @@ const Navigation = () => {
               className="ml-2 bg-primary text-primary-foreground hover:bg-primary/90 rounded-full px-5"
             >
               <a
-                href="https://whatsapp.com/channel/0029VbAhuJw1XquNoRtWzl44"
+                href="https://chat.whatsapp.com/IrsmtYoFqur9dkK1dSLVhu?s=cl&p=i&mlu=4"
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -92,11 +91,7 @@ const Navigation = () => {
             className="md:hidden p-2 text-foreground hover:text-primary transition-colors"
             aria-label={isOpen ? "Close menu" : "Open menu"}
           >
-            {isOpen ? (
-              <X className="h-6 w-6" />
-            ) : (
-              <Menu className="h-6 w-6" />
-            )}
+            {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
           </button>
         </div>
 

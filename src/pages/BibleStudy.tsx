@@ -52,7 +52,7 @@ const BibleStudy = () => {
 
         <div className="relative z-10 container mx-auto px-4 py-20">
           <div className="max-w-3xl mx-auto text-center">
-                       <h1 className="text-4xl md:text-6xl font-heading font-bold text-white mb-6 leading-tight">
+            <h1 className="text-4xl md:text-6xl font-heading font-bold text-white mb-6 leading-tight">
               Grow in God's Word
             </h1>
 
@@ -117,9 +117,18 @@ const BibleStudy = () => {
                 </div>
               </div>
 
-              <Button className="bg-primary text-primary-foreground hover:bg-primary/90 w-full md:w-auto">
-                Get Tuesday Link
-                <ArrowRight className="ml-2 h-4 w-4" />
+              <Button
+                asChild
+                className="bg-primary text-primary-foreground hover:bg-primary/90 w-full md:w-auto"
+              >
+                <a
+                  href="https://meet.google.com/see-egjy-ruo"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Get Tuesday Link
+                  <ArrowRight className="ml-2 h-4 w-4" />
+                </a>
               </Button>
             </div>
 
@@ -132,7 +141,7 @@ const BibleStudy = () => {
 
                 <div>
                   <h3 className="text-2xl font-heading font-bold text-foreground mb-2">
-                    Thursday Bible Study
+                    Thursday Prayer
                   </h3>
 
                   <div className="flex flex-wrap items-center gap-4 text-muted-foreground">
@@ -149,9 +158,18 @@ const BibleStudy = () => {
                 </div>
               </div>
 
-              <Button className="bg-primary text-primary-foreground hover:bg-primary/90 w-full md:w-auto">
-                Get Thursday Link
-                <ArrowRight className="ml-2 h-4 w-4" />
+              <Button
+                asChild
+                className="bg-primary text-primary-foreground hover:bg-primary/90 w-full md:w-auto"
+              >
+                <a
+                  href="https://meet.google.com/see-egjy-ruo"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Get Thursday Link
+                  <ArrowRight className="ml-2 h-4 w-4" />
+                </a>
               </Button>
             </div>
           </div>
@@ -255,7 +273,7 @@ const BibleStudy = () => {
 
             <Button
               size="lg"
-                className="bg-primary text-primary-foreground hover:bg-primary/90 text-lg px-8 py-6"
+              className="bg-primary text-primary-foreground hover:bg-primary/90 text-lg px-8 py-6"
             >
               <MessageCircle className="mr-2 h-5 w-5" />
               Join WhatsApp Group

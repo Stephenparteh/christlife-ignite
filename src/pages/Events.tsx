@@ -19,100 +19,22 @@ import groupImg1 from "@/assets/group1.jpeg";
 const Events = () => {
   const upcomingEvents = [
     {
-      id: 1,
-      title: "Prayer Picnic",
-      date: "March 16, 2026",
-      time: "Afternoon",
-      location: "In-Person",
-      type: "Bible Study",
-      category: "regular",
-      description: "Spiritual renewal, youth fellowship, and unity.",
-      attendees: "75-150 Young adult",
-      image: groupImg1,
-      icon: BookOpen,
-    },
-    {
-      id: 2,
-      title: "Orphan OUtreach Day",
-      date: "March 28, 2026",
-      time: "Afternoon",
-      location: "In-Person",
-      type: "Bible Study",
-      category: "regular",
-      description:
-        "Showing compassion, provide support, and share Christ's love.",
-      attendees: "100 Orphans",
-      image: groupImg1,
-      icon: BookOpen,
-    },
-    {
-      id: 3,
-      title: "Ladies Prayer Picnic",
-      date: "May 14, 2026",
-      time: "2:00 - 6:00 PM",
-      location: "In-Person",
-      type: "Social Event",
-      category: "special",
-      description: "Building women prayer Life.",
-      attendees: "50 - 100 Young adult",
-      image: groupImg1,
-      icon: BookOpen,
-    },
-    {
-      id: 4,
-      title: "Sports Day",
-      date: "June 20, 2026",
-      time: "Afternoon",
-      location: "In-Person",
-      type: "Social Event",
-      category: "social",
-      description: "Engage Youth through sports, teamwork, adn evangelism",
-      attendees: "50-100 Young adult",
-      image: groupImg1,
-      icon: Gamepad2,
-    },
-    {
-      id: 5,
-      title: "Street Jam",
-      date: "July 17, 2026",
-      time: "Afternoon",
-      location: "In-Person",
-      type: "Outreach",
-      category: "outreach",
-      description: "Music & Outreach",
-      attendees: "500 - 800 People",
-      image: groupImg1,
-      icon: Heart,
-    },
-    {
-      id: 6,
-      title: "Concert",
-      date: "August 30, 2026",
-      time: "Afternoon",
-      location: "In-Person",
-      type: "Outreach",
-      category: "outreach",
-      description: "Spiritual Impact",
-      attendees: "200 - 500 Young adult",
-      image: groupImg1,
-      icon: Heart,
-    },
-    {
       id: 7,
       title: "Door - Door Evangelism",
-      date: "September 12, 2026",
+      date: "TBA",
       time: "Afternoon",
       location: "In-Person",
       type: "Outreach",
       category: "outreach",
       description: "Grassroots outreach, personal connection.",
       attendees: "500 Young adult",
+      image: groupImg1,
       icon: Heart,
     },
     {
       id: 8,
       title: "Reconciliation Conference",
-      date: "January 02, 2027",
+      date: "TBA",
       time: "Afternoon",
       location: "In-Person",
       type: "Outreach",
@@ -126,7 +48,7 @@ const Events = () => {
     {
       id: 9,
       title: "Anniversary",
-      date: "January 23-31, 2027",
+      date: "TBA",
       time: "Afternoon",
       location: "In-Person",
       type: "Outreach",
@@ -137,47 +59,6 @@ const Events = () => {
       icon: Heart,
     },
   ];
-
-  const pastEvents = [
-    {
-      title: "Thanksgiving",
-      date: "November 24, 2024",
-      description: "Celebrated with food, gratitude, and community fellowship.",
-      image: "/src/assets/praying1.jpeg",
-    },
-    {
-      title: "Fall Meet & Greet",
-      date: "October 15, 2024",
-      description:
-        "Welcomed new members and strengthened existing friendships.",
-      image: "/placeholder-event2.jpg",
-    },
-    {
-      title: "Summer Bible Retreat",
-      date: "August 20, 2024",
-      description: "Three-day intensive study and fellowship retreat.",
-      image: "/placeholder-event3.jpg",
-    },
-  ];
-
-  const getEventBadgeVariant = (category: string) => {
-    switch (category) {
-      case "regular":
-        return "default";
-      case "special":
-        return "secondary";
-      case "social":
-        return "outline";
-      case "outreach":
-        return "destructive";
-      default:
-        return "default";
-    }
-  };
-
-  const getEventIcon = (IconComponent: any) => {
-    return <IconComponent className="h-6 w-6 text-primary" />;
-  };
 
   return (
     <div className="min-h-screen">
@@ -231,7 +112,7 @@ const Events = () => {
               </p>
 
               <h2 className="text-3xl md:text-4xl font-heading font-bold text-foreground mb-5">
-                Weekly Bible Study
+                Weekly Bible Study and Prayer
               </h2>
 
               <p className="text-lg text-muted-foreground leading-relaxed mb-8">
@@ -260,9 +141,18 @@ const Events = () => {
               </div>
 
               <div>
-                <Button className="bg-primary text-primary-foreground hover:bg-primary/90">
-                  <MessageCircle className="mr-2 h-4 w-4" />
-                  RSVP via WhatsApp
+                <Button
+                  asChild
+                  className="bg-primary text-primary-foreground hover:bg-primary/90"
+                >
+                  <a
+                    href="https://chat.whatsapp.com/IrsmtYoFqur9dkK1dSLVhu?s=cl&p=i&mlu=4"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <MessageCircle className="mr-2 h-4 w-4" />
+                    RSVP via WhatsApp
+                  </a>
                 </Button>
               </div>
             </div>
@@ -337,7 +227,7 @@ const Events = () => {
                   </p>
 
                   {/* Location & Attendees */}
-                  <div className="flex flex-wrap gap-5 text-sm text-muted-foreground mb-6">
+                  {/* <div className="flex flex-wrap gap-5 text-sm text-muted-foreground mb-6">
                     <div className="flex items-center gap-2">
                       <MapPin className="h-4 w-4 text-primary" />
                       <span>{event.location}</span>
@@ -347,10 +237,10 @@ const Events = () => {
                       <Users className="h-4 w-4 text-primary" />
                       <span>{event.attendees}</span>
                     </div>
-                  </div>
+                  </div> */}
 
                   {/* Action */}
-                  <div>
+                  {/* <div>
                     <Button
                       variant="outline"
                       size="sm"
@@ -359,121 +249,13 @@ const Events = () => {
                       Learn More
                       <ChevronRight className="ml-1 h-4 w-4" />
                     </Button>
-                  </div>
+                  </div> */}
                 </div>
               </div>
             ))}
           </div>
         </div>
       </section>
-
-      {/* Event Categories */}
-      {/* <section className="py-16 bg-muted">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-heading font-bold text-primary mb-4">
-              Event Categories
-            </h2>
-            <p className="text-lg text-muted-foreground">
-              Different types of events for spiritual growth and community
-              building
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-8">
-            <Card className="card-gradient card-hover text-center">
-              <CardContent className="p-8">
-                <BookOpen className="h-16 w-16 text-primary mx-auto mb-6" />
-                <h3 className="text-2xl font-heading font-bold text-primary mb-4">
-                  Bible Studies
-                </h3>
-                <p className="text-foreground leading-relaxed mb-4">
-                  Weekly studies every Tuesday and Thursday evening via Google
-                  Meet and WhatsApp for in-depth scriptural exploration.
-                </p>
-                <p className="text-sm text-muted-foreground">
-                  Regular • 10:00-11:00 PM • Online
-                </p>
-              </CardContent>
-            </Card>
-
-            <Card className="card-gradient card-hover text-center">
-              <CardContent className="p-8">
-                <Users className="h-16 w-16 text-primary mx-auto mb-6" />
-                <h3 className="text-2xl font-heading font-bold text-primary mb-4">
-                  Social Events
-                </h3>
-                <p className="text-foreground leading-relaxed mb-4">
-                  Bible picnics, game days, barbecues, and meet & greet events
-                  that build fellowship and strengthen our community bonds.
-                </p>
-                <p className="text-sm text-muted-foreground">
-                  Monthly • Various Times • In-Person
-                </p>
-              </CardContent>
-            </Card>
-
-            <Card className="card-gradient card-hover text-center">
-              <CardContent className="p-8">
-                <Heart className="h-16 w-16 text-primary mx-auto mb-6" />
-                <h3 className="text-2xl font-heading font-bold text-primary mb-4">
-                  Outreach
-                </h3>
-                <p className="text-foreground leading-relaxed mb-4">
-                  Community service projects, evangelism efforts, and
-                  opportunities to share Christ's love through action and
-                  service.
-                </p>
-                <p className="text-sm text-muted-foreground">
-                  Quarterly • Various Times • Community
-                </p>
-              </CardContent>
-            </Card>
-          </div>
-        </div>
-      </section> */}
-
-      {/* Past Events Archive */}
-      {/* <section className="py-16 bg-background">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-heading font-bold text-primary mb-4">
-              Past Event Highlights
-            </h2>
-            <p className="text-lg text-muted-foreground">
-              Memories from our recent community gatherings
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-6">
-            {pastEvents.map((event, index) => (
-              <Card key={index} className="card-gradient card-hover">
-                <CardContent className="p-6">
-                  <div className="bg-primary/10 h-40 rounded-lg mb-4 flex items-center justify-center">
-                    <Users className="h-12 w-12 text-primary" />
-                  </div>
-                  <h3 className="text-lg font-heading font-bold text-primary mb-2">
-                    {event.title}
-                  </h3>
-                  <p className="text-sm text-muted-foreground mb-3">
-                    {event.date}
-                  </p>
-                  <p className="text-foreground leading-relaxed">
-                    {event.description}
-                  </p>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-
-          <div className="text-center mt-8">
-            <Button variant="outline" size="lg">
-              View Full Gallery
-              <ChevronRight className="ml-2 h-4 w-4" />
-            </Button>
-          </div>
-        </div>
-      </section> */}
 
       {/* How to Join */}
       <section className="py-20 bg-muted/30 text-primary-foreground">
@@ -490,21 +272,19 @@ const Events = () => {
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button
+                asChild
                 size="lg"
                 className="bg-primary text-primary-foreground hover:bg-primary/90 text-lg px-8 py-6"
               >
-                <MessageCircle className="mr-2 h-5 w-5" />
-                Join WhatsApp Group
+                <a
+                  href="https://chat.whatsapp.com/IrsmtYoFqur9dkK1dSLVhu?s=cl&p=i&mlu=4"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <MessageCircle className="mr-2 h-5 w-5" />
+                  Join WhatsApp Group
+                </a>
               </Button>
-
-              {/* <Button
-          size="lg"
-          variant="outline"
-          className="text-lg px-8 py-6 border-white text-white hover:bg-white hover:text-primary"
-        >
-          <Calendar className="mr-2 h-5 w-5" />
-          View Calendar
-        </Button> */}
             </div>
           </div>
         </div>

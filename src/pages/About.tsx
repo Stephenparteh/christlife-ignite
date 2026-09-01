@@ -1,5 +1,7 @@
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
+
 import {
   Cross,
   Heart,
@@ -22,7 +24,7 @@ import groupPhoto1 from "@/assets/praying3.jpeg";
 const About = () => {
   const leadership = [
     {
-      name: "John Doe",
+      name: "Railey",
       role: "Founder & Director",
       image: groupPhoto1,
       description:
@@ -97,11 +99,18 @@ const About = () => {
               </div>
 
               <Button
+                asChild
                 className="mt-8 bg-primary text-primary-foreground hover:bg-primary/90"
                 size="lg"
               >
-                <MessageCircle className="mr-2 h-5 w-5" />
-                Join Our Community
+                <a
+                  href="https://chat.whatsapp.com/IrsmtYoFqur9dkK1dSLVhu?s=cl&p=i&mlu=4"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <MessageCircle className="mr-2 h-5 w-5" />
+                  Join Our Community
+                </a>
               </Button>
             </div>
 

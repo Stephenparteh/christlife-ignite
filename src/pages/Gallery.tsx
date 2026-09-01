@@ -32,130 +32,30 @@ import img5 from "@/assets/praying2.jpeg";
 import img6 from "@/assets/praying3.jpeg";
 
 const Gallery = () => {
-  const images = [img1, img2, img3, img4, img5, img6];
-  const [selectedAlbum, setSelectedAlbum] = useState<number | null>(null);
+  const [activeTab, setActiveTab] = useState<"photos" | "videos">("photos");
+  const [isPhotoViewerOpen, setIsPhotoViewerOpen] = useState(false);
   const [selectedPhoto, setSelectedPhoto] = useState(0);
-  const albums = [
+
+  const images = [img1, img2, img3, img4, img5, img6];
+
+  const videos = [
     {
       id: 1,
-      title: "Christ Life Community Gathering",
-      date: "August 2026",
-      coverImage: groupImg1,
-      photos: [groupImg1, groupPhoto1, groupPhoto3],
+      title: "Christ Life Community Moments",
+      description:
+        "A look at some of the moments we've shared together as a community.",
+      thumbnail: groupImg1,
+      duration: "2:34",
     },
     {
       id: 2,
-      title: "Fellowship & Fun Day",
-      date: "July 2026",
-      coverImage: groupPhoto1,
-      photos: [groupPhoto1, groupImg1, groupPhoto3],
-    },
-    {
-      id: 3,
-      title: "Bible Study & Fellowship",
-      date: "June 2026",
-      coverImage: groupPhoto3,
-      photos: [groupPhoto3, groupImg1, groupPhoto1],
-    },
-  ];
-  const photoAlbums = [
-    {
-      title: "Thanksgiving Barbecue 2024",
-      date: "November 24, 2024",
-      category: "Social Event",
-      photos: 25,
+      title: "Fellowship & Worship",
       description:
-        "Community gathering with food, fellowship, and gratitude sharing.",
-      thumbnail: "/placeholder-album1.jpg",
-      icon: Utensils,
-    },
-    {
-      title: "Fall Meet & Greet",
-      date: "October 15, 2024",
-      category: "Fellowship",
-      photos: 18,
-      description: "Welcoming new members and strengthening community bonds.",
-      thumbnail: "/placeholder-album2.jpg",
-      icon: Users,
-    },
-    {
-      title: "Summer Bible Retreat",
-      date: "August 20, 2024",
-      category: "Bible Study",
-      photos: 42,
-      description: "Three-day intensive study and spiritual growth retreat.",
-      thumbnail: "/placeholder-album3.jpg",
-      icon: BookOpen,
-    },
-    {
-      title: "Game Day Highlights",
-      date: "July 28, 2024",
-      category: "Social Event",
-      photos: 15,
-      description: "Board games, video games, and friendly competition.",
-      thumbnail: "/placeholder-album4.jpg",
-      icon: Gamepad2,
-    },
-    {
-      title: "Community Outreach",
-      date: "June 15, 2024",
-      category: "Outreach",
-      photos: 20,
-      description: "Serving our local community with love and action.",
-      thumbnail: "/placeholder-album5.jpg",
-      icon: Heart,
-    },
-    {
-      title: "Spring Bible Picnic",
-      date: "April 22, 2024",
-      category: "Social Event",
-      photos: 35,
-      description: "Outdoor worship, food, and fellowship in God's creation.",
-      thumbnail: "/placeholder-album6.jpg",
-      icon: Utensils,
+        "Moments of fellowship, worship, and connection with the Christ Life family.",
+      thumbnail: img2,
+      duration: "4:12",
     },
   ];
-
-  const videoHighlights = [
-    {
-      title: "Christ Life Testimony: Sarah's Story",
-      duration: "3:45",
-      views: "1.2K",
-      description:
-        "How Christ Life transformed Sarah's faith journey and relationships.",
-      thumbnail: "/placeholder-video1.jpg",
-    },
-    {
-      title: "Summer Retreat Highlights",
-      duration: "5:20",
-      views: "890",
-      description: "Best moments from our three-day spiritual growth retreat.",
-      thumbnail: "/placeholder-video2.jpg",
-    },
-    {
-      title: "Community Outreach Impact",
-      duration: "2:30",
-      views: "756",
-      description: "See how we're making a difference in our local community.",
-      thumbnail: "/placeholder-video3.jpg",
-    },
-  ];
-
-  const getCategoryBadge = (category: string) => {
-    switch (category) {
-      case "Bible Study":
-        return "default";
-      case "Social Event":
-        return "secondary";
-      case "Fellowship":
-        return "outline";
-      case "Outreach":
-        return "destructive";
-      default:
-        return "default";
-    }
-  };
-
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
@@ -177,137 +77,131 @@ const Gallery = () => {
         </div>
       </section>
 
-      {/* Gallery Albums */}
+      {/* Media Gallery */}
       <section className="py-20 bg-background">
         <div className="container mx-auto px-4">
-          {/* Section Heading */}
-          <div className="max-w-3xl mx-auto text-center mb-14">
-            {/* <p className="text-primary font-semibold tracking-[0.15em] uppercase text-sm mb-3">
+          {/* Heading */}
+          <div className="max-w-3xl mx-auto text-center mb-10">
+            <p className="text-primary font-semibold tracking-[0.15em] uppercase text-sm mb-3">
               Our Gallery
-            </p> */}
+            </p>
 
             <h2 className="text-3xl md:text-5xl font-heading font-bold text-foreground mb-5">
               Moments We’ve Shared
             </h2>
 
             <p className="text-lg text-muted-foreground leading-relaxed">
-              Explore photos from our Bible studies, fellowship gatherings,
-              outreach programs, and other Christ Life events.
+              A look at the people, gatherings, worship, and memories that make
+              Christ Life what it is.
             </p>
           </div>
 
-          {/* Albums */}
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
-            {albums.map((album) => (
+          {/* Tabs */}
+          <div className="flex justify-center mb-12">
+            <div className="inline-flex border-b border-border">
               <button
-                key={album.id}
                 type="button"
-                onClick={() => {
-                  setSelectedAlbum(album.id);
-                  setSelectedPhoto(0);
-                }}
-                className="group text-left"
+                onClick={() => setActiveTab("photos")}
+                className={`px-6 py-3 text-sm font-semibold transition-colors ${
+                  activeTab === "photos"
+                    ? "text-primary border-b-2 border-primary"
+                    : "text-muted-foreground hover:text-foreground"
+                }`}
               >
-                <div className="relative overflow-hidden rounded-2xl aspect-[4/3] mb-5">
+                Photos
+              </button>
+
+              <button
+                type="button"
+                onClick={() => setActiveTab("videos")}
+                className={`px-6 py-3 text-sm font-semibold transition-colors ${
+                  activeTab === "videos"
+                    ? "text-primary border-b-2 border-primary"
+                    : "text-muted-foreground hover:text-foreground"
+                }`}
+              >
+                Videos
+              </button>
+            </div>
+          </div>
+
+          {/* Photos */}
+          {activeTab === "photos" && (
+            <div className="columns-1 sm:columns-2 lg:columns-3 gap-5 space-y-5 max-w-6xl mx-auto">
+              {images.map((img, index) => (
+                <button
+                  key={index}
+                  type="button"
+                  onClick={() => {
+                    setSelectedPhoto(index);
+                    setIsPhotoViewerOpen(true);
+                  }}
+                  className="group relative block w-full overflow-hidden rounded-2xl break-inside-avoid"
+                >
                   <img
-                    src={album.coverImage}
-                    alt={album.title}
-                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    src={img}
+                    alt={`Christ Life moment ${index + 1}`}
+                    className="w-full h-auto object-cover transition-transform duration-500 group-hover:scale-105"
                   />
 
                   <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300" />
+                </button>
+              ))}
+            </div>
+          )}
 
-                  <div className="absolute bottom-4 left-4 bg-black/60 text-white text-sm px-3 py-1.5 rounded-full backdrop-blur-sm">
-                    {album.photos.length} Photos
+          {/* Videos */}
+          {activeTab === "videos" && (
+            <div className="grid md:grid-cols-2 gap-8 max-w-6xl mx-auto">
+              {videos.map((video) => (
+                <div key={video.id} className="group">
+                  <div className="relative aspect-video overflow-hidden rounded-2xl bg-muted">
+                    <img
+                      src={video.thumbnail}
+                      alt={video.title}
+                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    />
+
+                    {/* Play Button */}
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <div className="w-14 h-14 rounded-full bg-white/90 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
+                        <Play className="h-6 w-6 text-primary ml-1" />
+                      </div>
+                    </div>
+
+                    {/* Duration */}
+                    <span className="absolute bottom-3 right-3 bg-black/70 text-white text-xs px-2 py-1 rounded">
+                      {video.duration}
+                    </span>
                   </div>
-                </div>
 
-                <h3 className="text-xl font-heading font-bold text-foreground mb-2 group-hover:text-primary transition-colors">
-                  {album.title}
-                </h3>
-
-                <p className="text-sm text-muted-foreground">{album.date}</p>
-              </button>
-            ))}
-          </div>
-        </div>
-
-        {selectedAlbum !== null && (
-          <div className="fixed inset-0 z-50 bg-black/95 flex items-center justify-center">
-            {(() => {
-              const album = albums.find((item) => item.id === selectedAlbum);
-
-              if (!album) return null;
-
-              return (
-                <>
-                  {/* Close */}
-                  <button
-                    type="button"
-                    onClick={() => setSelectedAlbum(null)}
-                    className="absolute top-6 right-6 z-50 text-white hover:text-white/70 transition-colors"
-                    aria-label="Close gallery"
-                  >
-                    <X className="h-8 w-8" />
-                  </button>
-
-                  {/* Album title */}
-                  <div className="absolute top-6 left-6 z-50">
-                    <h3 className="text-white text-lg md:text-xl font-semibold">
-                      {album.title}
+                  <div className="pt-4">
+                    <h3 className="text-xl font-heading font-bold text-foreground group-hover:text-primary transition-colors">
+                      {video.title}
                     </h3>
 
-                    <p className="text-white/60 text-sm">
-                      {selectedPhoto + 1} of {album.photos.length}
+                    <p className="text-sm text-muted-foreground mt-2 leading-relaxed">
+                      {video.description}
                     </p>
                   </div>
+                </div>
+              ))}
+            </div>
+          )}
 
-                  {/* Main image */}
-                  <div className="w-full h-full flex items-center justify-center px-16 py-20">
-                    <img
-                      src={album.photos[selectedPhoto]}
-                      alt={`${album.title} photo ${selectedPhoto + 1}`}
-                      className="max-w-full max-h-full object-contain"
-                    />
-                  </div>
-
-                  {/* Previous */}
-                  {album.photos.length > 1 && (
-                    <button
-                      type="button"
-                      onClick={() =>
-                        setSelectedPhoto(
-                          (selectedPhoto - 1 + album.photos.length) %
-                            album.photos.length,
-                        )
-                      }
-                      className="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors"
-                      aria-label="Previous photo"
-                    >
-                      <ChevronLeft className="h-6 w-6" />
-                    </button>
-                  )}
-
-                  {/* Next */}
-                  {album.photos.length > 1 && (
-                    <button
-                      type="button"
-                      onClick={() =>
-                        setSelectedPhoto(
-                          (selectedPhoto + 1) % album.photos.length,
-                        )
-                      }
-                      className="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors"
-                      aria-label="Next photo"
-                    >
-                      <ChevronRight className="h-6 w-6" />
-                    </button>
-                  )}
-                </>
-              );
-            })()}
-          </div>
-        )}
+          {/* Empty State */}
+          {activeTab === "videos" && videos.length === 0 && (
+            <div className="text-center py-20">
+              <Play className="h-10 w-10 text-muted-foreground mx-auto mb-4" />
+              <h3 className="text-xl font-heading font-bold text-foreground mb-2">
+                Videos coming soon
+              </h3>
+              <p className="text-muted-foreground">
+                We’ll be sharing moments from Christ Life here soon.
+              </p>
+            </div>
+          )}
+        </div>
       </section>
 
       {/* Social Media Integration */}
