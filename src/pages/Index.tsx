@@ -12,6 +12,7 @@ import {
   Cross,
   Lightbulb,
   ChevronRight,
+  ChevronLeft,
   Play,
 } from "lucide-react";
 import heroImage from "@/assets/hero-main.jpg";
@@ -19,6 +20,10 @@ import bibleStudyImage from "@/assets/bible-study-hero.jpg";
 import groupPhoto1 from "@/assets/group1.jpeg";
 import groupPhoto2 from "@/assets/group2.jpeg";
 import groupPhoto3 from "@/assets/group3.jpeg";
+import { Autoplay, Navigation } from "swiper/modules";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import "swiper/css/navigation";
 
 const Index = () => {
   const coreValues = [
@@ -49,6 +54,17 @@ const Index = () => {
       author: "Thomas surprise Dugbeh Jr.",
       role: "Member",
     },
+    {
+      quote:
+        "Christ's life has helped strengthen my communication and relationship with God",
+      author: "Dugbeh Jr.",
+      role: "Member",
+    },
+    {
+      quote: "relationship with God",
+      author: "surprise",
+      role: "Member",
+    },
   ];
 
   const upcomingEvents = [
@@ -75,31 +91,35 @@ const Index = () => {
         className="relative h-screen flex items-center justify-center text-center bg-cover bg-center"
         style={{ backgroundImage: `url(${groupPhoto1})` }}
       >
-        <div className="hero-overlay"></div>
+        {/* Subtle overlay for text readability — no gradient */}
+        <div className="absolute inset-0 bg-black/45"></div>
+
         <div className="relative z-10 max-w-4xl mx-auto px-4">
           <div className="animate-fade-up">
-            <Badge
-              variant="secondary"
-              className="mb-4 text-primary bg-primary-foreground/90"
-            >
-              Digitally • Discovering • Following • Sharing Christ
-            </Badge>
-            <h1 className="text-4xl md:text-6xl font-heading font-bold text-primary-foreground mb-6">
-              We are <span>Christ Life</span>
+            <h1 className="text-4xl md:text-6xl font-heading font-bold text-white mb-6">
+              We are <span className="text-white">Christ Life</span>
             </h1>
-            <p className="text-xl md:text-2xl text-primary-foreground/90 mb-4 leading-relaxed">
-              "For I know the plans I have for you,"declares the Lord, "plans to
-              prosper you and not to harm you, to give you hope and a future."
+
+            <p className="text-xl md:text-2xl text-white/95 mb-4 leading-relaxed">
+              "For I know the plans I have for you," declares the Lord, "plans
+              to prosper you and not to harm you, to give you hope and a
+              future."
             </p>
-            <p className="text-lg text-primary-foreground/80 mb-8 italic">
+
+            <p className="text-lg text-white/85 mb-8 italic">
               - Jeremiah 29:11
             </p>
+
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button size="lg" className="btn-hero text-lg px-8 py-6">
+              <Button
+                size="lg"
+                className="bg-primary text-primary-foreground hover:bg-primary/90 text-lg px-8 py-6"
+              >
                 <Link
-                  to={"https://meet.google.com/see-egjy-ruo"}
+                  to="https://meet.google.com/see-egjy-ruo"
                   className="flex items-center"
                   target="_blank"
+                  rel="noopener noreferrer"
                 >
                   <MessageCircle className="mr-2 h-5 w-5" />
                   Join Bible Study
@@ -108,8 +128,8 @@ const Index = () => {
 
               <Button
                 size="lg"
-                variant="secondary"
-                className="btn-accent text-lg px-8 py-6"
+                variant="outline"
+                className="bg-white text-primary border-white hover:bg-white/90 hover:text-primary text-lg px-8 py-6"
               >
                 <Link to="/events" className="flex items-center">
                   <Calendar className="mr-2 h-5 w-5" />
@@ -145,38 +165,43 @@ const Index = () => {
           </div>
         </div>
       </section>
-
       <section
         className="py-20 bg-cover bg-center relative"
         style={{ backgroundImage: `url(${groupPhoto3})` }}
       >
-        <div className="hero-overlay bg-primary/70"></div>
+        {/* Simple overlay — no gradient */}
+        <div className="absolute inset-0 bg-black/80"></div>
+
         <div className="relative z-10 container mx-auto px-4 text-center">
           <div className="max-w-4xl mx-auto">
-            <Badge
-              variant="secondary"
-              className="mb-4 text-accent bg-accent-foreground/20"
-            >
-              Our VISION
-            </Badge>
-            <h2 className="text-3xl md:text-5xl font-heading font-bold text-primary-foreground mb-8">
+            <p className="mb-4 text-sm font-semibold tracking-[0.2em] uppercase text-white/80">
+              Mission & Vision
+            </p>
+
+            <h2 className="text-3xl md:text-5xl font-heading font-bold text-white mb-10">
               Restoring Relationships
             </h2>
-            <div className="grid md:grid-cols-2 gap-8 text-primary-foreground">
-              <div className="text-left">
-                <h3 className="text-xl font-heading font-semibold mb-4 text-accent">
-                  With God
+
+            <div className="grid md:grid-cols-2 gap-10 md:gap-16 text-white text-left">
+              {/* Mission */}
+              <div className="md:border-r md:border-white/30 md:pr-10">
+                <h3 className="text-2xl md:text-3xl font-heading font-semibold mb-4">
+                  Our Mission
                 </h3>
-                <p className="text-lg leading-relaxed">
+
+                <p className="text-lg leading-relaxed text-white/90">
                   Fostering discipleship and deepening our connection with Jesus
                   Christ through prayer, worship, and biblical study.
                 </p>
               </div>
-              <div className="text-left">
-                <h3 className="text-xl font-heading font-semibold mb-4 text-accent">
-                  With One Another
+
+              {/* Vision */}
+              <div>
+                <h3 className="text-2xl md:text-3xl font-heading font-semibold mb-4">
+                  Our Vision
                 </h3>
-                <p className="text-lg leading-relaxed">
+
+                <p className="text-lg leading-relaxed text-white/90">
                   Building authentic community through fellowship, outreach, and
                   supporting each other in our faith journey.
                 </p>
@@ -187,36 +212,93 @@ const Index = () => {
       </section>
 
       {/* Weekly Bible Studies */}
-      <section className="py-16 bg-background">
+      <section className="py-20 bg-background">
         <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-heading font-bold text-primary mb-4">
-              Weekly Bible Studies
-            </h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Join us twice weekly for deep Bible study, discussion, and
-              fellowship through Google Meet and WhatsApp.
-            </p>
-          </div>
+          <div className="max-w-5xl mx-auto">
+            {/* Section introduction */}
+            <div className="max-w-2xl mb-12">
+              <p className="text-sm font-semibold tracking-[0.2em] uppercase text-primary mb-3">
+                Weekly Gathering
+              </p>
 
-          <Card className="card-gradient card-hover max-w-2xl mx-auto">
-            <CardContent className="p-8 text-center">
-              <BookOpen className="h-16 w-16 text-primary mx-auto mb-6" />
-              <h3 className="text-2xl font-heading font-bold text-primary mb-4">
-                Tuesdays & Thursdays
-              </h3>
-              <p className="text-xl text-accent font-semibold mb-4">
-                10:00 - 11:00 PM
+              <h2 className="text-3xl md:text-5xl font-heading font-bold text-primary mb-5">
+                Weekly Bible Studies
+              </h2>
+
+              <p className="text-lg text-muted-foreground leading-relaxed">
+                Join us twice a week for Bible study, honest discussion, and
+                fellowship as we grow together in Christ.
               </p>
-              <p className="text-muted-foreground mb-6">
-                Via Google Meet / WhatsApp Group
-              </p>
-              <Button className="btn-hero w-full" size="lg">
-                <MessageCircle className="mr-2 h-5 w-5" />
-                Join WhatsApp Group for Links
-              </Button>
-            </CardContent>
-          </Card>
+            </div>
+
+            {/* Study schedule */}
+            <div className="border-y border-border">
+              {/* Tuesday */}
+              <div className="py-8 md:py-10 grid md:grid-cols-[180px_1fr_auto] gap-6 md:gap-10 items-center">
+                <div>
+                  <p className="text-sm uppercase tracking-widest text-muted-foreground mb-1">
+                    Every
+                  </p>
+                  <h3 className="text-3xl font-heading font-bold text-primary">
+                    Tuesday
+                  </h3>
+                </div>
+
+                <div>
+                  <p className="text-xl font-semibold text-foreground mb-2">
+                    Bible Study
+                  </p>
+                  <p className="text-muted-foreground">
+                    10:00 - 11:00 PM · Google Meet / WhatsApp
+                  </p>
+                </div>
+
+                <div className="md:text-right">
+                  <Button
+                    className="bg-primary text-primary-foreground hover:bg-primary/90"
+                    size="lg"
+                  >
+                    <MessageCircle className="mr-2 h-5 w-5" />
+                    Join Study
+                  </Button>
+                </div>
+              </div>
+
+              {/* Divider */}
+              <div className="border-t border-border" />
+
+              {/* Thursday */}
+              <div className="py-8 md:py-10 grid md:grid-cols-[180px_1fr_auto] gap-6 md:gap-10 items-center">
+                <div>
+                  <p className="text-sm uppercase tracking-widest text-muted-foreground mb-1">
+                    Every
+                  </p>
+                  <h3 className="text-3xl font-heading font-bold text-primary">
+                    Thursday
+                  </h3>
+                </div>
+
+                <div>
+                  <p className="text-xl font-semibold text-foreground mb-2">
+                    Bible Study
+                  </p>
+                  <p className="text-muted-foreground">
+                    10:00 - 11:00 PM · Google Meet / WhatsApp
+                  </p>
+                </div>
+
+                <div className="md:text-right">
+                  <Button
+                    className="bg-primary text-primary-foreground hover:bg-primary/90"
+                    size="lg"
+                  >
+                    <MessageCircle className="mr-2 h-5 w-5" />
+                    Join Study
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -297,40 +379,91 @@ const Index = () => {
         </div>
       </section> */}
 
-      {/* Testimonies Slider */}
-      <section className="py-16 bg-gradient-to-r from-primary to-primary-light text-primary-foreground">
+      {/* Life Transformations */}
+      <section className="py-20 bg-secondary">
         <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-heading font-bold mb-4">
-              Life Transformations
-            </h2>
-            <p className="text-lg text-primary-foreground/90">
-              Hear from our community members
-            </p>
-          </div>
+          <div className="max-w-5xl mx-auto">
+            {/* Section Heading */}
+            <div className="text-center mb-12">
+              <h2 className="text-3xl md:text-5xl font-heading font-bold text-primary">
+                Stories From Our Community
+              </h2>
+            </div>
 
-          <div className="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto">
-            {testimonials.map((testimonial, index) => (
-              <Card
-                key={index}
-                className="bg-primary-foreground/10 border-primary-foreground/20 card-hover"
+            {/* Testimonial Carousel */}
+            <div className="relative">
+              <Swiper
+                modules={[Autoplay, Navigation]}
+                navigation={{
+                  prevEl: ".testimonial-prev",
+                  nextEl: ".testimonial-next",
+                }}
+                spaceBetween={40}
+                slidesPerView={1}
+                autoplay={{
+                  delay: 6000,
+                  disableOnInteraction: false,
+                }}
+                loop={testimonials.length > 1}
+                className="testimonial-swiper"
               >
-                <CardContent className="p-6">
-                  {/* <Star className="h-6 w-6 text-accent mb-4 fill-current" /> */}
-                  <blockquote className="text-primary-foreground/90 mb-4 italic leading-relaxed">
-                    "{testimonial.quote}"
-                  </blockquote>
-                  <div>
-                    <p className="font-semibold text-primary-foreground">
-                      {testimonial.author}
-                    </p>
-                    <p className="text-sm text-primary-foreground/70">
-                      {testimonial.role}
-                    </p>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
+                {testimonials.map((testimonial, index) => (
+                  <SwiperSlide key={index}>
+                    <div className="max-w-3xl mx-auto text-center px-6 md:px-12">
+                      {/* Large quotation mark */}
+                      <div
+                        className="text-7xl md:text-8xl leading-none text-primary/20 font-serif mb-2"
+                        aria-hidden="true"
+                      >
+                        “
+                      </div>
+
+                      {/* Testimonial */}
+                      <blockquote className="text-xl md:text-2xl leading-relaxed text-foreground mb-8">
+                        {testimonial.quote}
+                      </blockquote>
+
+                      {/* Person */}
+                      <div>
+                        <p className="font-semibold text-primary text-lg">
+                          {testimonial.author}
+                        </p>
+
+                        <p className="text-sm text-muted-foreground mt-1">
+                          {testimonial.role}
+                        </p>
+                      </div>
+                    </div>
+                  </SwiperSlide>
+                ))}
+              </Swiper>
+
+              {/* Carousel Controls */}
+              <div className="flex items-center justify-center gap-6 mt-10">
+                {/* Previous */}
+                <button
+                  className="testimonial-prev h-11 w-11 rounded-full border border-primary/30 text-primary flex items-center justify-center transition-all duration-200 hover:bg-primary hover:text-white"
+                  aria-label="Previous testimonial"
+                >
+                  <ChevronLeft className="h-5 w-5" />
+                </button>
+
+                {/* Counter */}
+                {/* <div className="text-sm text-muted-foreground">
+                  <span className="text-primary font-semibold">1</span>
+                  <span className="mx-2">/</span>
+                  <span>{testimonials.length}</span>
+                </div> */}
+
+                {/* Next */}
+                <button
+                  className="testimonial-next h-11 w-11 rounded-full border border-primary/30 text-primary flex items-center justify-center transition-all duration-200 hover:bg-primary hover:text-white"
+                  aria-label="Next testimonial"
+                >
+                  <ChevronRight className="h-5 w-5" />
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -354,37 +487,33 @@ const Index = () => {
       </section> */}
 
       {/* Call to Join */}
-      <section className="py-20 bg-gradient-to-r from-secondary via-muted to-secondary">
+      <section className="py-20 bg-background">
         <div className="container mx-auto px-4 text-center">
           <div className="max-w-3xl mx-auto">
             <h2 className="text-3xl md:text-5xl font-heading font-bold text-primary mb-6">
               Ready to Join Our Family?
             </h2>
+
             <p className="text-xl text-foreground mb-8 leading-relaxed">
               Take the first step in your faith journey with Christ Life.
               Connect with us and discover the joy of Christian community.
             </p>
+
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button size="lg" className="btn-hero text-lg px-8 py-6">
+              <Button
+                size="lg"
+                className="bg-primary text-primary-foreground hover:bg-primary/90 text-lg px-8 py-6"
+              >
                 <Link
-                  to={"https://meet.google.com/see-egjy-ruo"}
+                  to="https://meet.google.com/see-egjy-ruo"
                   className="flex items-center"
                   target="_blank"
+                  rel="noopener noreferrer"
                 >
                   <MessageCircle className="mr-2 h-5 w-5" />
                   Join Bible Study
                 </Link>
               </Button>
-              {/* <Button
-                size="lg"
-                variant="outline"
-                className="text-lg px-8 py-6 border-primary text-primary hover:bg-primary hover:text-primary-foreground"
-              >
-                <Link to="/get-involved" className="flex items-center">
-                  <Users className="mr-2 h-5 w-5" />
-                  Get Involved
-                </Link>
-              </Button> */}
             </div>
           </div>
         </div>

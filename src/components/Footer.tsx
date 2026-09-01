@@ -37,7 +37,7 @@ const Footer = () => {
             </p>
             <Button asChild variant="secondary" className="btn-accent">
               <a
-                href="https://chat.whatsapp.com/join"
+                href="https://whatsapp.com/channel/0029VbAhuJw1XquNoRtWzl44"
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -92,9 +92,10 @@ const Footer = () => {
             </div>
             <div className="flex space-x-3">
               <a
-                href="https://web.facebook.com/profile.php?id=61575222419191"
+                href="https://www.facebook.com/share/1DDubvaPmz/?milbextid=wwXlfr"
                 className="text-primary-foreground/80 hover:text-primary-foreground transition-colors"
                 aria-label="Facebook"
+                target="blank"
               >
                 <Facebook className="h-5 w-5" />
               </a>
