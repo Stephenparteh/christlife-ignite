@@ -28,7 +28,7 @@ const About = () => {
       role: "Founder & Director",
       image: groupPhoto1,
       description:
-        "John leads Christ Life with a passion for helping young people discover and follow Christ.",
+        "Railey leads Christ Life with a passion for helping young people discover and follow Christ.",
       instagram: "https://instagram.com/...",
       facebook: "https://facebook.com/...",
       linkedin: "https://linkedin.com/...",

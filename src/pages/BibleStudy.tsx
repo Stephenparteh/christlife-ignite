@@ -91,7 +91,48 @@ const BibleStudy = () => {
           </div>
 
           <div className="max-w-4xl mx-auto border-y border-border">
-            {/* Tuesday */}
+            {/* Monday */}
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 py-8 border-b border-border">
+              <div className="flex items-start gap-5">
+                <div className="flex-shrink-0 w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
+                  <Calendar className="h-6 w-6 text-primary" />
+                </div>
+
+                <div>
+                  <h3 className="text-2xl font-heading font-bold text-foreground mb-2">
+                    Monday Female Bible Study
+                  </h3>
+
+                  <div className="flex flex-wrap items-center gap-4 text-muted-foreground">
+                    <span className="flex items-center gap-2">
+                      <Clock className="h-4 w-4 text-primary" />
+                      10:00 - 11:00 PM
+                    </span>
+
+                    <span className="flex items-center gap-2">
+                      <MessageCircle className="h-4 w-4 text-primary" />
+                      Google Meet / WhatsApp
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              <Button
+                asChild
+                className="bg-primary text-primary-foreground hover:bg-primary/90 w-full md:w-auto"
+              >
+                <a
+                  href="https://meet.google.com/see-egjy-ruo"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Get Monday Link
+                  <ArrowRight className="ml-2 h-4 w-4" />
+                </a>
+              </Button>
+            </div>
+
+            {/* Tuesday Schedule */}
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 py-8 border-b border-border">
               <div className="flex items-start gap-5">
                 <div className="flex-shrink-0 w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
@@ -223,8 +264,8 @@ const BibleStudy = () => {
                 </h3>
 
                 <p className="text-muted-foreground leading-relaxed">
-                  Bible studies take place every Tuesday and Thursday from 10:00
-                  to 11:00 PM.
+                  Bible studies take place every Monday, Tuesday and Thursday
+                  from 10:00 to 11:00 PM.
                 </p>
               </div>
 
@@ -247,11 +288,18 @@ const BibleStudy = () => {
 
             <div className="text-center mt-12">
               <Button
+                asChild
                 size="lg"
                 className="bg-primary text-primary-foreground hover:bg-primary/90"
               >
-                <MessageCircle className="mr-2 h-5 w-5" />
-                Join WhatsApp Group
+                <a
+                  href="https://chat.whatsapp.com/IrsmtYoFqur9dkK1dSLVhu?s=cl&p=i&mlu=4"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <MessageCircle className="mr-2 h-5 w-5" />
+                  Join WhatsApp Group
+                </a>
               </Button>
             </div>
           </div>
@@ -272,11 +320,18 @@ const BibleStudy = () => {
             </p>
 
             <Button
+              asChild
               size="lg"
               className="bg-primary text-primary-foreground hover:bg-primary/90 text-lg px-8 py-6"
             >
-              <MessageCircle className="mr-2 h-5 w-5" />
-              Join WhatsApp Group
+              <a
+                href="https://chat.whatsapp.com/IrsmtYoFqur9dkK1dSLVhu?s=cl&p=i&mlu=4"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <MessageCircle className="mr-2 h-5 w-5" />
+                Join WhatsApp Group
+              </a>
             </Button>
           </div>
         </div>

@@ -30,13 +30,20 @@ import img3 from "@/assets/group3.jpeg";
 import img4 from "@/assets/praying1.jpeg";
 import img5 from "@/assets/praying2.jpeg";
 import img6 from "@/assets/praying3.jpeg";
+import img7 from "@/assets/officialImg01.jpeg";
+import img8 from "@/assets/officialImg02.jpeg";
+import img9 from "@/assets/officialImg03.jpeg";
+import img10 from "@/assets/officialImg04.jpeg";
+import img11 from "@/assets/officialImg05.jpeg";
+import img12 from "@/assets/officialImg06.jpeg";
+
 
 const Gallery = () => {
   const [activeTab, setActiveTab] = useState<"photos" | "videos">("photos");
   const [isPhotoViewerOpen, setIsPhotoViewerOpen] = useState(false);
   const [selectedPhoto, setSelectedPhoto] = useState(0);
 
-  const images = [img1, img2, img3, img4, img5, img6];
+  const images = [img1, img2, img3, img4, img5, img6, img7, img8, img9, img10, img11, img12];
 
   const videos = [
     {

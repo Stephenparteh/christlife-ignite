@@ -1,4 +1,3 @@
-
 import { Link } from "react-router-dom";
 import { Heart, Facebook } from "lucide-react";
 import Logo from "@/assets/logo.jpeg";
@@ -42,10 +41,10 @@ const Footer = () => {
                   Share Christ.
                 </h2>
 
-                <p className="mt-6 text-white/75 max-w-md leading-relaxed">
+                {/* <p className="mt-6 text-white/75 max-w-md leading-relaxed">
                   A community growing together in faith, fellowship, and the
                   love of Christ.
-                </p>
+                </p> */}
               </div>
 
               {/* Connect */}

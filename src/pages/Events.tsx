@@ -80,7 +80,7 @@ const Events = () => {
           </h1>
 
           <p className="text-xl md:text-2xl text-white/90 max-w-3xl mx-auto leading-relaxed">
-            From Bible studies to social gatherings and outreach — there's
+            From Bible studies to social gatherings and outreach there's
             always something happening in the Christ Life community.
           </p>
         </div>
