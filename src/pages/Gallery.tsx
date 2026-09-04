@@ -37,50 +37,79 @@ import img10 from "@/assets/officialImg04.jpeg";
 import img11 from "@/assets/officialImg05.jpeg";
 import img12 from "@/assets/officialImg06.jpeg";
 
+import videoOne from "@/assets/officialVideo01.mp4";
+import videoTwo from "@/assets/officialVideo02.mp4";
+import videoThree from "@/assets/officialVideo03.mp4";
+import videoFour from "@/assets/officialVideo04.mp4";
+import videoFive from "@/assets/officialVideo05.mp4";
+import videoSix from "@/assets/officialVideo06.mp4";
 
 const Gallery = () => {
   const [activeTab, setActiveTab] = useState<"photos" | "videos">("photos");
   const [isPhotoViewerOpen, setIsPhotoViewerOpen] = useState(false);
   const [selectedPhoto, setSelectedPhoto] = useState(0);
 
-  const images = [img1, img2, img3, img4, img5, img6, img7, img8, img9, img10, img11, img12];
+  const images = [
+    img1,
+    img2,
+    img3,
+    img4,
+    img5,
+    img6,
+    img7,
+    img8,
+    img9,
+    img10,
+    img11,
+    img12,
+  ];
 
   const videos = [
     {
       id: 1,
-      title: "Christ Life Community Moments",
-      description:
-        "A look at some of the moments we've shared together as a community.",
-      thumbnail: groupImg1,
-      duration: "2:34",
+      video: videoOne,
     },
     {
       id: 2,
-      title: "Fellowship & Worship",
-      description:
-        "Moments of fellowship, worship, and connection with the Christ Life family.",
-      thumbnail: img2,
-      duration: "4:12",
+      video: videoTwo,
+    },
+    {
+      id: 3,
+      video: videoThree,
+    },
+    {
+      id: 4,
+      video: videoFour,
+    },
+    {
+      id: 5,
+      video: videoFive,
+    },
+    {
+      id: 6,
+      video: videoSix,
     },
   ];
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
       <section
-        className="relative py-20 bg-cover bg-center"
+        className="relative min-h-[70vh] flex items-center bg-cover bg-center"
         // style={{ backgroundImage: `url(${heroImage})` }}
         style={{ backgroundImage: `url(${groupImg1})` }}
       >
         <div className="absolute inset-0 bg-black/45"></div>
 
-        <div className="relative z-10 container mx-auto px-4 text-center">
-          <h1 className="text-4xl md:text-6xl font-heading font-bold text-primary-foreground mb-6">
-            Memories & Moments
-          </h1>
-          <p className="text-xl md:text-2xl text-primary-foreground/90 max-w-3xl mx-auto leading-relaxed">
-            Explore photos and videos from our community events, Bible studies,
-            and fellowship gatherings throughout the year.
-          </p>
+        <div className="relative z-10 container mx-auto px-4 py-20">
+          <div className="max-w-3xl">
+            <h1 className="text-4xl md:text-6xl lg:text-7xl font-heading font-bold text-white mb-8 leading-tight">
+              Our Gallery
+            </h1>
+            <p className="text-xl md:text-2xl text-white/90 max-w-3xl mx-auto leading-relaxed">
+              Explore photos and videos from our community events, Bible
+              studies, and fellowship gatherings throughout the year.
+            </p>
+          </div>
         </div>
       </section>
 
@@ -89,18 +118,18 @@ const Gallery = () => {
         <div className="container mx-auto px-4">
           {/* Heading */}
           <div className="max-w-3xl mx-auto text-center mb-10">
-            <p className="text-primary font-semibold tracking-[0.15em] uppercase text-sm mb-3">
+            {/* <p className="text-primary font-semibold tracking-[0.15em] uppercase text-sm mb-3">
               Our Gallery
-            </p>
+            </p> */}
 
-            <h2 className="text-3xl md:text-5xl font-heading font-bold text-foreground mb-5">
+            {/* <h2 className="text-3xl md:text-5xl font-heading font-bold text-foreground mb-5">
               Moments We’ve Shared
-            </h2>
+            </h2> */}
 
-            <p className="text-lg text-muted-foreground leading-relaxed">
+            {/* <p className="text-lg text-muted-foreground leading-relaxed">
               A look at the people, gatherings, worship, and memories that make
               Christ Life what it is.
-            </p>
+            </p> */}
           </div>
 
           {/* Tabs */}
@@ -159,38 +188,19 @@ const Gallery = () => {
 
           {/* Videos */}
           {activeTab === "videos" && (
-            <div className="grid md:grid-cols-2 gap-8 max-w-6xl mx-auto">
+            <div className="columns-1 sm:columns-2 lg:columns-3 gap-6 max-w-6xl mx-auto">
               {videos.map((video) => (
-                <div key={video.id} className="group">
-                  <div className="relative aspect-video overflow-hidden rounded-2xl bg-muted">
-                    <img
-                      src={video.thumbnail}
-                      alt={video.title}
-                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                    />
-
-                    {/* Play Button */}
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <div className="w-14 h-14 rounded-full bg-white/90 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
-                        <Play className="h-6 w-6 text-primary ml-1" />
-                      </div>
-                    </div>
-
-                    {/* Duration */}
-                    <span className="absolute bottom-3 right-3 bg-black/70 text-white text-xs px-2 py-1 rounded">
-                      {video.duration}
-                    </span>
-                  </div>
-
-                  <div className="pt-4">
-                    <h3 className="text-xl font-heading font-bold text-foreground group-hover:text-primary transition-colors">
-                      {video.title}
-                    </h3>
-
-                    <p className="text-sm text-muted-foreground mt-2 leading-relaxed">
-                      {video.description}
-                    </p>
-                  </div>
+                <div
+                  key={video.id}
+                  className="group mb-6 break-inside-avoid overflow-hidden rounded-2xl bg-muted"
+                >
+                  <video
+                    src={video.video}
+                    controls
+                    playsInline
+                    preload="metadata"
+                    className="block w-full h-auto object-contain"
+                  />
                 </div>
               ))}
             </div>

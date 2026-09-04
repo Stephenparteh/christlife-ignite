@@ -44,19 +44,19 @@ const BibleStudy = () => {
     <div className="min-h-screen bg-background">
       {/* Hero Section */}
       <section
-        className="relative min-h-[65vh] flex items-center bg-cover bg-center"
+        className="relative min-h-[70vh] flex items-center bg-cover bg-center"
         style={{ backgroundImage: `url(${groupImg1})` }}
       >
         {/* Simple solid overlay - no gradient */}
         <div className="absolute inset-0 bg-black/45"></div>
 
         <div className="relative z-10 container mx-auto px-4 py-20">
-          <div className="max-w-3xl mx-auto text-center">
-            <h1 className="text-4xl md:text-6xl font-heading font-bold text-white mb-6 leading-tight">
+          <div className="max-w-3xl">
+            <h1 className="text-4xl md:text-6xl lg:text-7xl font-heading font-bold text-white mb-8 leading-tight">
               Grow in God's Word
             </h1>
 
-            <p className="text-lg md:text-xl text-white/90 max-w-2xl mx-auto leading-relaxed mb-8">
+            <p className="text-xl md:text-2xl text-white/90 max-w-3xl mx-auto leading-relaxed">
               Join us twice a week for Bible study, discussion, prayer, and
               fellowship as we grow together in Christ.
             </p>
@@ -76,18 +76,14 @@ const BibleStudy = () => {
       <section className="py-20 bg-background">
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto text-center mb-14">
-            <p className="text-primary font-semibold tracking-[0.15em] uppercase text-sm mb-3">
-              Weekly Schedule
-            </p>
-
             <h2 className="text-3xl md:text-5xl font-heading font-bold text-foreground mb-5">
-              Join Us Twice a Week
+              Join Us Thrice a Week
             </h2>
 
-            <p className="text-lg text-muted-foreground">
+            {/* <p className="text-lg text-muted-foreground">
               Set aside an hour to study God's Word, ask questions, pray, and
               connect with the Christ Life community.
-            </p>
+            </p> */}
           </div>
 
           <div className="max-w-4xl mx-auto border-y border-border">
@@ -127,7 +123,6 @@ const BibleStudy = () => {
                   rel="noopener noreferrer"
                 >
                   Get Monday Link
-                  <ArrowRight className="ml-2 h-4 w-4" />
                 </a>
               </Button>
             </div>
@@ -168,7 +163,6 @@ const BibleStudy = () => {
                   rel="noopener noreferrer"
                 >
                   Get Tuesday Link
-                  <ArrowRight className="ml-2 h-4 w-4" />
                 </a>
               </Button>
             </div>
@@ -209,7 +203,6 @@ const BibleStudy = () => {
                   rel="noopener noreferrer"
                 >
                   Get Thursday Link
-                  <ArrowRight className="ml-2 h-4 w-4" />
                 </a>
               </Button>
             </div>
@@ -222,10 +215,7 @@ const BibleStudy = () => {
         <div className="container mx-auto px-4">
           <div className="max-w-5xl mx-auto">
             <div className="text-center mb-14">
-              <p className="text-primary font-semibold tracking-[0.15em] uppercase text-sm mb-3">
-                Getting Started
-              </p>
-
+              
               <h2 className="text-3xl md:text-5xl font-heading font-bold text-foreground mb-5">
                 How to Join
               </h2>
@@ -297,7 +287,6 @@ const BibleStudy = () => {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  <MessageCircle className="mr-2 h-5 w-5" />
                   Join WhatsApp Group
                 </a>
               </Button>
@@ -329,7 +318,6 @@ const BibleStudy = () => {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <MessageCircle className="mr-2 h-5 w-5" />
                 Join WhatsApp Group
               </a>
             </Button>

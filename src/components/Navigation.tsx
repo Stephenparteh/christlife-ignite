@@ -72,7 +72,7 @@ const Navigation = () => {
             {/* WhatsApp CTA */}
             <Button
               asChild
-              className="ml-2 bg-primary text-primary-foreground hover:bg-primary/90 rounded-full px-5"
+              className="ml-2 bg-primary text-primary-foreground hover:bg-primary/90 px-5"
             >
               <a
                 href="https://chat.whatsapp.com/IrsmtYoFqur9dkK1dSLVhu?s=cl&p=i&mlu=4"

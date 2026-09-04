@@ -17,19 +17,19 @@ const Contact = () => {
     <div className="min-h-screen bg-background">
       {/* Hero Section */}
       <section
-        className="relative min-h-[55vh] flex items-center bg-cover bg-center"
+        className="relative min-h-[70vh] flex items-center bg-cover bg-center"
         style={{ backgroundImage: `url(${groupImg1})` }}
       >
         {/* Simple dark overlay */}
         <div className="absolute inset-0 bg-black/50" />
 
-        <div className="relative z-10 container mx-auto px-20 py-20">
+        <div className="relative z-10 container mx-auto px-4 py-20">
           <div className="max-w-3xl">
-            <h1 className="text-4xl md:text-6xl lg:text-7xl font-heading font-bold text-white mb-6 leading-tight">
+            <h1 className="text-4xl md:text-6xl lg:text-7xl font-heading font-bold text-white mb-8 leading-tight">
               Let’s Talk.
             </h1>
 
-            <p className="text-lg md:text-xl text-white/90 max-w-2xl leading-relaxed">
+            <p className="text-xl md:text-2xl text-white/90 max-w-3xl mx-auto leading-relaxed">
               Have a question, prayer request, or simply want to connect? We’d
               love to hear from you.
             </p>
@@ -135,12 +135,11 @@ const Contact = () => {
                   size="lg"
                   className="bg-primary text-primary-foreground hover:bg-primary/90 px-8 my-20"
                 >
-                  <Send className="mr-2 h-5 w-5" />
                   Send Message
                 </Button>
               </form>
             </div>
-            
+
             {/* Connect With Us */}
             <div className="mt-24 pt-6">
               <div className="max-w-3xl">
@@ -161,10 +160,14 @@ const Contact = () => {
 
               {/* Contact Links */}
               <div className="mt-10 grid sm:grid-cols-3 gap-8">
-                <a href="#" className="group">
+                <a
+                  href="https://chat.whatsapp.com/IrsmtYoFqur9dkK1dSLVhu?s=cl&p=i&mlu=4"
+                  className="group"
+                  target="_blank"
+                >
                   <p className="text-sm text-muted-foreground mb-2">WhatsApp</p>
                   <p className="text-lg font-medium text-foreground group-hover:text-primary transition-colors">
-                    Join our community →
+                    Join our community
                   </p>
                 </a>
 
@@ -185,7 +188,6 @@ const Contact = () => {
                     >
                       Facebook
                     </a>
-
                   </div>
                 </div>
               </div>

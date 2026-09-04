@@ -78,7 +78,7 @@ const Index = () => {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  <MessageCircle className="mr-2 h-5 w-5" />
+                  {/* <MessageCircle className="mr-2 h-5 w-5" /> */}
                   Join Bible Study
                 </Link>
               </Button>
@@ -89,7 +89,7 @@ const Index = () => {
                 className="bg-white text-primary border-white hover:bg-white/90 hover:text-primary text-lg px-8 py-6"
               >
                 <Link to="/events" className="flex items-center">
-                  <Calendar className="mr-2 h-5 w-5" />
+                  {/* <Calendar className="mr-2 h-5 w-5" /> */}
                   See Events
                 </Link>
               </Button>
@@ -219,7 +219,6 @@ const Index = () => {
                     className="bg-primary text-primary-foreground hover:bg-primary/90"
                     size="lg"
                   >
-                    <MessageCircle className="mr-2 h-5 w-5" />
                     Join Study
                   </Button>
                 </div>
@@ -253,7 +252,6 @@ const Index = () => {
                     className="bg-primary text-primary-foreground hover:bg-primary/90"
                     size="lg"
                   >
-                    <MessageCircle className="mr-2 h-5 w-5" />
                     Join Prayer
                   </Button>
                 </div>
@@ -367,7 +365,6 @@ const Index = () => {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  <MessageCircle className="mr-2 h-5 w-5" />
                   Join Bible Study
                 </Link>
               </Button>

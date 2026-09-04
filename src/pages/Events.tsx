@@ -64,25 +64,23 @@ const Events = () => {
     <div className="min-h-screen">
       {/* Hero Section */}
       <section
-        className="relative py-20 bg-cover bg-center"
+        className="relative min-h-[70vh] flex items-center bg-cover bg-center"
         style={{ backgroundImage: `url(${groupImg1})` }}
       >
         {/* Simple dark overlay — no gradient */}
         <div className="absolute inset-0 bg-black/50"></div>
 
-        <div className="relative z-10 container mx-auto px-4 text-center">
-          {/* <p className="text-sm font-semibold tracking-[0.2em] uppercase text-white/80 mb-4">
-            Events & Activities
-          </p> */}
+        <div className="relative z-10 container mx-auto px-4 py-20">
+          <div className="max-w-3xl">
+            <h1 className="text-4xl md:text-6xl lg:text-7xl font-heading font-bold text-white mb-8 leading-tight">
+              Community Events
+            </h1>
 
-          <h1 className="text-4xl md:text-6xl font-heading font-bold text-white mb-6">
-            Join Our Community Events
-          </h1>
-
-          <p className="text-xl md:text-2xl text-white/90 max-w-3xl mx-auto leading-relaxed">
-            From Bible studies to social gatherings and outreach there's
-            always something happening in the Christ Life community.
-          </p>
+            <p className="text-xl md:text-2xl text-white/90 max-w-3xl mx-auto leading-relaxed">
+              From Bible studies to social gatherings and outreach there's
+              always something happening in the Christ Life community.
+            </p>
+          </div>
         </div>
       </section>
 
@@ -107,10 +105,6 @@ const Events = () => {
 
             {/* Event Details */}
             <div className="p-8 md:p-12 lg:p-14 flex flex-col justify-center">
-              <p className="text-sm font-semibold tracking-[0.2em] uppercase text-primary mb-4">
-                Weekly Gathering
-              </p>
-
               <h2 className="text-3xl md:text-4xl font-heading font-bold text-foreground mb-5">
                 Weekly Bible Study and Prayer
               </h2>
@@ -150,7 +144,6 @@ const Events = () => {
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    <MessageCircle className="mr-2 h-4 w-4" />
                     RSVP via WhatsApp
                   </a>
                 </Button>
@@ -164,11 +157,7 @@ const Events = () => {
       <section className="py-24 bg-background">
         <div className="container mx-auto px-4">
           {/* Section Heading */}
-          <div className="max-w-3xl mb-14">
-            <p className="text-sm font-semibold tracking-[0.2em] uppercase text-primary mb-4">
-              What's Coming Up
-            </p>
-
+          <div className="max-w-3xl mx-auto mb-14 text-center">
             <h2 className="text-3xl md:text-5xl font-heading font-bold text-foreground mb-5">
               Upcoming Events
             </h2>
@@ -226,30 +215,6 @@ const Events = () => {
                     {event.description}
                   </p>
 
-                  {/* Location & Attendees */}
-                  {/* <div className="flex flex-wrap gap-5 text-sm text-muted-foreground mb-6">
-                    <div className="flex items-center gap-2">
-                      <MapPin className="h-4 w-4 text-primary" />
-                      <span>{event.location}</span>
-                    </div>
-
-                    <div className="flex items-center gap-2">
-                      <Users className="h-4 w-4 text-primary" />
-                      <span>{event.attendees}</span>
-                    </div>
-                  </div> */}
-
-                  {/* Action */}
-                  {/* <div>
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      className="border-primary text-primary hover:bg-primary hover:text-primary-foreground"
-                    >
-                      Learn More
-                      <ChevronRight className="ml-1 h-4 w-4" />
-                    </Button>
-                  </div> */}
                 </div>
               </div>
             ))}
@@ -281,7 +246,6 @@ const Events = () => {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  <MessageCircle className="mr-2 h-5 w-5" />
                   Join WhatsApp Group
                 </a>
               </Button>

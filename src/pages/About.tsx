@@ -108,7 +108,6 @@ const About = () => {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  <MessageCircle className="mr-2 h-5 w-5" />
                   Join Our Community
                 </a>
               </Button>
