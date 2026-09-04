@@ -30,7 +30,7 @@ const Index = () => {
   const testimonials = [
     {
       quote:
-        "Joining Christ life has strengthened my faith, my prayer life, and my relationship with God. The sermons and the people here have encouraged me a lot. I'm growing, and I'm thankful for how God is using this organization in my life 🙏",
+        "Joining Christ life has strengthened my faith, my prayer life, and my relationship with God. The sermons and the people here have encouraged me a lot. I'm growing, and I'm thankful for how God is using this organization in my life",
       author: "Emily Emily",
       role: "Member",
     },
