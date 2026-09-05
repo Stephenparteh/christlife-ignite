@@ -26,7 +26,6 @@ import "swiper/css";
 import "swiper/css/navigation";
 
 const Index = () => {
- 
   const testimonials = [
     {
       quote:
@@ -178,22 +177,52 @@ const Index = () => {
           <div className="max-w-5xl mx-auto">
             {/* Section introduction */}
             <div className="max-w-2xl mb-12">
-              <p className="text-sm font-semibold tracking-[0.2em] uppercase text-primary mb-3">
-                Weekly Gathering
-              </p>
-
+              
               <h2 className="text-3xl md:text-5xl font-heading font-bold text-primary mb-5">
                 Weekly Bible Studies
               </h2>
 
               <p className="text-lg text-muted-foreground leading-relaxed">
-                Join us twice a week for Bible study, honest discussion, and
+                Join us thrice a week for Bible study, honest discussion, and
                 fellowship as we grow together in Christ.
               </p>
             </div>
 
             {/* Study schedule */}
-            <div className="border-y border-border">
+            <div className="">
+              {/* Monday */}
+              <div className="py-8 md:py-10 grid md:grid-cols-[180px_1fr_auto] gap-6 md:gap-10 items-center">
+                <div>
+                  <p className="text-sm uppercase tracking-widest text-muted-foreground mb-1">
+                    Every
+                  </p>
+                  <h3 className="text-3xl font-heading font-bold text-primary">
+                    Monday
+                  </h3>
+                </div>
+
+                <div>
+                  <p className="text-xl font-semibold text-foreground mb-2">
+                    Ladies Bible Study
+                  </p>
+                  <p className="text-muted-foreground">
+                    10:00 - 11:00 PM · Google Meet / WhatsApp
+                  </p>
+                </div>
+
+                <div className="md:text-right">
+                  <Button
+                    className="bg-primary text-primary-foreground hover:bg-primary/90"
+                    size="lg"
+                  >
+                    Join Study
+                  </Button>
+                </div>
+              </div>
+
+              {/* Divider */}
+              <div className="border-t border-border" />
+
               {/* Tuesday */}
               <div className="py-8 md:py-10 grid md:grid-cols-[180px_1fr_auto] gap-6 md:gap-10 items-center">
                 <div>
