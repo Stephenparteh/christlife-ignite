@@ -18,20 +18,65 @@ import heroImage1 from "@/assets/group1.jpeg";
 import prayingPhoto1 from "@/assets/praying1.jpeg";
 import prayingPhoto2 from "@/assets/praying2.jpeg";
 import prayingPhoto3 from "@/assets/praying3.jpeg";
+import phil01 from "@/assets/Phil01.jpeg";
+import MaLois01 from "@/assets/Ma-Lois01.jpeg";
+import Blessing01 from "@/assets/Blessing01.jpeg";
+import Jorii01 from "@/assets/Jorii01.jpeg";
+import Gracesia01 from "@/assets/Gracesia01.jpeg";
 
 import groupPhoto1 from "@/assets/praying3.jpeg";
 
 const About = () => {
   const leadership = [
     {
-      name: "Railey",
-      role: "Founder & Director",
-      image: groupPhoto1,
-      description:
-        "Railey leads Christ Life with a passion for helping young people discover and follow Christ.",
-      instagram: "https://instagram.com/...",
-      facebook: "https://facebook.com/...",
-      linkedin: "https://linkedin.com/...",
+      name: "Phil Julius Railey",
+      role: " CEO/FOUNDER",
+      image: phil01,
+      // description:
+      //   "Railey leads Christ Life with a passion for helping young people discover and follow Christ.",
+      // instagram: "https://instagram.com/...",
+      // facebook: "https://facebook.com/...",
+      // linkedin: "https://linkedin.com/...",
+    },
+    {
+      name: "Ma-Lois D Cheyee",
+      role: "Executive Director",
+      image: MaLois01,
+      // description:
+      //   "Railey leads Christ Life with a passion for helping young people discover and follow Christ.",
+      // instagram: "https://instagram.com/...",
+      // facebook: "https://facebook.com/...",
+      // linkedin: "https://linkedin.com/...",
+    },
+    {
+      name: "Min. Blessing M Jonah",
+      role: "Worship & Women's Ministry Leader",
+      image: Blessing01,
+      // description:
+      //   "Railey leads Christ Life with a passion for helping young people discover and follow Christ.",
+      // instagram: "https://instagram.com/...",
+      // facebook: "https://facebook.com/...",
+      // linkedin: "https://linkedin.com/...",
+    },
+    {
+      name: "Jorii S. Kullie",
+      role: "Secretary",
+      image: Jorii01,
+      // description:
+      //   "Railey leads Christ Life with a passion for helping young people discover and follow Christ.",
+      // instagram: "https://instagram.com/...",
+      // facebook: "https://facebook.com/...",
+      // linkedin: "https://linkedin.com/...",
+    },
+    {
+      name: "Gracesia Angel Vienn",
+      role: "Chief Operating Officer",
+      image: Gracesia01,
+      // description:
+      //   "Railey leads Christ Life with a passion for helping young people discover and follow Christ.",
+      // instagram: "https://instagram.com/...",
+      // facebook: "https://facebook.com/...",
+      // linkedin: "https://linkedin.com/...",
     },
   ];
 
@@ -194,89 +239,11 @@ const About = () => {
         </div>
       </section>
 
-      {/* Core Values - Flowing horizontal layout */}
-      {/* <section className="py-24 lg:py-32 bg-gradient-to-b from-muted/50 to-background relative overflow-hidden">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-primary/5 rounded-full blur-3xl" />
-
-        <div className="container mx-auto px-4 relative z-10">
-          <div className="text-center mb-20">
-            <span className="text-primary font-semibold tracking-wider uppercase text-sm mb-4 block">
-              Our Foundation
-            </span>
-            <h2 className="text-3xl md:text-5xl font-heading font-bold text-foreground mb-6">
-              Core Values
-            </h2>
-            <p className="text-lg text-muted-foreground">
-              The principles that guide our community and ministry
-            </p>
-          </div>
-
-          <div className="max-w-6xl mx-auto">
-            <div className="flex flex-col md:flex-row items-start gap-8 mb-16 pb-16 border-b border-border/50">
-              <div className="flex-shrink-0">
-                <div className="w-24 h-24 rounded-full bg-gradient-to-br from-primary to-primary-light flex items-center justify-center shadow-2xl shadow-primary/30">
-                  <Cross className="h-12 w-12 text-white" />
-                </div>
-              </div>
-              <div className="flex-1">
-                <h3 className="text-3xl font-heading font-bold text-foreground mb-4">
-                  Faith
-                </h3>
-                <p className="text-lg text-muted-foreground leading-relaxed max-w-2xl">
-                  Deepening our relationship with Jesus Christ through prayer,
-                  worship, and faithful study of God's Word. We believe faith is
-                  the foundation of all spiritual growth and transformation.
-                </p>
-              </div>
-            </div>
-
-            <div className="flex flex-col md:flex-row-reverse items-start gap-8 mb-16 pb-16 border-b border-border/50">
-              <div className="flex-shrink-0">
-                <div className="w-24 h-24 rounded-full bg-gradient-to-br from-accent to-accent/80 flex items-center justify-center shadow-2xl shadow-accent/30">
-                  <Heart className="h-12 w-12 text-primary" />
-                </div>
-              </div>
-              <div className="flex-1 md:text-right">
-                <h3 className="text-3xl font-heading font-bold text-foreground mb-4">
-                  Love
-                </h3>
-                <p className="text-lg text-muted-foreground leading-relaxed max-w-2xl md:ml-auto">
-                  Showing Christ's love through compassion, kindness, and
-                  genuine care for one another. Love motivates everything we do
-                  and reflects God's heart for His people.
-                </p>
-              </div>
-            </div>
-
-            <div className="flex flex-col md:flex-row items-start gap-8">
-              <div className="flex-shrink-0">
-                <div className="w-24 h-24 rounded-full bg-gradient-to-br from-primary-light to-primary flex items-center justify-center shadow-2xl shadow-primary/30">
-                  <Users className="h-12 w-12 text-white" />
-                </div>
-              </div>
-              <div className="flex-1">
-                <h3 className="text-3xl font-heading font-bold text-foreground mb-4">
-                  Service
-                </h3>
-                <p className="text-lg text-muted-foreground leading-relaxed max-w-2xl">
-                  Serving our community and sharing the Gospel through actions
-                  and outreach. We believe service is worship in action and a
-                  way to demonstrate Christ's love.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section> */}
-
       {/* Our People */}
       <section className="py-24 lg:py-32 bg-background">
         <div className="container mx-auto px-4">
           {/* Section Heading */}
           <div className="max-w-3xl mb-16">
-            <p className="text-sm font-semibold tracking-[0.2em] uppercase text-primary mb-4">
-              Our People
-            </p>
 
             <h2 className="text-3xl md:text-5xl font-heading font-bold text-foreground mb-6">
               Meet Our Leadership
@@ -301,12 +268,11 @@ const About = () => {
                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                   />
                   {/* Hover Information */}
-                  <div className="absolute inset-0 bg-primary/90 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
+                  {/* <div className="absolute inset-0 bg-primary/90 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
                     <p className="text-white/90 leading-relaxed mb-6">
                       {member.description}
                     </p>
 
-                    {/* Social Media */}
                     <div className="flex items-center gap-3">
                       {member.instagram && (
                         <a
@@ -344,7 +310,7 @@ const About = () => {
                         </a>
                       )}
                     </div>
-                  </div>
+                  </div> */}
                 </div>
 
                 {/* Name & Position */}
@@ -363,63 +329,6 @@ const About = () => {
         </div>
       </section>
 
-      {/* Impact Stories - Full width with large typography */}
-      {/* <section className="py-24 lg:py-32 bg-gradient-to-b from-muted/30 to-background relative overflow-hidden">
-        <div className="absolute -top-40 -right-40 w-80 h-80 bg-accent/10 rounded-full blur-3xl" />
-        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-primary/10 rounded-full blur-3xl" />
-
-        <div className="container mx-auto px-4 relative z-10">
-          <div className="text-center mb-20">
-            <span className="text-primary font-semibold tracking-wider uppercase text-sm mb-4 block">
-              Making a Difference
-            </span>
-            <h2 className="text-3xl md:text-5xl font-heading font-bold text-foreground mb-6">
-              Our Impact
-            </h2>
-            <p className="text-lg text-muted-foreground">
-              God's work through our community
-            </p>
-          </div>
-
-          <div className="flex flex-col lg:flex-row items-stretch gap-8 max-w-5xl mx-auto">
-            <div className="flex-1 bg-white rounded-3xl p-10 shadow-xl shadow-primary/5 hover:shadow-2xl hover:shadow-primary/10 transition-all duration-500 group">
-              <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-primary/10 to-primary/5 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-500">
-                <Users className="h-8 w-8 text-primary" />
-              </div>
-              <h3 className="text-2xl font-heading font-bold text-foreground mb-3">
-                100+ Lives Transformed
-              </h3>
-              <p className="text-muted-foreground leading-relaxed">
-                Through Bible studies and discipleship programs
-              </p>
-            </div>
-
-            <div className="flex-1 bg-gradient-to-br from-primary to-primary-light rounded-3xl p-10 shadow-xl shadow-primary/30 transition-all duration-500 group lg:-mt-4 lg:mb-4">
-              <div className="w-16 h-16 rounded-2xl bg-white/20 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-500">
-                <BookOpen className="h-8 w-8 text-white" />
-              </div>
-              <h3 className="text-2xl font-heading font-bold text-white mb-3">
-                Weekly Bible Studies
-              </h3>
-              <p className="text-white/80 leading-relaxed">
-                Consistent spiritual growth and community building
-              </p>
-            </div>
-
-            <div className="flex-1 bg-white rounded-3xl p-10 shadow-xl shadow-primary/5 hover:shadow-2xl hover:shadow-primary/10 transition-all duration-500 group">
-              <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-accent/20 to-accent/10 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-500">
-                <Heart className="h-8 w-8 text-primary" />
-              </div>
-              <h3 className="text-2xl font-heading font-bold text-foreground mb-3">
-                Community Outreach
-              </h3>
-              <p className="text-muted-foreground leading-relaxed">
-                Serving our local community through various initiatives
-              </p>
-            </div>
-          </div>
-        </div>
-      </section> */}
     </div>
   );
 };
