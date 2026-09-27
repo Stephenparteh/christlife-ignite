@@ -20,7 +20,10 @@ const Navigation = () => {
   const isActivePath = (path: string) => location.pathname === path;
 
   return (
-    <nav className="bg-white sticky top-0 z-50 border-b border-border">
+    <nav
+      aria-label="Main navigation"
+      className="bg-white sticky top-0 z-50 border-b border-border"
+    >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-[76px]">
           {/* Logo */}
@@ -50,6 +53,7 @@ const Navigation = () => {
                   <Link
                     key={item.name}
                     to={item.path}
+                    aria-current={active ? "page" : undefined}
                     className={`relative py-2 text-sm font-medium transition-colors ${
                       active
                         ? "text-primary"
@@ -107,6 +111,7 @@ const Navigation = () => {
                     <Link
                       key={item.name}
                       to={item.path}
+                      aria-current={active ? "page" : undefined}
                       onClick={() => setIsOpen(false)}
                       className={`py-4 text-base font-medium border-b border-border/60 transition-colors ${
                         active

@@ -57,8 +57,9 @@ const BibleStudy = () => {
             </h1>
 
             <p className="text-xl md:text-2xl text-white/90 max-w-3xl mx-auto leading-relaxed">
-              Join us twice a week for Bible study, discussion, prayer, and
-              fellowship as we grow together in Christ.
+              Join Christ Life for Bible study and Christian fellowship in
+              Liberia, with Scripture, discussion, and prayer as we grow
+              together in Christ.
             </p>
 
             {/* <Button
@@ -77,7 +78,7 @@ const BibleStudy = () => {
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto text-center mb-14">
             <h2 className="text-3xl md:text-5xl font-heading font-bold text-foreground mb-5">
-              Join Us Thrice a Week
+              Join Our Bible Study Thrice a Week
             </h2>
 
             {/* <p className="text-lg text-muted-foreground">
@@ -217,7 +218,7 @@ const BibleStudy = () => {
             <div className="text-center mb-14">
               
               <h2 className="text-3xl md:text-5xl font-heading font-bold text-foreground mb-5">
-                How to Join
+                How to Join Our Bible Study
               </h2>
 
               <p className="text-lg text-muted-foreground max-w-2xl mx-auto">

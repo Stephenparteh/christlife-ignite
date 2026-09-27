@@ -13,6 +13,7 @@ import {
   Heart,
   ChevronRight,
 } from "lucide-react";
+import { Link } from "react-router-dom";
 import heroImage from "@/assets/hero-main.jpg";
 import groupImg1 from "@/assets/group1.jpeg";
 
@@ -78,7 +79,8 @@ const Events = () => {
 
             <p className="text-xl md:text-2xl text-white/90 max-w-3xl mx-auto leading-relaxed">
               From Bible studies to social gatherings and outreach there's
-              always something happening in the Christ Life community.
+              always something happening in the Christ Life community in
+              Liberia.
             </p>
           </div>
         </div>
@@ -92,7 +94,8 @@ const Events = () => {
             <div className="relative min-h-[320px] lg:min-h-[460px]">
               <img
                 src={groupImg1}
-                alt="Christ Life Bible Study"
+                alt="Christ Life youth fellowship gathering, with members posing together outdoors at night"
+                loading="lazy"
                 className="absolute inset-0 w-full h-full object-cover"
               />
 
@@ -111,7 +114,14 @@ const Events = () => {
 
               <p className="text-lg text-muted-foreground leading-relaxed mb-8">
                 Join us for deep Bible study, discussion, prayer, and fellowship
-                as we grow together in our understanding of God's Word.
+                as we grow together in our understanding of God's Word.{" "}
+                <Link
+                  to="/bible-study"
+                  className="text-primary underline underline-offset-4 hover:text-primary/80"
+                >
+                  See how to join our Bible study
+                </Link>
+                .
               </p>
 
               {/* Event Information */}
@@ -119,7 +129,7 @@ const Events = () => {
                 <div className="flex items-center gap-4">
                   <Calendar className="h-5 w-5 text-primary flex-shrink-0" />
                   <span className="text-foreground">
-                    Every Tuesday & Thursday
+                    Every Monday, Tuesday & Thursday
                   </span>
                 </div>
 
@@ -184,7 +194,8 @@ const Events = () => {
                   <div className="aspect-[4/3] overflow-hidden rounded-xl bg-muted">
                     <img
                       src={event.image}
-                      alt={event.title}
+                      alt=""
+                      loading="lazy"
                       className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                     />
                   </div>

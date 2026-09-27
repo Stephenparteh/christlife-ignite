@@ -94,7 +94,7 @@ const Footer = () => {
               <Heart className="h-4 w-4 text-white fill-current" />
               by{" "}
               <a
-                href="https://stephenpartehportfolio.com"
+                href="https://stephenparteh.vercel.app"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-white hover:text-white/75 transition-colors"

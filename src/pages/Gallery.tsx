@@ -50,18 +50,54 @@ const Gallery = () => {
   const [selectedPhoto, setSelectedPhoto] = useState(0);
 
   const images = [
-    img1,
-    img2,
-    img3,
-    img4,
-    img5,
-    img6,
-    img7,
-    img8,
-    img9,
-    img10,
-    img11,
-    img12,
+    {
+      src: img1,
+      alt: "Christ Life members posing together at an evening outdoor gathering, holding food and drinks",
+    },
+    {
+      src: img2,
+      alt: "Young people at an outdoor picnic, one wearing a shirt that reads “Live His Life, Do His Work”",
+    },
+    {
+      src: img3,
+      alt: "Young people standing together indoors as one member speaks into a microphone",
+    },
+    {
+      src: img4,
+      alt: "Young man kneeling with his head bowed, praying into a microphone",
+    },
+    {
+      src: img5,
+      alt: "Young man sitting on the floor with his eyes closed and hands held to his face in prayer",
+    },
+    {
+      src: img6,
+      alt: "Two people embracing in front of a stage with a drum kit and stage lighting",
+    },
+    {
+      src: img7,
+      alt: "Group of young men in white football kits posing with a ball on a dirt pitch",
+    },
+    {
+      src: img8,
+      alt: "Young people standing along a long table of food and refreshments in a meeting room",
+    },
+    {
+      src: img9,
+      alt: "Women in neon-green football kits sitting in a line on a dirt field",
+    },
+    {
+      src: img10,
+      alt: "Smiling young woman at a long table during a group meeting, with a speaker standing at the far end of the room",
+    },
+    {
+      src: img11,
+      alt: "Group of young women in pink and blue football kits posing with a ball on a dirt pitch",
+    },
+    {
+      src: img12,
+      alt: "Football team in white and green kits posing on a pitch with a woman in a white jersey",
+    },
   ];
 
   const videos = [
@@ -164,7 +200,7 @@ const Gallery = () => {
           {/* Photos */}
           {activeTab === "photos" && (
             <div className="columns-1 sm:columns-2 lg:columns-3 gap-5 space-y-5 max-w-6xl mx-auto">
-              {images.map((img, index) => (
+              {images.map((image, index) => (
                 <button
                   key={index}
                   type="button"
@@ -175,8 +211,9 @@ const Gallery = () => {
                   className="group relative block w-full overflow-hidden rounded-2xl break-inside-avoid"
                 >
                   <img
-                    src={img}
-                    alt={`Christ Life moment ${index + 1}`}
+                    src={image.src}
+                    alt={image.alt}
+                    loading="lazy"
                     className="w-full h-auto object-cover transition-transform duration-500 group-hover:scale-105"
                   />
 
@@ -196,6 +233,7 @@ const Gallery = () => {
                 >
                   <video
                     src={video.video}
+                    aria-label={`Christ Life community video ${video.id}`}
                     controls
                     playsInline
                     preload="metadata"

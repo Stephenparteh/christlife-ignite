@@ -105,17 +105,19 @@ const Index = () => {
               Who We Are
             </h2>
             <p className="text-lg md:text-xl text-foreground leading-relaxed">
-              Christ Life is a Christian youth group dedicated to digitally,
-              discovering, following, and sharing Christ. We meet weekly for
-              Bible studies and organize events to build fellowship and faith in
-              our community.
+              Christ Life is a Christian youth organization in Liberia
+              dedicated to discovering, following, and sharing Christ, both
+              online and in person. We meet weekly for Bible study and prayer
+              and organize events that build fellowship and faith in our
+              Christian community.
             </p>
           </div>
 
           <div className="flex justify-center">
             <img
               src={groupPhoto2}
-              alt="Christ Life Youth Group"
+              alt="Christ Life youth community members gathered at an outdoor fellowship picnic in Liberia"
+              loading="lazy"
               className="rounded-xl shadow-xl w-full max-w-lg md:max-w-3xl object-cover"
             />
           </div>
@@ -184,7 +186,14 @@ const Index = () => {
 
               <p className="text-lg text-muted-foreground leading-relaxed">
                 Join us thrice a week for Bible study, honest discussion, and
-                fellowship as we grow together in Christ.
+                fellowship as we grow together in Christ.{" "}
+                <Link
+                  to="/bible-study"
+                  className="text-primary underline underline-offset-4 hover:text-primary/80"
+                >
+                  Learn how to join our Bible study
+                </Link>
+                .
               </p>
             </div>
 
@@ -322,12 +331,12 @@ const Index = () => {
                   <SwiperSlide key={index}>
                     <div className="max-w-3xl mx-auto text-center px-6 md:px-12">
                       {/* Large quotation mark */}
-                      <div
+                      {/* <div
                         className="text-7xl md:text-8xl leading-none text-primary/20 font-serif mb-2"
                         aria-hidden="true"
                       >
                         “
-                      </div>
+                      </div> */}
 
                       {/* Testimonial */}
                       <blockquote className="text-xl md:text-2xl leading-relaxed text-foreground mb-8">

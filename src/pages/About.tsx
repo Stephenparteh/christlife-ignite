@@ -100,8 +100,9 @@ const About = () => {
             </h1>
 
             <p className="text-xl md:text-2xl text-white/90 leading-relaxed max-w-2xl">
-              Founded to discover, follow, and share Christ through community,
-              Bible study, and authentic fellowship.
+              Christ Life is a Christian organization in Liberia, founded to
+              discover, follow, and share Christ through community, Bible
+              study, and authentic fellowship.
             </p>
           </div>
         </div>
@@ -137,7 +138,14 @@ const About = () => {
                 </p>
 
                 <p>
-                  Through weekly Bible studies every Tuesday and Thursday (10-11
+                  Through weekly{" "}
+                  <Link
+                    to="/bible-study"
+                    className="text-primary underline underline-offset-4 hover:text-primary/80"
+                  >
+                    Bible studies
+                  </Link>{" "}
+                  every Monday, Tuesday and Thursday (10-11
                   PM via Google Meet/WhatsApp), we dive deep into God's Word and
                   support each other's spiritual growth journey.
                 </p>
@@ -163,7 +171,8 @@ const About = () => {
               <div className="overflow-hidden rounded-2xl">
                 <img
                   src={groupPhoto1}
-                  alt="Christ Life community"
+                  alt="Two people embracing in front of a stage with a drum kit at a Christ Life community gathering"
+                  loading="lazy"
                   className="w-full aspect-[4/3] object-cover"
                 />
               </div>
@@ -264,7 +273,8 @@ const About = () => {
                   {" "}
                   <img
                     src={member.image}
-                    alt={member.name}
+                    alt={`Portrait of ${member.name}`}
+                    loading="lazy"
                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                   />
                   {/* Hover Information */}

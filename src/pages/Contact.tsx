@@ -171,10 +171,10 @@ const Contact = () => {
                   </p>
                 </a>
 
-                <a href="mailto:info@christlife.org" className="group">
+                <a href="mailto:info@pjsaydyu@gmail.com" className="group">
                   <p className="text-sm text-muted-foreground mb-2">Email</p>
                   <p className="text-lg font-medium text-foreground group-hover:text-primary transition-colors">
-                    info@christlife.org
+                    pjsaydyu@gmail.com
                   </p>
                 </a>
 
@@ -183,7 +183,7 @@ const Contact = () => {
 
                   <div className="flex gap-5">
                     <a
-                      href="#"
+                      href="https://www.facebook.com/share/1DDubvaPmz/?milbextid=wwXlfr"
                       className="text-lg font-medium text-foreground hover:text-primary transition-colors"
                     >
                       Facebook
