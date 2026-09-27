@@ -16,6 +16,9 @@ import GetInvolved from "./pages/GetInvolved";
 import NotFound from "./pages/NotFound";
 import ScrollToTop from "./components/ScrollToTop";
 import Seo from "./components/Seo";
+import Login from "./pages/Login";
+import { AuthProvider } from "@/auth/AuthProvider";
+import RequireAuth from "@/auth/RequireAuth";
 import DashboardLayout from "@/components/dashboard/DashboardLayout";
 import DashboardOverview from "./pages/dashboard/DashboardOverview";
 import DashboardEvents from "./pages/dashboard/DashboardEvents";
@@ -47,35 +50,48 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
-        <ScrollToTop />
-        <Routes>
-          <Route element={<PublicLayout />}>
-            <Route path="/" element={<Index />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/events" element={<Events />} />
-            <Route path="/bible-study" element={<BibleStudy />} />
-            <Route path="/gallery" element={<Gallery />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="/get-involved" element={<GetInvolved />} />
-            {/* ADD ALL CUSTOM PUBLIC ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-            <Route path="*" element={<NotFound />} />
-          </Route>
+        <AuthProvider>
+          <ScrollToTop />
+          <Routes>
+            <Route element={<PublicLayout />}>
+              <Route path="/" element={<Index />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/events" element={<Events />} />
+              <Route path="/bible-study" element={<BibleStudy />} />
+              <Route path="/gallery" element={<Gallery />} />
+              <Route path="/contact" element={<Contact />} />
+              <Route path="/get-involved" element={<GetInvolved />} />
+              {/* ADD ALL CUSTOM PUBLIC ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+              <Route path="*" element={<NotFound />} />
+            </Route>
 
-          {/*
-            Admin dashboard — Milestone 1 (UI foundation only).
-            No authentication yet: these routes are reachable by anyone who
-            knows the URL until Milestone 2 adds route protection.
-          */}
-          <Route path="/dashboard" element={<DashboardLayout />}>
-            <Route index element={<DashboardOverview />} />
-            <Route path="events" element={<DashboardEvents />} />
-            <Route path="bible-study" element={<DashboardBibleStudy />} />
-            <Route path="gallery" element={<DashboardGallery />} />
-            <Route path="testimonials" element={<DashboardTestimonials />} />
-            <Route path="contact" element={<DashboardContact />} />
-            <Route path="settings" element={<DashboardSettings />} />
-          </Route>
-        </Routes>
+            {/* Admin sign-in — its own minimal layout, no public chrome. */}
+            <Route path="/login" element={<Login />} />
+
+            {/*
+              Admin dashboard — Milestone 2 adds real route protection.
+              RequireAuth blocks the UI on the frontend; the backend's
+              requireAuth middleware is the actual security boundary for
+              the data itself (see server/src/middleware/auth.ts).
+            */}
+            <Route
+              path="/dashboard"
+              element={
+                <RequireAuth>
+                  <DashboardLayout />
+                </RequireAuth>
+              }
+            >
+              <Route index element={<DashboardOverview />} />
+              <Route path="events" element={<DashboardEvents />} />
+              <Route path="bible-study" element={<DashboardBibleStudy />} />
+              <Route path="gallery" element={<DashboardGallery />} />
+              <Route path="testimonials" element={<DashboardTestimonials />} />
+              <Route path="contact" element={<DashboardContact />} />
+              <Route path="settings" element={<DashboardSettings />} />
+            </Route>
+          </Routes>
+        </AuthProvider>
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>

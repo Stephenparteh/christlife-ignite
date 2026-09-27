@@ -50,6 +50,25 @@ npm run dev
 - Click on "New codespace" to launch a new Codespace environment.
 - Edit files directly within the Codespace and commit and push your changes once you're done.
 
+## Admin dashboard (`/dashboard`)
+
+This project also has an authenticated admin dashboard at `/dashboard`,
+backed by a separate Express + MongoDB Atlas API in [`server/`](server/README.md).
+
+To run it locally, in two terminals:
+
+```sh
+# Terminal 1 — API (see server/README.md for one-time setup: Atlas + admin account)
+cd server && npm install && npm run dev
+
+# Terminal 2 — frontend (this repo's usual dev server)
+npm run dev
+```
+
+Then sign in at `http://localhost:8080/login`. See [`server/README.md`](server/README.md)
+for environment variables, how the first admin account is created, and how
+authentication works.
+
 ## What technologies are used for this project?
 
 This project is built with:

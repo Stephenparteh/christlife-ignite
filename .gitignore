@@ -12,6 +12,11 @@ dist
 dist-ssr
 *.local
 
+# Environment files with real secrets (MongoDB URI, JWT secret, admin seed
+# credentials, etc). server/.env.example is the tracked, placeholder-only
+# template — never commit the real server/.env.
+.env
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

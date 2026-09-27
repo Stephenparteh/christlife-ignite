@@ -4,6 +4,7 @@ import { SidebarProvider, SidebarInset } from "@/components/ui/sidebar";
 import DashboardSidebar from "@/components/dashboard/DashboardSidebar";
 import DashboardHeader from "@/components/dashboard/DashboardHeader";
 import { findDashboardNavItem } from "@/components/dashboard/dashboard-nav";
+import { useNoIndex } from "@/hooks/useNoIndex";
 
 /**
  * Layout for every /dashboard/* route. This is intentionally separate from
@@ -11,24 +12,19 @@ import { findDashboardNavItem } from "@/components/dashboard/dashboard-nav";
  * part of the public website's visual chrome, even though it reuses the
  * same design tokens and components.
  *
- * The admin area is not meant to be indexed by search engines; it manages
- * its own <title>/robots tag here rather than reusing the public SEO
- * pipeline from src/config/seo.ts, which is out of scope for this
- * milestone.
+ * The admin area is not meant to be indexed by search engines (useNoIndex)
+ * and manages its own <title> here, rather than reusing the public SEO
+ * pipeline from src/config/seo.ts, which is out of scope for the dashboard.
+ *
+ * Route-level protection lives one level up, where this component is used
+ * as the child of <RequireAuth> (see App.tsx) — by the time this renders,
+ * an authenticated session has already been confirmed.
  */
 const DashboardLayout = () => {
   const location = useLocation();
   const currentItem = findDashboardNavItem(location.pathname);
 
-  useEffect(() => {
-    const meta = document.createElement("meta");
-    meta.name = "robots";
-    meta.content = "noindex, nofollow";
-    document.head.appendChild(meta);
-    return () => {
-      meta.remove();
-    };
-  }, []);
+  useNoIndex();
 
   useEffect(() => {
     const previousTitle = document.title;
