@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -24,22 +25,21 @@ import { Autoplay, Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/navigation";
+import { testimonialsService } from "@/services/testimonials";
+import { useBibleStudy } from "@/hooks/useBibleStudy";
+import PublicContentState from "@/components/PublicContentState";
 
 const Index = () => {
-  const testimonials = [
-    {
-      quote:
-        "Joining Christ life has strengthened my faith, my prayer life, and my relationship with God. The sermons and the people here have encouraged me a lot. I'm growing, and I'm thankful for how God is using this organization in my life",
-      author: "Emily Emily",
-      role: "Member",
-    },
-    {
-      quote:
-        "Being part of Christ's life has helped strengthen my communication and relationship with God",
-      author: "Thomas Surprise Dugbeh Jr.",
-      role: "Member",
-    },
-  ];
+  const { bibleStudy } = useBibleStudy();
+  const {
+    data: testimonials,
+    isLoading: testimonialsLoading,
+    isError: testimonialsError,
+  } = useQuery({
+    queryKey: ["testimonials", "public"],
+    queryFn: testimonialsService.list,
+    staleTime: 60 * 1000,
+  });
 
   return (
     <div className="min-h-screen">
@@ -72,7 +72,7 @@ const Index = () => {
                 className="bg-primary text-primary-foreground hover:bg-primary/90 text-lg px-8 py-6"
               >
                 <Link
-                  to="https://meet.google.com/see-egjy-ruo"
+                  to={bibleStudy.meetUrl}
                   className="flex items-center"
                   target="_blank"
                   rel="noopener noreferrer"
@@ -199,101 +199,45 @@ const Index = () => {
 
             {/* Study schedule */}
             <div className="">
-              {/* Monday */}
-              <div className="py-8 md:py-10 grid md:grid-cols-[180px_1fr_auto] gap-6 md:gap-10 items-center">
-                <div>
-                  <p className="text-sm uppercase tracking-widest text-muted-foreground mb-1">
-                    Every
-                  </p>
-                  <h3 className="text-3xl font-heading font-bold text-primary">
-                    Monday
-                  </h3>
+              {bibleStudy.sessions.map((session, index) => (
+                <div key={`${session.day}-${session.title}`}>
+                  <div className="py-8 md:py-10 grid md:grid-cols-[180px_1fr_auto] gap-6 md:gap-10 items-center">
+                    <div>
+                      <p className="text-sm uppercase tracking-widest text-muted-foreground mb-1">
+                        Every
+                      </p>
+                      <h3 className="text-3xl font-heading font-bold text-primary">
+                        {session.day}
+                      </h3>
+                    </div>
+
+                    <div>
+                      <p className="text-xl font-semibold text-foreground mb-2">
+                        {session.title}
+                      </p>
+                      <p className="text-muted-foreground">
+                        {[bibleStudy.time, bibleStudy.platform].filter(Boolean).join(" · ")}
+                      </p>
+                    </div>
+
+                    <div className="md:text-right">
+                      <Button
+                        asChild
+                        className="bg-primary text-primary-foreground hover:bg-primary/90"
+                        size="lg"
+                      >
+                        <a href={bibleStudy.meetUrl} target="_blank" rel="noopener noreferrer">
+                          {session.title.toLowerCase().includes("prayer") ? "Join Prayer" : "Join Study"}
+                        </a>
+                      </Button>
+                    </div>
+                  </div>
+
+                  {index !== bibleStudy.sessions.length - 1 && (
+                    <div className="border-t border-border" />
+                  )}
                 </div>
-
-                <div>
-                  <p className="text-xl font-semibold text-foreground mb-2">
-                    Ladies Bible Study
-                  </p>
-                  <p className="text-muted-foreground">
-                    10:00 - 11:00 PM · Google Meet / WhatsApp
-                  </p>
-                </div>
-
-                <div className="md:text-right">
-                  <Button
-                    className="bg-primary text-primary-foreground hover:bg-primary/90"
-                    size="lg"
-                  >
-                    Join Study
-                  </Button>
-                </div>
-              </div>
-
-              {/* Divider */}
-              <div className="border-t border-border" />
-
-              {/* Tuesday */}
-              <div className="py-8 md:py-10 grid md:grid-cols-[180px_1fr_auto] gap-6 md:gap-10 items-center">
-                <div>
-                  <p className="text-sm uppercase tracking-widest text-muted-foreground mb-1">
-                    Every
-                  </p>
-                  <h3 className="text-3xl font-heading font-bold text-primary">
-                    Tuesday
-                  </h3>
-                </div>
-
-                <div>
-                  <p className="text-xl font-semibold text-foreground mb-2">
-                    Bible Study
-                  </p>
-                  <p className="text-muted-foreground">
-                    10:00 - 11:00 PM · Google Meet / WhatsApp
-                  </p>
-                </div>
-
-                <div className="md:text-right">
-                  <Button
-                    className="bg-primary text-primary-foreground hover:bg-primary/90"
-                    size="lg"
-                  >
-                    Join Study
-                  </Button>
-                </div>
-              </div>
-
-              {/* Divider */}
-              <div className="border-t border-border" />
-
-              {/* Thursday */}
-              <div className="py-8 md:py-10 grid md:grid-cols-[180px_1fr_auto] gap-6 md:gap-10 items-center">
-                <div>
-                  <p className="text-sm uppercase tracking-widest text-muted-foreground mb-1">
-                    Every
-                  </p>
-                  <h3 className="text-3xl font-heading font-bold text-primary">
-                    Thursday
-                  </h3>
-                </div>
-
-                <div>
-                  <p className="text-xl font-semibold text-foreground mb-2">
-                    Prayer
-                  </p>
-                  <p className="text-muted-foreground">
-                    10:00 - 11:00 PM · Google Meet / WhatsApp
-                  </p>
-                </div>
-
-                <div className="md:text-right">
-                  <Button
-                    className="bg-primary text-primary-foreground hover:bg-primary/90"
-                    size="lg"
-                  >
-                    Join Prayer
-                  </Button>
-                </div>
-              </div>
+              ))}
             </div>
           </div>
         </div>
@@ -311,6 +255,15 @@ const Index = () => {
             </div>
 
             {/* Testimonial Carousel */}
+            {testimonialsLoading ? (
+              <PublicContentState variant="loading" title="Loading stories…" />
+            ) : testimonialsError ? (
+              <PublicContentState
+                variant="error"
+                title="Stories aren't available right now"
+                description="Please check back in a little while."
+              />
+            ) : !testimonials || testimonials.length === 0 ? null : (
             <div className="relative">
               <Swiper
                 modules={[Autoplay, Navigation]}
@@ -375,6 +328,7 @@ const Index = () => {
                 </button>
               </div>
             </div>
+            )}
           </div>
         </div>
       </section>
@@ -398,7 +352,7 @@ const Index = () => {
                 className="bg-primary text-primary-foreground hover:bg-primary/90 text-lg px-8 py-6"
               >
                 <Link
-                  to="https://meet.google.com/see-egjy-ruo"
+                  to={bibleStudy.meetUrl}
                   className="flex items-center"
                   target="_blank"
                   rel="noopener noreferrer"

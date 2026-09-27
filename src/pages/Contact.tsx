@@ -11,8 +11,11 @@ import {
   ArrowUpRight,
 } from "lucide-react";
 import groupImg1 from "@/assets/group1.jpeg";
+import { useSiteSettings } from "@/hooks/useSiteSettings";
 
 const Contact = () => {
+  const { settings } = useSiteSettings();
+
   return (
     <div className="min-h-screen bg-background">
       {/* Hero Section */}
@@ -161,9 +164,10 @@ const Contact = () => {
               {/* Contact Links */}
               <div className="mt-10 grid sm:grid-cols-3 gap-8">
                 <a
-                  href="https://chat.whatsapp.com/IrsmtYoFqur9dkK1dSLVhu?s=cl&p=i&mlu=4"
+                  href={settings.whatsappChannelUrl}
                   className="group"
                   target="_blank"
+                  rel="noopener noreferrer"
                 >
                   <p className="text-sm text-muted-foreground mb-2">WhatsApp</p>
                   <p className="text-lg font-medium text-foreground group-hover:text-primary transition-colors">
@@ -171,10 +175,10 @@ const Contact = () => {
                   </p>
                 </a>
 
-                <a href="mailto:info@pjsaydyu@gmail.com" className="group">
+                <a href={`mailto:${settings.email}`} className="group">
                   <p className="text-sm text-muted-foreground mb-2">Email</p>
                   <p className="text-lg font-medium text-foreground group-hover:text-primary transition-colors">
-                    pjsaydyu@gmail.com
+                    {settings.email}
                   </p>
                 </a>
 
@@ -183,7 +187,9 @@ const Contact = () => {
 
                   <div className="flex gap-5">
                     <a
-                      href="https://www.facebook.com/share/1DDubvaPmz/?milbextid=wwXlfr"
+                      href={settings.facebookUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
                       className="text-lg font-medium text-foreground hover:text-primary transition-colors"
                     >
                       Facebook

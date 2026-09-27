@@ -1,21 +1,48 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { toast } from "sonner";
 import { Settings as SettingsIcon } from "lucide-react";
 import PageHeader from "@/components/dashboard/PageHeader";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { toast } from "sonner";
-import { mockOrganizationSettings } from "@/data/dashboardMockData";
+import { ApiClientError } from "@/lib/apiClient";
+import { settingsService } from "@/services/settings";
+
+const QUERY_KEY = ["settings", "dashboard"];
+
+const errorMessage = (error: unknown) =>
+  error instanceof ApiClientError ? error.message : "Something went wrong. Please try again.";
 
 const DashboardSettings = () => {
-  const [name, setName] = useState<string>(mockOrganizationSettings.name);
-  const [tagline, setTagline] = useState<string>(mockOrganizationSettings.tagline);
+  const queryClient = useQueryClient();
+  const { data: settings, isLoading } = useQuery({ queryKey: QUERY_KEY, queryFn: settingsService.get });
+
+  const [name, setName] = useState("");
+  const [tagline, setTagline] = useState("");
+  const [hasLoadedOnce, setHasLoadedOnce] = useState(false);
+
+  useEffect(() => {
+    if (settings && !hasLoadedOnce) {
+      setName(settings.organizationName);
+      setTagline(settings.tagline);
+      setHasLoadedOnce(true);
+    }
+  }, [settings, hasLoadedOnce]);
+
+  const updateMutation = useMutation({
+    mutationFn: settingsService.update,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: QUERY_KEY });
+      queryClient.invalidateQueries({ queryKey: ["settings", "public"] });
+      toast.success("Settings saved.");
+    },
+    onError: (error) => toast.error(errorMessage(error)),
+  });
 
   const handleSave = () => {
-    toast.info("Preview only — nothing was saved.", {
-      description: "This form isn't connected to a database yet.",
-    });
+    updateMutation.mutate({ organizationName: name, tagline });
   };
 
   return (
@@ -31,19 +58,25 @@ const DashboardSettings = () => {
           Shown in the site header, footer, and page titles.
         </p>
 
-        <div className="space-y-5">
-          <div className="space-y-1.5">
-            <Label htmlFor="org-name">Organization name</Label>
-            <Input id="org-name" value={name} onChange={(e) => setName(e.target.value)} />
+        {isLoading ? (
+          <p className="text-sm text-muted-foreground">Loading…</p>
+        ) : (
+          <div className="space-y-5">
+            <div className="space-y-1.5">
+              <Label htmlFor="org-name">Organization name</Label>
+              <Input id="org-name" value={name} onChange={(e) => setName(e.target.value)} />
+            </div>
+            <div className="space-y-1.5">
+              <Label htmlFor="org-tagline">Tagline</Label>
+              <Input id="org-tagline" value={tagline} onChange={(e) => setTagline(e.target.value)} />
+            </div>
           </div>
-          <div className="space-y-1.5">
-            <Label htmlFor="org-tagline">Tagline</Label>
-            <Input id="org-tagline" value={tagline} onChange={(e) => setTagline(e.target.value)} />
-          </div>
-        </div>
+        )}
 
         <div className="mt-6 flex justify-end">
-          <Button onClick={handleSave}>Save changes</Button>
+          <Button onClick={handleSave} disabled={isLoading || updateMutation.isPending}>
+            {updateMutation.isPending ? "Saving…" : "Save changes"}
+          </Button>
         </div>
       </section>
 

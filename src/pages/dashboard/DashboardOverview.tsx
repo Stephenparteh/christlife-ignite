@@ -1,10 +1,11 @@
 import { Link } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
+import { formatDistanceToNow } from "date-fns";
 import {
   CalendarDays,
   BookOpen,
   Images,
   MessageSquareQuote,
-  Info,
   Clock,
   Plus,
 } from "lucide-react";
@@ -12,13 +13,10 @@ import PageHeader from "@/components/dashboard/PageHeader";
 import StatCard from "@/components/dashboard/StatCard";
 import EmptyState from "@/components/dashboard/EmptyState";
 import { Button } from "@/components/ui/button";
-import {
-  mockEvents,
-  mockBibleStudySessions,
-  mockGalleryItems,
-  mockTestimonials,
-  mockRecentActivity,
-} from "@/data/dashboardMockData";
+import { eventsService } from "@/services/events";
+import { galleryService } from "@/services/gallery";
+import { testimonialsService } from "@/services/testimonials";
+import { bibleStudyService } from "@/services/bibleStudy";
 
 const quickActions = [
   { label: "Add Event", to: "/dashboard/events", icon: CalendarDays },
@@ -28,7 +26,24 @@ const quickActions = [
 ];
 
 const DashboardOverview = () => {
-  const publishedEvents = mockEvents.filter((e) => e.status === "published").length;
+  const events = useQuery({ queryKey: ["events", "dashboard"], queryFn: eventsService.list });
+  const gallery = useQuery({ queryKey: ["gallery", "dashboard"], queryFn: galleryService.list });
+  const testimonials = useQuery({ queryKey: ["testimonials", "dashboard"], queryFn: testimonialsService.list });
+  const bibleStudy = useQuery({ queryKey: ["bible-study", "dashboard"], queryFn: bibleStudyService.get });
+
+  const isLoading = events.isLoading || gallery.isLoading || testimonials.isLoading || bibleStudy.isLoading;
+
+  // "Recently updated" is real data — each record's own updatedAt — not a
+  // fabricated activity log (Milestone 3 explicitly doesn't add audit logs).
+  const recentlyUpdated = [
+    ...(events.data ?? []).map((e) => ({ label: "Event", target: e.title, updatedAt: e.updatedAt })),
+    ...(gallery.data ?? []).map((g) => ({ label: "Gallery item", target: g.title, updatedAt: g.updatedAt })),
+    ...(testimonials.data ?? []).map((t) => ({ label: "Testimonial", target: t.author, updatedAt: t.updatedAt })),
+  ]
+    .sort((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime())
+    .slice(0, 5);
+
+  const publishedEvents = events.data?.filter((e) => e.published).length ?? 0;
 
   return (
     <div>
@@ -37,37 +52,28 @@ const DashboardOverview = () => {
         description="A quick look at your Christ Life website content."
       />
 
-      <div className="mb-6 flex items-start gap-3 rounded-lg border border-border bg-muted/40 p-4 text-sm text-muted-foreground">
-        <Info className="mt-0.5 h-4 w-4 shrink-0" aria-hidden="true" />
-        <p className="min-w-0">
-          The numbers and activity below are sample development data, not
-          live figures. They will update automatically once the dashboard is
-          connected to the database in a later milestone.
-        </p>
-      </div>
-
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
         <StatCard
           label="Total Events"
-          value={mockEvents.length}
+          value={isLoading ? "…" : events.data?.length ?? 0}
           icon={CalendarDays}
-          hint={`${publishedEvents} published`}
+          hint={isLoading ? undefined : `${publishedEvents} published`}
         />
         <StatCard
           label="Bible Study"
-          value={`${mockBibleStudySessions.length}x`}
+          value={isLoading ? "…" : `${bibleStudy.data?.sessions.length ?? 0}x`}
           icon={BookOpen}
           hint="sessions per week"
         />
         <StatCard
           label="Gallery Items"
-          value={mockGalleryItems.length}
+          value={isLoading ? "…" : gallery.data?.length ?? 0}
           icon={Images}
-          hint={`${mockGalleryItems.filter((g) => g.type === "video").length} videos`}
+          hint={isLoading ? undefined : `${gallery.data?.filter((g) => g.type === "video").length ?? 0} videos`}
         />
         <StatCard
           label="Testimonials"
-          value={mockTestimonials.length}
+          value={isLoading ? "…" : testimonials.data?.length ?? 0}
           icon={MessageSquareQuote}
           hint="shown on homepage"
         />
@@ -76,27 +82,29 @@ const DashboardOverview = () => {
       <div className="mt-10 grid grid-cols-1 gap-8 lg:grid-cols-3">
         <div className="lg:col-span-2">
           <h2 className="mb-4 font-heading text-lg font-semibold text-foreground">
-            Recent Activity
+            Recently Updated
           </h2>
 
-          {mockRecentActivity.length === 0 ? (
+          {isLoading ? (
+            <p className="py-6 text-sm text-muted-foreground">Loading…</p>
+          ) : recentlyUpdated.length === 0 ? (
             <EmptyState
               icon={Clock}
-              title="No activity yet"
+              title="No content yet"
               description="Updates to events, the gallery, and testimonials will show up here."
             />
           ) : (
             <ul className="divide-y divide-border rounded-lg border border-border">
-              {mockRecentActivity.map((activity) => (
-                <li key={activity.id} className="flex items-center justify-between gap-4 p-4">
+              {recentlyUpdated.map((activity, index) => (
+                <li key={index} className="flex items-center justify-between gap-4 p-4">
                   <div className="min-w-0">
-                    <p className="text-sm text-foreground">
+                    <p className="truncate text-sm text-foreground">
                       {activity.label}
                       <span className="text-muted-foreground"> — {activity.target}</span>
                     </p>
                   </div>
                   <span className="shrink-0 text-xs text-muted-foreground">
-                    {activity.relativeTime}
+                    {formatDistanceToNow(new Date(activity.updatedAt), { addSuffix: true })}
                   </span>
                 </li>
               ))}

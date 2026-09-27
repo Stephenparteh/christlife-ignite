@@ -1,11 +1,13 @@
 import { useState } from "react";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { toast } from "sonner";
 import { Images, Plus, Upload, Video as VideoIcon } from "lucide-react";
 import PageHeader from "@/components/dashboard/PageHeader";
 import EmptyState from "@/components/dashboard/EmptyState";
 import StatusBadge from "@/components/dashboard/StatusBadge";
 import ActionMenu from "@/components/dashboard/ActionMenu";
 import ConfirmDialog from "@/components/dashboard/ConfirmDialog";
-import DevActionDialog from "@/components/dashboard/DevActionDialog";
+import FormDialog from "@/components/dashboard/FormDialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -17,25 +19,116 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { mockGalleryItems, type DashboardGalleryItem } from "@/data/dashboardMockData";
+import { ApiClientError } from "@/lib/apiClient";
+import { galleryService } from "@/services/gallery";
+import type { GalleryItem, GalleryItemInput } from "@/types/cms";
+
+const QUERY_KEY = ["gallery", "dashboard"];
+
+interface GalleryFormState {
+  type: "photo" | "video";
+  title: string;
+  caption: string;
+  mediaUrl: string;
+  thumbnailUrl: string;
+  published: boolean;
+}
+
+const emptyForm = (type: "photo" | "video"): GalleryFormState => ({
+  type,
+  title: "",
+  caption: "",
+  mediaUrl: "",
+  thumbnailUrl: "",
+  published: true,
+});
+
+const toFormState = (item: GalleryItem): GalleryFormState => ({
+  type: item.type,
+  title: item.title,
+  caption: item.caption,
+  mediaUrl: item.mediaUrl,
+  thumbnailUrl: item.thumbnailUrl,
+  published: item.published,
+});
+
+const errorMessage = (error: unknown) =>
+  error instanceof ApiClientError ? error.message : "Something went wrong. Please try again.";
 
 const DashboardGallery = () => {
-  const [items] = useState<DashboardGalleryItem[]>(mockGalleryItems);
-  const [activeTab, setActiveTab] = useState<"photo" | "video">("photo");
-  const [editingItem, setEditingItem] = useState<DashboardGalleryItem | null>(null);
-  const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const [deletingItem, setDeletingItem] = useState<DashboardGalleryItem | null>(null);
+  const queryClient = useQueryClient();
+  const { data: items, isLoading, isError } = useQuery({
+    queryKey: QUERY_KEY,
+    queryFn: galleryService.list,
+  });
 
-  const photos = items.filter((item) => item.type === "photo");
-  const videos = items.filter((item) => item.type === "video");
-  const visible = activeTab === "photo" ? photos : videos;
+  const [activeTab, setActiveTab] = useState<"photo" | "video">("photo");
+  const [editingItem, setEditingItem] = useState<GalleryItem | null>(null);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [deletingItem, setDeletingItem] = useState<GalleryItem | null>(null);
+  const [form, setForm] = useState<GalleryFormState>(emptyForm("photo"));
+
+  const invalidate = () => queryClient.invalidateQueries({ queryKey: QUERY_KEY });
+
+  const createMutation = useMutation({
+    mutationFn: (input: Partial<GalleryItemInput>) => galleryService.create(input),
+    onSuccess: () => {
+      invalidate();
+      toast.success("Added to the gallery.");
+    },
+    onError: (error) => toast.error(errorMessage(error)),
+  });
+
+  const updateMutation = useMutation({
+    mutationFn: ({ id, input }: { id: string; input: Partial<GalleryItemInput> }) =>
+      galleryService.update(id, input),
+    onSuccess: () => {
+      invalidate();
+      toast.success("Gallery item updated.");
+    },
+    onError: (error) => toast.error(errorMessage(error)),
+  });
+
+  const deleteMutation = useMutation({
+    mutationFn: (id: string) => galleryService.remove(id),
+    onSuccess: () => {
+      invalidate();
+      toast.success("Gallery item deleted.");
+    },
+    onError: (error) => toast.error(errorMessage(error)),
+  });
+
+  const photos = items?.filter((item) => item.type === "photo") ?? [];
+  const videos = items?.filter((item) => item.type === "video") ?? [];
+  const visibleList = activeTab === "photo" ? photos : videos;
 
   const openAddDialog = () => {
     setEditingItem(null);
+    setForm(emptyForm(activeTab));
     setIsDialogOpen(true);
   };
 
-  const renderGrid = (list: DashboardGalleryItem[], emptyLabel: string) => {
+  const handleSave = async () => {
+    if (editingItem) {
+      await updateMutation.mutateAsync({ id: editingItem._id, input: form });
+    } else {
+      await createMutation.mutateAsync(form);
+    }
+  };
+
+  const renderGrid = (list: GalleryItem[], emptyLabel: string) => {
+    if (isLoading) {
+      return <p className="py-10 text-center text-sm text-muted-foreground">Loading…</p>;
+    }
+    if (isError) {
+      return (
+        <EmptyState
+          icon={activeTab === "photo" ? Images : VideoIcon}
+          title="Couldn't load the gallery"
+          description="Something went wrong talking to the server. Try refreshing the page."
+        />
+      );
+    }
     if (list.length === 0) {
       return (
         <EmptyState
@@ -55,13 +148,13 @@ const DashboardGallery = () => {
     return (
       <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
         {list.map((item) => (
-          <div key={item.id} className="group relative overflow-hidden rounded-lg border border-border">
+          <div key={item._id} className="group relative overflow-hidden rounded-lg border border-border">
             <div className="relative aspect-square bg-muted">
-              <img
-                src={item.thumbnail}
-                alt=""
-                className="h-full w-full object-cover"
-              />
+              {item.type === "photo" ? (
+                <img src={item.mediaUrl} alt="" className="h-full w-full object-cover" />
+              ) : (
+                <video src={item.mediaUrl} className="h-full w-full object-cover" muted preload="metadata" />
+              )}
               {item.type === "video" && (
                 <div className="absolute inset-0 flex items-center justify-center bg-black/25">
                   <VideoIcon className="h-6 w-6 text-white" aria-hidden="true" />
@@ -72,6 +165,7 @@ const DashboardGallery = () => {
                   label={item.title}
                   onEdit={() => {
                     setEditingItem(item);
+                    setForm(toFormState(item));
                     setIsDialogOpen(true);
                   }}
                   onDelete={() => setDeletingItem(item)}
@@ -80,7 +174,7 @@ const DashboardGallery = () => {
             </div>
             <div className="flex items-center justify-between gap-2 p-2.5">
               <p className="min-w-0 truncate text-sm text-foreground">{item.title}</p>
-              <StatusBadge status={item.status} />
+              <StatusBadge status={item.published ? "published" : "draft"} />
             </div>
           </div>
         ))}
@@ -114,24 +208,39 @@ const DashboardGallery = () => {
         </TabsContent>
       </Tabs>
 
-      <DevActionDialog
+      <FormDialog
         open={isDialogOpen}
         onOpenChange={setIsDialogOpen}
         title={editingItem ? "Edit Media" : `Add ${activeTab === "photo" ? "Photo" : "Video"}`}
         saveLabel={editingItem ? "Save changes" : "Add"}
+        onSave={handleSave}
       >
         <div className="space-y-1.5">
           <Label htmlFor="gallery-title">Title</Label>
           <Input
             id="gallery-title"
-            defaultValue={editingItem?.title}
+            value={form.title}
+            onChange={(e) => setForm({ ...form, title: e.target.value })}
             placeholder="e.g. Fellowship gathering"
           />
         </div>
 
         <div className="space-y-1.5">
+          <Label htmlFor="gallery-caption">Caption</Label>
+          <Input
+            id="gallery-caption"
+            value={form.caption}
+            onChange={(e) => setForm({ ...form, caption: e.target.value })}
+            placeholder="What does this show?"
+          />
+        </div>
+
+        <div className="space-y-1.5">
           <Label htmlFor="gallery-type">Type</Label>
-          <Select defaultValue={editingItem?.type ?? activeTab}>
+          <Select
+            value={form.type}
+            onValueChange={(value) => setForm({ ...form, type: value as "photo" | "video" })}
+          >
             <SelectTrigger id="gallery-type">
               <SelectValue />
             </SelectTrigger>
@@ -143,8 +252,37 @@ const DashboardGallery = () => {
         </div>
 
         <div className="space-y-1.5">
+          <Label htmlFor="gallery-media-url">{form.type === "photo" ? "Image" : "Video"} URL</Label>
+          <Input
+            id="gallery-media-url"
+            value={form.mediaUrl}
+            onChange={(e) => setForm({ ...form, mediaUrl: e.target.value })}
+            placeholder="/gallery/photos/example.jpeg or https://…"
+          />
+          <div className="flex items-center gap-2 pt-1 text-xs text-muted-foreground">
+            <Upload className="h-3.5 w-3.5" aria-hidden="true" />
+            File upload isn't available yet — paste a URL or site path.
+          </div>
+        </div>
+
+        {form.type === "video" && (
+          <div className="space-y-1.5">
+            <Label htmlFor="gallery-thumbnail-url">Thumbnail URL (optional)</Label>
+            <Input
+              id="gallery-thumbnail-url"
+              value={form.thumbnailUrl}
+              onChange={(e) => setForm({ ...form, thumbnailUrl: e.target.value })}
+              placeholder="/gallery/photos/example.jpeg"
+            />
+          </div>
+        )}
+
+        <div className="space-y-1.5">
           <Label htmlFor="gallery-status">Status</Label>
-          <Select defaultValue={editingItem?.status ?? "draft"}>
+          <Select
+            value={form.published ? "published" : "draft"}
+            onValueChange={(value) => setForm({ ...form, published: value === "published" })}
+          >
             <SelectTrigger id="gallery-status">
               <SelectValue />
             </SelectTrigger>
@@ -154,24 +292,16 @@ const DashboardGallery = () => {
             </SelectContent>
           </Select>
         </div>
-
-        {!editingItem && (
-          <div className="space-y-1.5">
-            <Label>File</Label>
-            <div className="flex flex-col items-center gap-2 rounded-md border border-dashed border-border p-6 text-center text-muted-foreground">
-              <Upload className="h-5 w-5" aria-hidden="true" />
-              <p className="text-sm">File upload isn't connected yet.</p>
-              <input type="file" disabled aria-label="File upload (not yet available)" className="text-xs" />
-            </div>
-          </div>
-        )}
-      </DevActionDialog>
+      </FormDialog>
 
       <ConfirmDialog
         open={!!deletingItem}
         onOpenChange={(open) => !open && setDeletingItem(null)}
         title="Delete this item?"
-        description={`"${deletingItem?.title}" will be removed from the gallery.`}
+        description={`"${deletingItem?.title}" will be permanently removed from the gallery. This cannot be undone.`}
+        onConfirm={async () => {
+          if (deletingItem) await deleteMutation.mutateAsync(deletingItem._id);
+        }}
       />
     </div>
   );

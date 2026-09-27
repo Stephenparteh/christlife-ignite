@@ -1,6 +1,7 @@
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
-import type { ContentStatus } from "@/data/dashboardMockData";
+
+export type ContentStatus = "published" | "draft";
 
 const STATUS_LABEL: Record<ContentStatus, string> = {
   published: "Published",

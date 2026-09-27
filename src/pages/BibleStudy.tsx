@@ -1,44 +1,10 @@
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import {
-  BookOpen,
-  Clock,
-  Users,
-  MessageCircle,
-  Calendar,
-  Heart,
-  Lightbulb,
-  ArrowRight,
-} from "lucide-react";
+import { Clock, MessageCircle, Calendar } from "lucide-react";
 import groupImg1 from "@/assets/group1.jpeg";
+import { useBibleStudy } from "@/hooks/useBibleStudy";
 
 const BibleStudy = () => {
-  const studyFeatures = [
-    {
-      icon: BookOpen,
-      title: "Study Scripture",
-      description:
-        "We explore God's Word together and seek to understand how Scripture applies to our lives.",
-    },
-    {
-      icon: Users,
-      title: "Discuss Together",
-      description:
-        "Everyone is encouraged to share questions, thoughts, and insights during our sessions.",
-    },
-    {
-      icon: Heart,
-      title: "Pray Together",
-      description:
-        "We make time to pray for one another and grow together in our relationship with Christ.",
-    },
-    {
-      icon: Lightbulb,
-      title: "Live It Out",
-      description:
-        "Our goal is not only to learn God's Word, but to put what we learn into practice.",
-    },
-  ];
+  const { bibleStudy, isLoading } = useBibleStudy();
 
   return (
     <div className="min-h-screen bg-background">
@@ -61,14 +27,6 @@ const BibleStudy = () => {
               Liberia, with Scripture, discussion, and prayer as we grow
               together in Christ.
             </p>
-
-            {/* <Button
-              size="lg"
-              className="bg-white text-primary hover:bg-white/90 text-lg px-8 py-6"
-            >
-              <MessageCircle className="mr-2 h-5 w-5" />
-              Join Study Group
-            </Button> */}
           </div>
         </div>
       </section>
@@ -80,133 +38,58 @@ const BibleStudy = () => {
             <h2 className="text-3xl md:text-5xl font-heading font-bold text-foreground mb-5">
               Join Our Bible Study Thrice a Week
             </h2>
-
-            {/* <p className="text-lg text-muted-foreground">
-              Set aside an hour to study God's Word, ask questions, pray, and
-              connect with the Christ Life community.
-            </p> */}
           </div>
 
-          <div className="max-w-4xl mx-auto border-y border-border">
-            {/* Monday */}
-            <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 py-8 border-b border-border">
-              <div className="flex items-start gap-5">
-                <div className="flex-shrink-0 w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
-                  <Calendar className="h-6 w-6 text-primary" />
-                </div>
+          <div
+            className={`max-w-4xl mx-auto border-y border-border transition-opacity ${
+              isLoading ? "opacity-60" : ""
+            }`}
+          >
+            {bibleStudy.sessions.map((session, index) => (
+              <div
+                key={`${session.day}-${session.title}`}
+                className={`flex flex-col md:flex-row md:items-center justify-between gap-6 py-8 ${
+                  index !== bibleStudy.sessions.length - 1 ? "border-b border-border" : ""
+                }`}
+              >
+                <div className="flex items-start gap-5">
+                  <div className="flex-shrink-0 w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
+                    <Calendar className="h-6 w-6 text-primary" />
+                  </div>
 
-                <div>
-                  <h3 className="text-2xl font-heading font-bold text-foreground mb-2">
-                    Monday Female Bible Study
-                  </h3>
+                  <div>
+                    <h3 className="text-2xl font-heading font-bold text-foreground mb-2">
+                      {session.title}
+                    </h3>
 
-                  <div className="flex flex-wrap items-center gap-4 text-muted-foreground">
-                    <span className="flex items-center gap-2">
-                      <Clock className="h-4 w-4 text-primary" />
-                      10:00 - 11:00 PM
-                    </span>
+                    <div className="flex flex-wrap items-center gap-4 text-muted-foreground">
+                      {bibleStudy.time && (
+                        <span className="flex items-center gap-2">
+                          <Clock className="h-4 w-4 text-primary" />
+                          {bibleStudy.time}
+                        </span>
+                      )}
 
-                    <span className="flex items-center gap-2">
-                      <MessageCircle className="h-4 w-4 text-primary" />
-                      Google Meet / WhatsApp
-                    </span>
+                      {bibleStudy.platform && (
+                        <span className="flex items-center gap-2">
+                          <MessageCircle className="h-4 w-4 text-primary" />
+                          {bibleStudy.platform}
+                        </span>
+                      )}
+                    </div>
                   </div>
                 </div>
-              </div>
 
-              <Button
-                asChild
-                className="bg-primary text-primary-foreground hover:bg-primary/90 w-full md:w-auto"
-              >
-                <a
-                  href="https://meet.google.com/see-egjy-ruo"
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <Button
+                  asChild
+                  className="bg-primary text-primary-foreground hover:bg-primary/90 w-full md:w-auto"
                 >
-                  Get Monday Link
-                </a>
-              </Button>
-            </div>
-
-            {/* Tuesday Schedule */}
-            <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 py-8 border-b border-border">
-              <div className="flex items-start gap-5">
-                <div className="flex-shrink-0 w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
-                  <Calendar className="h-6 w-6 text-primary" />
-                </div>
-
-                <div>
-                  <h3 className="text-2xl font-heading font-bold text-foreground mb-2">
-                    Tuesday Bible Study
-                  </h3>
-
-                  <div className="flex flex-wrap items-center gap-4 text-muted-foreground">
-                    <span className="flex items-center gap-2">
-                      <Clock className="h-4 w-4 text-primary" />
-                      10:00 - 11:00 PM
-                    </span>
-
-                    <span className="flex items-center gap-2">
-                      <MessageCircle className="h-4 w-4 text-primary" />
-                      Google Meet / WhatsApp
-                    </span>
-                  </div>
-                </div>
+                  <a href={bibleStudy.meetUrl} target="_blank" rel="noopener noreferrer">
+                    Get {session.day} Link
+                  </a>
+                </Button>
               </div>
-
-              <Button
-                asChild
-                className="bg-primary text-primary-foreground hover:bg-primary/90 w-full md:w-auto"
-              >
-                <a
-                  href="https://meet.google.com/see-egjy-ruo"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  Get Tuesday Link
-                </a>
-              </Button>
-            </div>
-
-            {/* Thursday */}
-            <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 py-8">
-              <div className="flex items-start gap-5">
-                <div className="flex-shrink-0 w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
-                  <Calendar className="h-6 w-6 text-primary" />
-                </div>
-
-                <div>
-                  <h3 className="text-2xl font-heading font-bold text-foreground mb-2">
-                    Thursday Prayer
-                  </h3>
-
-                  <div className="flex flex-wrap items-center gap-4 text-muted-foreground">
-                    <span className="flex items-center gap-2">
-                      <Clock className="h-4 w-4 text-primary" />
-                      10:00 - 11:00 PM
-                    </span>
-
-                    <span className="flex items-center gap-2">
-                      <MessageCircle className="h-4 w-4 text-primary" />
-                      Google Meet / WhatsApp
-                    </span>
-                  </div>
-                </div>
-              </div>
-
-              <Button
-                asChild
-                className="bg-primary text-primary-foreground hover:bg-primary/90 w-full md:w-auto"
-              >
-                <a
-                  href="https://meet.google.com/see-egjy-ruo"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  Get Thursday Link
-                </a>
-              </Button>
-            </div>
+            ))}
           </div>
         </div>
       </section>
@@ -216,7 +99,6 @@ const BibleStudy = () => {
         <div className="container mx-auto px-4">
           <div className="max-w-5xl mx-auto">
             <div className="text-center mb-14">
-              
               <h2 className="text-3xl md:text-5xl font-heading font-bold text-foreground mb-5">
                 How to Join Our Bible Study
               </h2>
@@ -283,11 +165,7 @@ const BibleStudy = () => {
                 size="lg"
                 className="bg-primary text-primary-foreground hover:bg-primary/90"
               >
-                <a
-                  href="https://chat.whatsapp.com/IrsmtYoFqur9dkK1dSLVhu?s=cl&p=i&mlu=4"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
+                <a href={bibleStudy.whatsappUrl} target="_blank" rel="noopener noreferrer">
                   Join WhatsApp Group
                 </a>
               </Button>
@@ -314,11 +192,7 @@ const BibleStudy = () => {
               size="lg"
               className="bg-primary text-primary-foreground hover:bg-primary/90 text-lg px-8 py-6"
             >
-              <a
-                href="https://chat.whatsapp.com/IrsmtYoFqur9dkK1dSLVhu?s=cl&p=i&mlu=4"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
+              <a href={bibleStudy.whatsappUrl} target="_blank" rel="noopener noreferrer">
                 Join WhatsApp Group
               </a>
             </Button>

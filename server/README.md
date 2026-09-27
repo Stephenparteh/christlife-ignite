@@ -1,11 +1,11 @@
 # Christ Life API
 
-Express + MongoDB Atlas backend for the Christ Life admin dashboard.
-
-As of Milestone 2, this API only handles **authentication** — logging an
-administrator in and out, and reporting who (if anyone) is currently signed
-in. It does not yet manage events, gallery items, testimonials, etc. — that
-CRUD API is Milestone 3, and will reuse the auth middleware built here.
+Express + MongoDB Atlas backend for the Christ Life admin dashboard: real
+authentication (Milestone 2) plus a small CMS for events, the Bible Study
+schedule, gallery items, testimonials, and site/contact settings
+(Milestone 3). Every mutation reuses the same `requireAuth` middleware from
+Milestone 2 — there's still exactly one way in (the admin account created
+by `create-admin`), no public registration.
 
 ## Architecture
 
@@ -86,6 +86,18 @@ same-origin and no CORS configuration is needed for local dev.
    Visit `http://localhost:8080/login` and sign in with the admin account
    from step 4.
 
+7. **Seed the real Christ Life content** (events, testimonials, the Bible
+   Study schedule, contact/settings — the same text/links already on the
+   public site):
+
+   ```sh
+   npm run seed-content
+   ```
+
+   Safe to run anytime: each collection is only seeded while it's
+   completely empty, so this never duplicates or overwrites content an
+   admin has since created or edited through the dashboard.
+
 ## How authentication works
 
 - `POST /api/auth/login` — validates the email/password, looks up the
@@ -107,6 +119,67 @@ same-origin and no CORS configuration is needed for local dev.
   the cookie, verifies the JWT, and attaches `{ id, role }` to `req.user`.
   Milestone 3's CRUD routes should mount this the same way `/me` does,
   rather than re-implementing auth checks.
+
+## The CMS
+
+Content lives in five collections, each following the same shape:
+
+| Collection | Endpoints | Notes |
+| --- | --- | --- |
+| Events | `GET/POST /api/events`, `GET/PATCH/DELETE /api/events/:id` | `featured: boolean` marks the one shown in the public page's "Featured Event" slot |
+| Gallery items | `GET/POST /api/gallery`, `GET/PATCH/DELETE /api/gallery/:id` | One model, `type: "photo" \| "video"` |
+| Testimonials | `GET/POST /api/testimonials`, `GET/PATCH/DELETE /api/testimonials/:id` | |
+| Bible Study | `GET/PATCH /api/bible-study` | Singleton (fixed `_id`) — no create/delete |
+| Site Settings | `GET/PATCH /api/settings` | Singleton (fixed `_id`) — organization/contact/social info |
+
+**Published vs. draft, on the same endpoint.** Events/gallery/testimonials
+have a `published: boolean`. The list/detail GET routes use
+`attachUserIfPresent` (`src/middleware/auth.ts`) instead of `requireAuth`:
+if the request carries a valid session cookie, it sees everything
+(drafts included) — that's what the dashboard's own fetches get, since
+they carry the cookie automatically. Without a valid cookie — the public
+site — the same endpoint silently filters to `published: true` only, and
+`GET /:id` on an unpublished item 404s instead of revealing it exists.
+All create/update/delete routes require `requireAuth` unconditionally.
+
+**The CRUD boilerplate is shared.** `src/utils/crudFactory.ts` builds
+list/getOne/create/update/remove handlers from a Mongoose model + Zod
+schemas, so `src/controllers/events.controller.ts` (etc.) are a few lines
+each. The two singletons (`bibleStudy.controller.ts`, `settings.controller.ts`)
+don't fit that shape (no list, no delete) and are written out directly —
+each does a small "get-or-create" against a fixed `_id` so there is ever
+only one document, instead of needing admins to track a random settings id.
+
+**Media is a URL field, not a file upload.** `GalleryItem.mediaUrl` (and
+`Event.coverImageUrl`) are plain strings — either a site-relative path
+(e.g. `/gallery/photos/group1.jpeg`, served from this repo's `public/`) or
+a full `https://` URL. There is no upload endpoint and no cloud storage
+provider configured. See "Media storage" below for why, and what a real
+upload would need.
+
+**Seeding.** `npm run seed-content` (`src/scripts/seedContent.ts`) inserts
+the real content already on the public site — the actual event
+descriptions, the two real testimonials, the actual Monday/Tuesday/Thursday
+schedule, the real contact/social links — nothing invented. It's gated per
+collection ("only seed while empty"), so it's safe to run again later; it
+just won't do anything once real content exists.
+
+## Media storage
+
+Gallery photos/videos are served as static files from this repo's
+`public/gallery/` (photos and videos that were already shipped with the
+public site, just moved/copied there so they have a stable URL a database
+record can point to — see the repo root's `public/gallery/` folder).
+Anything an admin adds through the dashboard today is entered as a URL,
+not uploaded — there's no file picker wired to a backend upload endpoint.
+
+This was a deliberate Milestone 3 scope decision, not an oversight: adding
+real uploads means picking and paying for a storage provider (S3-compatible
+bucket, Cloudinary, etc.), which needs real credentials this project
+doesn't have yet and shouldn't have invented. The data model is already
+shaped for it — `mediaUrl`/`coverImageUrl` are just strings — so adding
+uploads later means adding an upload endpoint that returns a URL and
+storing that URL in the existing field, not a schema change.
 
 ## Environment variables
 
@@ -133,7 +206,9 @@ Never commit real values for any of these — `server/.env` is gitignored,
 | `npm run build` | Compiles TypeScript to `dist/` |
 | `npm start` | Runs the compiled `dist/index.js` (production) |
 | `npm run create-admin` | One-time admin account creation (see above) |
-| `npm run smoke-test` | End-to-end auth check against an in-memory MongoDB — no Atlas credentials needed. Useful to verify the auth code itself still behaves correctly after a change. |
+| `npm run seed-content` | Seeds the real Christ Life content (see above) |
+| `npm run smoke-test` | End-to-end auth check against an in-memory MongoDB — no Atlas credentials needed |
+| `npm run smoke-test-content` | Same idea, for the CMS endpoints: create/read/update/delete, published-vs-draft filtering, singleton persistence |
 
 ## Security notes (read before deploying)
 

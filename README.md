@@ -53,13 +53,16 @@ npm run dev
 ## Admin dashboard (`/dashboard`)
 
 This project also has an authenticated admin dashboard at `/dashboard`,
-backed by a separate Express + MongoDB Atlas API in [`server/`](server/README.md).
+backed by a separate Express + MongoDB Atlas API in [`server/`](server/README.md),
+that manages the site's events, Bible Study schedule, gallery, testimonials,
+and contact/settings — the public pages read that same content back.
 
 To run it locally, in two terminals:
 
 ```sh
 # Terminal 1 — API (see server/README.md for one-time setup: Atlas + admin account)
 cd server && npm install && npm run dev
+npm run seed-content   # once, to load the real Christ Life content
 
 # Terminal 2 — frontend (this repo's usual dev server)
 npm run dev

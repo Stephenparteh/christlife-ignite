@@ -2,14 +2,16 @@
   "name": "christlife-server",
   "private": true,
   "version": "0.1.0",
-  "description": "Express + MongoDB Atlas API for the Christ Life admin dashboard (auth only in Milestone 2).",
+  "description": "Express + MongoDB Atlas API for the Christ Life admin dashboard (auth + CMS content).",
   "main": "dist/index.js",
   "scripts": {
     "dev": "tsx watch src/index.ts",
     "build": "tsc -p tsconfig.json",
     "start": "node dist/index.js",
     "create-admin": "tsx src/scripts/createAdmin.ts",
-    "smoke-test": "tsx src/scripts/smokeTest.ts"
+    "seed-content": "tsx src/scripts/seedContent.ts",
+    "smoke-test": "tsx src/scripts/smokeTest.ts",
+    "smoke-test-content": "tsx src/scripts/smokeTestContent.ts"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",

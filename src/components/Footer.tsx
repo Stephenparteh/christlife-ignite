@@ -1,8 +1,11 @@
 import { Link } from "react-router-dom";
 import { Heart, Facebook } from "lucide-react";
 import Logo from "@/assets/logo.jpeg";
+import { useSiteSettings } from "@/hooks/useSiteSettings";
 
 const Footer = () => {
+  const { settings } = useSiteSettings();
+  const whatsappTel = settings.whatsappDisplay.replace(/[^\d+]/g, "");
   const quickLinks = [
     { name: "About", path: "/about" },
     { name: "Events", path: "/events" },
@@ -55,22 +58,22 @@ const Footer = () => {
 
                 <div className="space-y-2">
                   <a
-                    href="mailto:pjsaydyu@gmail.com"
+                    href={`mailto:${settings.email}`}
                     className="block text-lg hover:text-white/75 transition-colors"
                   >
-                    pjsaydyu@gmail.com
+                    {settings.email}
                   </a>
 
                   <a
-                    href="tel:+231778282210"
+                    href={`tel:${whatsappTel}`}
                     className="block text-lg hover:text-white/75 transition-colors"
                   >
-                    +231 778 282 210
+                    {settings.whatsappDisplay}
                   </a>
                 </div>
 
                 <a
-                  href="https://www.facebook.com/share/1DDubvaPmz/?milbextid=wwXlfr"
+                  href={settings.facebookUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="Facebook"

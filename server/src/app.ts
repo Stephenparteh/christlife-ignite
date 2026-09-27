@@ -3,6 +3,11 @@ import cookieParser from "cookie-parser";
 import cors from "cors";
 import { env } from "./config/env";
 import authRoutes from "./routes/auth.routes";
+import eventsRoutes from "./routes/events.routes";
+import galleryRoutes from "./routes/gallery.routes";
+import testimonialsRoutes from "./routes/testimonials.routes";
+import bibleStudyRoutes from "./routes/bibleStudy.routes";
+import settingsRoutes from "./routes/settings.routes";
 import { errorHandler, notFoundHandler } from "./middleware/errorHandler";
 import { ApiError } from "./utils/ApiError";
 
@@ -38,6 +43,11 @@ export const createApp = () => {
 
   app.get("/api/health", (_req, res) => res.json({ status: "ok" }));
   app.use("/api/auth", authRoutes);
+  app.use("/api/events", eventsRoutes);
+  app.use("/api/gallery", galleryRoutes);
+  app.use("/api/testimonials", testimonialsRoutes);
+  app.use("/api/bible-study", bibleStudyRoutes);
+  app.use("/api/settings", settingsRoutes);
 
   app.use("/api", notFoundHandler);
   app.use(errorHandler);

@@ -9,6 +9,8 @@
  * This is a development tool, not a CI test suite — it's here so the auth
  * implementation can be verified without needing a live Atlas cluster.
  */
+export {}; // treat this file as its own module scope, not a global script
+
 process.env.NODE_ENV = "test";
 process.env.JWT_SECRET = "smoke-test-secret-do-not-use-in-production-0000000000";
 process.env.CLIENT_ORIGINS = "http://localhost:8080";

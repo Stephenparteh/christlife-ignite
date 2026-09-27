@@ -1,6 +1,6 @@
+import { useState } from "react";
 import {
   AlertDialog,
-  AlertDialogAction,
   AlertDialogCancel,
   AlertDialogContent,
   AlertDialogDescription,
@@ -8,7 +8,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
-import { toast } from "sonner";
+import { Button } from "@/components/ui/button";
 
 interface ConfirmDialogProps {
   open: boolean;
@@ -16,13 +16,15 @@ interface ConfirmDialogProps {
   title: string;
   description: string;
   confirmLabel?: string;
+  /** Performs the real mutation. Throwing keeps the dialog open so the admin can retry; the caller's mutation is responsible for the error toast. */
+  onConfirm: () => Promise<void>;
 }
 
 /**
- * Reusable delete/destructive-action confirmation. Milestone 1 has no
- * database, so confirming never actually deletes anything — it just closes
- * the dialog and says so via a toast, instead of silently pretending the
- * item is gone.
+ * Reusable delete/destructive-action confirmation. Uses a plain Button
+ * (not AlertDialogAction) for Confirm so an async failure can keep the
+ * dialog open instead of Radix closing it immediately regardless of the
+ * result.
  */
 const ConfirmDialog = ({
   open,
@@ -30,28 +32,42 @@ const ConfirmDialog = ({
   title,
   description,
   confirmLabel = "Delete",
-}: ConfirmDialogProps) => (
-  <AlertDialog open={open} onOpenChange={onOpenChange}>
-    <AlertDialogContent>
-      <AlertDialogHeader>
-        <AlertDialogTitle>{title}</AlertDialogTitle>
-        <AlertDialogDescription>{description}</AlertDialogDescription>
-      </AlertDialogHeader>
-      <AlertDialogFooter>
-        <AlertDialogCancel>Cancel</AlertDialogCancel>
-        <AlertDialogAction
-          className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
-          onClick={() => {
-            toast.info("Preview only — nothing was deleted.", {
-              description: "Deleting will be connected to the database in a later milestone.",
-            });
-          }}
-        >
-          {confirmLabel}
-        </AlertDialogAction>
-      </AlertDialogFooter>
-    </AlertDialogContent>
-  </AlertDialog>
-);
+  onConfirm,
+}: ConfirmDialogProps) => {
+  const [isConfirming, setIsConfirming] = useState(false);
+
+  const handleConfirm = async () => {
+    setIsConfirming(true);
+    try {
+      await onConfirm();
+      onOpenChange(false);
+    } catch {
+      // The mutation's own onError shows the toast; keep the dialog open.
+    } finally {
+      setIsConfirming(false);
+    }
+  };
+
+  return (
+    <AlertDialog open={open} onOpenChange={(next) => !isConfirming && onOpenChange(next)}>
+      <AlertDialogContent>
+        <AlertDialogHeader>
+          <AlertDialogTitle>{title}</AlertDialogTitle>
+          <AlertDialogDescription>{description}</AlertDialogDescription>
+        </AlertDialogHeader>
+        <AlertDialogFooter>
+          <AlertDialogCancel disabled={isConfirming}>Cancel</AlertDialogCancel>
+          <Button
+            variant="destructive"
+            onClick={handleConfirm}
+            disabled={isConfirming}
+          >
+            {isConfirming ? "Deleting…" : confirmLabel}
+          </Button>
+        </AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialog>
+  );
+};
 
 export default ConfirmDialog;

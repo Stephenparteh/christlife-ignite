@@ -1,137 +1,29 @@
 import { useState } from "react";
-import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import {
-  Camera,
-  Play,
-  Users,
-  BookOpen,
-  Utensils,
-  Gamepad2,
-  Heart,
-  Download,
-  ExternalLink,
-  ChevronLeft,
-  X,
-  ChevronRight,
-  Instagram,
-  Facebook,
-} from "lucide-react";
-import heroImage from "@/assets/hero-main.jpg";
+import { useQuery } from "@tanstack/react-query";
+import { Play, Images } from "lucide-react";
 import groupImg1 from "@/assets/group1.jpeg";
-import groupPhoto1 from "@/assets/group1.jpeg";
-import groupPhoto2 from "@/assets/group1.jpeg";
-import groupPhoto3 from "@/assets/group1.jpeg";
-
-import img1 from "@/assets/group1.jpeg";
-import img2 from "@/assets/group2.jpeg";
-import img3 from "@/assets/group3.jpeg";
-import img4 from "@/assets/praying1.jpeg";
-import img5 from "@/assets/praying2.jpeg";
-import img6 from "@/assets/praying3.jpeg";
-import img7 from "@/assets/officialImg01.jpeg";
-import img8 from "@/assets/officialImg02.jpeg";
-import img9 from "@/assets/officialImg03.jpeg";
-import img10 from "@/assets/officialImg04.jpeg";
-import img11 from "@/assets/officialImg05.jpeg";
-import img12 from "@/assets/officialImg06.jpeg";
-
-import videoOne from "@/assets/officialVideo01.mp4";
-import videoTwo from "@/assets/officialVideo02.mp4";
-import videoThree from "@/assets/officialVideo03.mp4";
-import videoFour from "@/assets/officialVideo04.mp4";
-import videoFive from "@/assets/officialVideo05.mp4";
-import videoSix from "@/assets/officialVideo06.mp4";
+import { galleryService } from "@/services/gallery";
+import PublicContentState from "@/components/PublicContentState";
 
 const Gallery = () => {
   const [activeTab, setActiveTab] = useState<"photos" | "videos">("photos");
   const [isPhotoViewerOpen, setIsPhotoViewerOpen] = useState(false);
   const [selectedPhoto, setSelectedPhoto] = useState(0);
 
-  const images = [
-    {
-      src: img1,
-      alt: "Christ Life members posing together at an evening outdoor gathering, holding food and drinks",
-    },
-    {
-      src: img2,
-      alt: "Young people at an outdoor picnic, one wearing a shirt that reads “Live His Life, Do His Work”",
-    },
-    {
-      src: img3,
-      alt: "Young people standing together indoors as one member speaks into a microphone",
-    },
-    {
-      src: img4,
-      alt: "Young man kneeling with his head bowed, praying into a microphone",
-    },
-    {
-      src: img5,
-      alt: "Young man sitting on the floor with his eyes closed and hands held to his face in prayer",
-    },
-    {
-      src: img6,
-      alt: "Two people embracing in front of a stage with a drum kit and stage lighting",
-    },
-    {
-      src: img7,
-      alt: "Group of young men in white football kits posing with a ball on a dirt pitch",
-    },
-    {
-      src: img8,
-      alt: "Young people standing along a long table of food and refreshments in a meeting room",
-    },
-    {
-      src: img9,
-      alt: "Women in neon-green football kits sitting in a line on a dirt field",
-    },
-    {
-      src: img10,
-      alt: "Smiling young woman at a long table during a group meeting, with a speaker standing at the far end of the room",
-    },
-    {
-      src: img11,
-      alt: "Group of young women in pink and blue football kits posing with a ball on a dirt pitch",
-    },
-    {
-      src: img12,
-      alt: "Football team in white and green kits posing on a pitch with a woman in a white jersey",
-    },
-  ];
+  const { data: items, isLoading, isError } = useQuery({
+    queryKey: ["gallery", "public"],
+    queryFn: galleryService.list,
+    staleTime: 60 * 1000,
+  });
 
-  const videos = [
-    {
-      id: 1,
-      video: videoOne,
-    },
-    {
-      id: 2,
-      video: videoTwo,
-    },
-    {
-      id: 3,
-      video: videoThree,
-    },
-    {
-      id: 4,
-      video: videoFour,
-    },
-    {
-      id: 5,
-      video: videoFive,
-    },
-    {
-      id: 6,
-      video: videoSix,
-    },
-  ];
+  const photos = items?.filter((item) => item.type === "photo") ?? [];
+  const videos = items?.filter((item) => item.type === "video") ?? [];
+
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
       <section
         className="relative min-h-[70vh] flex items-center bg-cover bg-center"
-        // style={{ backgroundImage: `url(${heroImage})` }}
         style={{ backgroundImage: `url(${groupImg1})` }}
       >
         <div className="absolute inset-0 bg-black/45"></div>
@@ -152,22 +44,6 @@ const Gallery = () => {
       {/* Media Gallery */}
       <section className="py-20 bg-background">
         <div className="container mx-auto px-4">
-          {/* Heading */}
-          <div className="max-w-3xl mx-auto text-center mb-10">
-            {/* <p className="text-primary font-semibold tracking-[0.15em] uppercase text-sm mb-3">
-              Our Gallery
-            </p> */}
-
-            {/* <h2 className="text-3xl md:text-5xl font-heading font-bold text-foreground mb-5">
-              Moments We’ve Shared
-            </h2> */}
-
-            {/* <p className="text-lg text-muted-foreground leading-relaxed">
-              A look at the people, gatherings, worship, and memories that make
-              Christ Life what it is.
-            </p> */}
-          </div>
-
           {/* Tabs */}
           <div className="flex justify-center mb-12">
             <div className="inline-flex border-b border-border">
@@ -197,134 +73,89 @@ const Gallery = () => {
             </div>
           </div>
 
-          {/* Photos */}
-          {activeTab === "photos" && (
-            <div className="columns-1 sm:columns-2 lg:columns-3 gap-5 space-y-5 max-w-6xl mx-auto">
-              {images.map((image, index) => (
-                <button
-                  key={index}
-                  type="button"
-                  onClick={() => {
-                    setSelectedPhoto(index);
-                    setIsPhotoViewerOpen(true);
-                  }}
-                  className="group relative block w-full overflow-hidden rounded-2xl break-inside-avoid"
-                >
-                  <img
-                    src={image.src}
-                    alt={image.alt}
-                    loading="lazy"
-                    className="w-full h-auto object-cover transition-transform duration-500 group-hover:scale-105"
+          {isLoading ? (
+            <PublicContentState variant="loading" title="Loading the gallery…" />
+          ) : isError ? (
+            <PublicContentState
+              variant="error"
+              icon={Images}
+              title="The gallery isn't available right now"
+              description="Please check back in a little while."
+            />
+          ) : (
+            <>
+              {/* Photos */}
+              {activeTab === "photos" && (
+                photos.length === 0 ? (
+                  <PublicContentState
+                    variant="empty"
+                    icon={Images}
+                    title="No photos yet"
+                    description="We'll be sharing moments from Christ Life here soon."
                   />
+                ) : (
+                  <div className="columns-1 sm:columns-2 lg:columns-3 gap-5 space-y-5 max-w-6xl mx-auto">
+                    {photos.map((photo, index) => (
+                      <button
+                        key={photo._id}
+                        type="button"
+                        onClick={() => {
+                          setSelectedPhoto(index);
+                          setIsPhotoViewerOpen(true);
+                        }}
+                        className="group relative block w-full overflow-hidden rounded-2xl break-inside-avoid"
+                      >
+                        <img
+                          src={photo.mediaUrl}
+                          alt={photo.caption || photo.title}
+                          loading="lazy"
+                          className="w-full h-auto object-cover transition-transform duration-500 group-hover:scale-105"
+                        />
 
-                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300" />
-                </button>
-              ))}
-            </div>
-          )}
+                        <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300" />
+                      </button>
+                    ))}
+                  </div>
+                )
+              )}
 
-          {/* Videos */}
-          {activeTab === "videos" && (
-            <div className="columns-1 sm:columns-2 lg:columns-3 gap-6 max-w-6xl mx-auto">
-              {videos.map((video) => (
-                <div
-                  key={video.id}
-                  className="group mb-6 break-inside-avoid overflow-hidden rounded-2xl bg-muted"
-                >
-                  <video
-                    src={video.video}
-                    aria-label={`Christ Life community video ${video.id}`}
-                    controls
-                    playsInline
-                    preload="metadata"
-                    className="block w-full h-auto object-contain"
-                  />
-                </div>
-              ))}
-            </div>
-          )}
-
-          {/* Empty State */}
-          {activeTab === "videos" && videos.length === 0 && (
-            <div className="text-center py-20">
-              <Play className="h-10 w-10 text-muted-foreground mx-auto mb-4" />
-              <h3 className="text-xl font-heading font-bold text-foreground mb-2">
-                Videos coming soon
-              </h3>
-              <p className="text-muted-foreground">
-                We’ll be sharing moments from Christ Life here soon.
-              </p>
-            </div>
+              {/* Videos */}
+              {activeTab === "videos" && (
+                videos.length === 0 ? (
+                  <div className="text-center py-20">
+                    <Play className="h-10 w-10 text-muted-foreground mx-auto mb-4" />
+                    <h3 className="text-xl font-heading font-bold text-foreground mb-2">
+                      Videos coming soon
+                    </h3>
+                    <p className="text-muted-foreground">
+                      We’ll be sharing moments from Christ Life here soon.
+                    </p>
+                  </div>
+                ) : (
+                  <div className="columns-1 sm:columns-2 lg:columns-3 gap-6 max-w-6xl mx-auto">
+                    {videos.map((video) => (
+                      <div
+                        key={video._id}
+                        className="group mb-6 break-inside-avoid overflow-hidden rounded-2xl bg-muted"
+                      >
+                        <video
+                          src={video.mediaUrl}
+                          poster={video.thumbnailUrl || undefined}
+                          aria-label={video.title}
+                          controls
+                          playsInline
+                          preload="metadata"
+                          className="block w-full h-auto object-contain"
+                        />
+                      </div>
+                    ))}
+                  </div>
+                )
+              )}
+            </>
           )}
         </div>
       </section>
-
-      {/* Social Media Integration */}
-      {/* <section className="py-16 bg-gradient-to-r from-primary to-primary-light text-primary-foreground">
-        <div className="container mx-auto px-4 text-center">
-          <div className="max-w-3xl mx-auto">
-            <h2 className="text-3xl md:text-4xl font-heading font-bold mb-6">
-              Follow Our Journey
-            </h2>
-            <p className="text-xl text-primary-foreground/90 mb-8 leading-relaxed">
-              Stay connected and see our latest photos and updates on social
-              media. Share your own Christ Life moments with our community!
-            </p>
-
-            <div className="grid md:grid-cols-2 gap-6 mb-8">
-              <Card className="bg-primary-foreground/10 border-primary-foreground/20">
-                <CardContent className="p-6 text-center">
-                  <Instagram className="h-12 w-12 text-accent mx-auto mb-4" />
-                  <h3 className="text-xl font-heading font-bold mb-2">
-                    Instagram
-                  </h3>
-                  <p className="text-primary-foreground/80 mb-4">
-                    Follow @christlifeyouth for daily inspiration and event
-                    updates
-                  </p>
-                  <Button variant="secondary" className="btn-accent">
-                    <Instagram className="mr-2 h-4 w-4" />
-                    Follow Us
-                  </Button>
-                </CardContent>
-              </Card>
-
-              <Card className="bg-primary-foreground/10 border-primary-foreground/20">
-                <CardContent className="p-6 text-center">
-                  <Facebook className="h-12 w-12 text-accent mx-auto mb-4" />
-                  <h3 className="text-xl font-heading font-bold mb-2">
-                    Facebook
-                  </h3>
-                  <p className="text-primary-foreground/80 mb-4">
-                    Join our Facebook community for discussions and photo
-                    sharing
-                  </p>
-                  <Button variant="secondary" className="btn-accent">
-                    <Facebook className="mr-2 h-4 w-4" />
-                    Join Group
-                  </Button>
-                </CardContent>
-              </Card>
-            </div>
-
-            <div className="bg-primary-foreground/10 rounded-lg p-6 border border-primary-foreground/20">
-              <h3 className="text-lg font-heading font-bold mb-3">
-                Share Your Photos
-              </h3>
-              <p className="text-primary-foreground/90 mb-4">
-                Tag us in your Christ Life photos using{" "}
-                <span className="font-semibold text-accent">
-                  #ChristLifeMoments
-                </span>
-                and we might feature them in our gallery!
-              </p>
-              <Button variant="secondary" size="sm" className="btn-accent">
-                Upload Photos
-              </Button>
-            </div>
-          </div>
-        </div>
-      </section> */}
     </div>
   );
 };
