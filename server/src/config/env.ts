@@ -29,6 +29,15 @@ const envSchema = z.object({
 
   COOKIE_SAMESITE: z.enum(["lax", "strict", "none"]).default("lax"),
   COOKIE_NAME: z.string().min(1).default("cl_session"),
+
+  // Media uploads (see src/services/uploadService.ts). All optional — if
+  // the Cloudinary variables aren't set, uploads either fall back to local
+  // disk (dev only) or are refused with a clear error (production).
+  CLOUDINARY_CLOUD_NAME: z.string().optional(),
+  CLOUDINARY_API_KEY: z.string().optional(),
+  CLOUDINARY_API_SECRET: z.string().optional(),
+  MAX_UPLOAD_IMAGE_MB: z.coerce.number().positive().default(8),
+  MAX_UPLOAD_VIDEO_MB: z.coerce.number().positive().default(50),
 });
 
 const parsed = envSchema.safeParse(process.env);
@@ -50,4 +59,7 @@ export const env = {
   AUTH_SESSION_SECONDS: data.AUTH_SESSION_DAYS * 24 * 60 * 60,
   AUTH_SESSION_MS: data.AUTH_SESSION_DAYS * 24 * 60 * 60 * 1000,
   IS_PRODUCTION: data.NODE_ENV === "production",
+  HAS_CLOUDINARY: Boolean(
+    data.CLOUDINARY_CLOUD_NAME && data.CLOUDINARY_API_KEY && data.CLOUDINARY_API_SECRET,
+  ),
 };

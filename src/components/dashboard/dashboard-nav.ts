@@ -4,6 +4,8 @@ import {
   BookOpen,
   Images,
   MessageSquareQuote,
+  Users,
+  Inbox,
   Mail,
   Settings,
   type LucideIcon,
@@ -50,6 +52,18 @@ export const dashboardNavItems: DashboardNavItem[] = [
     description: "Manage the testimonials shown on the homepage.",
     path: "testimonials",
     icon: MessageSquareQuote,
+  },
+  {
+    title: "Team",
+    description: "Manage the leadership profiles shown on the About page.",
+    path: "team",
+    icon: Users,
+  },
+  {
+    title: "Messages",
+    description: "Messages submitted through the public Contact form.",
+    path: "messages",
+    icon: Inbox,
   },
   {
     title: "Contact",

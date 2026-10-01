@@ -17,6 +17,10 @@ dist-ssr
 # template — never commit the real server/.env.
 .env
 
+# Dev-only local media upload fallback — see server/src/services/uploadService.ts.
+# Never committed: this exists only when Cloudinary isn't configured locally.
+server/uploads/
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

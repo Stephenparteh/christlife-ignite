@@ -53,6 +53,11 @@ export type TestimonialInput = Omit<Testimonial, "_id" | "createdAt" | "updatedA
 export interface BibleStudySession {
   day: string;
   title: string;
+  time: string;
+  platform: string;
+  meetUrl: string;
+  whatsappUrl: string;
+  description: string;
 }
 
 export interface BibleStudy extends CmsTimestamps {
@@ -79,3 +84,29 @@ export interface SiteSettings extends CmsTimestamps {
 }
 
 export type SiteSettingsInput = Partial<Omit<SiteSettings, "_id" | "createdAt" | "updatedAt">>;
+
+export interface TeamMember extends CmsTimestamps {
+  _id: string;
+  name: string;
+  role: string;
+  imageUrl: string;
+  bio: string;
+  facebookUrl: string;
+  instagramUrl: string;
+  linkedinUrl: string;
+  order: number;
+  published: boolean;
+}
+
+export type TeamMemberInput = Omit<TeamMember, "_id" | "createdAt" | "updatedAt">;
+
+export interface ContactMessage extends CmsTimestamps {
+  _id: string;
+  name: string;
+  email: string;
+  subject: string;
+  message: string;
+  read: boolean;
+}
+
+export type ContactMessageCreateInput = Pick<ContactMessage, "name" | "email" | "subject" | "message">;

@@ -74,12 +74,18 @@ const Events = () => {
             <div className="max-w-6xl mx-auto grid lg:grid-cols-2 overflow-hidden rounded-2xl bg-muted/30">
               {/* Event Image */}
               <div className="relative min-h-[320px] lg:min-h-[460px]">
-                <img
-                  src={featured.coverImageUrl || groupImg1}
-                  alt="Christ Life youth fellowship gathering, with members posing together outdoors at night"
-                  loading="lazy"
-                  className="absolute inset-0 w-full h-full object-cover"
-                />
+                {featured.coverImageUrl ? (
+                  <img
+                    src={featured.coverImageUrl}
+                    alt="Christ Life youth fellowship gathering, with members posing together outdoors at night"
+                    loading="lazy"
+                    className="absolute inset-0 w-full h-full object-cover"
+                  />
+                ) : (
+                  <div className="absolute inset-0 flex items-center justify-center bg-muted">
+                    <Calendar className="h-10 w-10 text-muted-foreground" aria-hidden="true" />
+                  </div>
+                )}
 
                 <div className="absolute top-6 left-6">
                   <span className="inline-block bg-primary text-white px-4 py-2 text-sm font-semibold">
@@ -189,12 +195,18 @@ const Events = () => {
                   {/* Event Image */}
                   <div className="w-full md:w-72 lg:w-80 flex-shrink-0">
                     <div className="aspect-[4/3] overflow-hidden rounded-xl bg-muted">
-                      <img
-                        src={event.coverImageUrl || groupImg1}
-                        alt=""
-                        loading="lazy"
-                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                      />
+                      {event.coverImageUrl ? (
+                        <img
+                          src={event.coverImageUrl}
+                          alt=""
+                          loading="lazy"
+                          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                        />
+                      ) : (
+                        <div className="flex h-full w-full items-center justify-center">
+                          <Calendar className="h-8 w-8 text-muted-foreground" aria-hidden="true" />
+                        </div>
+                      )}
                     </div>
                   </div>
 

@@ -1,8 +1,14 @@
 import { z } from "zod";
+import { optionalUrl } from "./shared";
 
 const sessionSchema = z.object({
   day: z.string().trim().min(1, "Day is required.").max(100),
   title: z.string().trim().min(1, "Session title is required.").max(200),
+  time: z.string().trim().max(200).optional().default(""),
+  platform: z.string().trim().max(200).optional().default(""),
+  meetUrl: optionalUrl(),
+  whatsappUrl: optionalUrl(),
+  description: z.string().trim().max(1000).optional().default(""),
 });
 
 export const bibleStudyUpdateSchema = z.object({

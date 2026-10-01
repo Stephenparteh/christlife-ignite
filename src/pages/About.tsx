@@ -18,67 +18,12 @@ import heroImage1 from "@/assets/group1.jpeg";
 import prayingPhoto1 from "@/assets/praying1.jpeg";
 import prayingPhoto2 from "@/assets/praying2.jpeg";
 import prayingPhoto3 from "@/assets/praying3.jpeg";
-import phil01 from "@/assets/Phil01.jpeg";
-import MaLois01 from "@/assets/Ma-Lois01.jpeg";
-import Blessing01 from "@/assets/Blessing01.jpeg";
-import Jorii01 from "@/assets/Jorii01.jpeg";
-import Gracesia01 from "@/assets/Gracesia01.jpeg";
-
 import groupPhoto1 from "@/assets/praying3.jpeg";
+import { useTeam } from "@/hooks/useTeam";
 
 const About = () => {
-  const leadership = [
-    {
-      name: "Phil Julius Railey",
-      role: " CEO/FOUNDER",
-      image: phil01,
-      // description:
-      //   "Railey leads Christ Life with a passion for helping young people discover and follow Christ.",
-      // instagram: "https://instagram.com/...",
-      // facebook: "https://facebook.com/...",
-      // linkedin: "https://linkedin.com/...",
-    },
-    {
-      name: "Ma-Lois D Cheyee",
-      role: "Executive Director",
-      image: MaLois01,
-      // description:
-      //   "Railey leads Christ Life with a passion for helping young people discover and follow Christ.",
-      // instagram: "https://instagram.com/...",
-      // facebook: "https://facebook.com/...",
-      // linkedin: "https://linkedin.com/...",
-    },
-    {
-      name: "Min. Blessing M Jonah",
-      role: "Worship & Women's Ministry Leader",
-      image: Blessing01,
-      // description:
-      //   "Railey leads Christ Life with a passion for helping young people discover and follow Christ.",
-      // instagram: "https://instagram.com/...",
-      // facebook: "https://facebook.com/...",
-      // linkedin: "https://linkedin.com/...",
-    },
-    {
-      name: "Jorii S. Kullie",
-      role: "Secretary",
-      image: Jorii01,
-      // description:
-      //   "Railey leads Christ Life with a passion for helping young people discover and follow Christ.",
-      // instagram: "https://instagram.com/...",
-      // facebook: "https://facebook.com/...",
-      // linkedin: "https://linkedin.com/...",
-    },
-    {
-      name: "Gracesia Angel Vienn",
-      role: "Chief Operating Officer",
-      image: Gracesia01,
-      // description:
-      //   "Railey leads Christ Life with a passion for helping young people discover and follow Christ.",
-      // instagram: "https://instagram.com/...",
-      // facebook: "https://facebook.com/...",
-      // linkedin: "https://linkedin.com/...",
-    },
-  ];
+  const { team } = useTeam();
+  const leadership = team.filter((member) => member.published);
 
   return (
     <div className="min-h-screen bg-background overflow-hidden">
@@ -266,13 +211,13 @@ const About = () => {
 
           {/* Leadership */}
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-14">
-            {leadership.map((member, index) => (
-              <div key={index} className="group">
+            {leadership.map((member) => (
+              <div key={member._id} className="group">
                 {/* Person Image */}
                 <div className="relative overflow-hidden rounded-2xl aspect-[4/4] bg-muted max-w-sm">
                   {" "}
                   <img
-                    src={member.image}
+                    src={member.imageUrl}
                     alt={`Portrait of ${member.name}`}
                     loading="lazy"
                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"

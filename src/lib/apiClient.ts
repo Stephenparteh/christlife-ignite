@@ -53,3 +53,40 @@ export async function apiFetch<T>(path: string, options: ApiFetchOptions = {}): 
 
   return data as T;
 }
+
+/**
+ * Multipart upload — kept separate from apiFetch because it must NOT set a
+ * JSON Content-Type header; the browser sets the correct multipart
+ * boundary itself as long as the body is a FormData and we leave that
+ * header alone.
+ */
+export async function apiUpload(
+  path: string,
+  file: File,
+  fields: Record<string, string> = {},
+): Promise<{ url: string }> {
+  const formData = new FormData();
+  formData.append("file", file);
+
+  const query = new URLSearchParams(fields).toString();
+  const url = `${API_BASE}/api${path}${query ? `?${query}` : ""}`;
+
+  let response: Response;
+  try {
+    response = await fetch(url, { method: "POST", credentials: "include", body: formData });
+  } catch {
+    throw new ApiClientError(0, "Couldn't reach the server. Check your connection and try again.");
+  }
+
+  const isJson = response.headers.get("content-type")?.includes("application/json");
+  const data = isJson ? await response.json().catch(() => null) : null;
+
+  if (!response.ok) {
+    const message = (data && typeof data === "object" && "message" in data && typeof data.message === "string")
+      ? data.message
+      : "Something went wrong. Please try again.";
+    throw new ApiClientError(response.status, message);
+  }
+
+  return data as { url: string };
+}

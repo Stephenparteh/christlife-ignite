@@ -1,3 +1,4 @@
+import { useState, type FormEvent } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -9,12 +10,46 @@ import {
   Instagram,
   Send,
   ArrowUpRight,
+  CheckCircle2,
 } from "lucide-react";
 import groupImg1 from "@/assets/group1.jpeg";
 import { useSiteSettings } from "@/hooks/useSiteSettings";
+import { contactMessagesService } from "@/services/contactMessages";
+import { ApiClientError } from "@/lib/apiClient";
 
 const Contact = () => {
   const { settings } = useSiteSettings();
+
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
+  const [message, setMessage] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [isSubmitted, setIsSubmitted] = useState(false);
+
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setError(null);
+    setIsSubmitting(true);
+    try {
+      await contactMessagesService.create({
+        name: `${firstName} ${lastName}`.trim(),
+        email,
+        subject: "",
+        message,
+      });
+      setIsSubmitted(true);
+      setFirstName("");
+      setLastName("");
+      setEmail("");
+      setMessage("");
+    } catch (err) {
+      setError(err instanceof ApiClientError ? err.message : "Something went wrong. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-background">
@@ -61,7 +96,21 @@ const Contact = () => {
                 </p>
               </div>
 
-              <form className="space-y-8">
+              {isSubmitted ? (
+                <div className="flex items-start gap-4 rounded-lg border border-primary/20 bg-primary/5 p-6 my-8">
+                  <CheckCircle2 className="mt-0.5 h-6 w-6 shrink-0 text-primary" aria-hidden="true" />
+                  <div>
+                    <p className="font-heading text-lg font-semibold text-foreground">Message sent</p>
+                    <p className="mt-1 text-muted-foreground">
+                      Thanks for reaching out — we'll be in touch soon.
+                    </p>
+                    <Button variant="outline" className="mt-4" onClick={() => setIsSubmitted(false)}>
+                      Send another message
+                    </Button>
+                  </div>
+                </div>
+              ) : (
+              <form className="space-y-8" onSubmit={handleSubmit}>
                 {/* Name */}
                 <div className="grid md:grid-cols-2 gap-8">
                   <div className="space-y-2">
@@ -76,6 +125,9 @@ const Contact = () => {
                       id="firstName"
                       placeholder="Your first name"
                       required
+                      value={firstName}
+                      onChange={(e) => setFirstName(e.target.value)}
+                      disabled={isSubmitting}
                       className="h-11 rounded-none border-0 border-b border-border bg-transparent px-0 shadow-none focus-visible:ring-0 focus-visible:border-primary placeholder:text-muted-foreground/60"
                     />
                   </div>
@@ -92,6 +144,9 @@ const Contact = () => {
                       id="lastName"
                       placeholder="Your last name"
                       required
+                      value={lastName}
+                      onChange={(e) => setLastName(e.target.value)}
+                      disabled={isSubmitting}
                       className="h-11 rounded-none border-0 border-b border-border bg-transparent px-0 shadow-none focus-visible:ring-0 focus-visible:border-primary placeholder:text-muted-foreground/60"
                     />
                   </div>
@@ -111,6 +166,9 @@ const Contact = () => {
                     type="email"
                     placeholder="you@example.com"
                     required
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    disabled={isSubmitting}
                     className="h-11 rounded-none border-0 border-b border-border bg-transparent px-0 shadow-none focus-visible:ring-0 focus-visible:border-primary placeholder:text-muted-foreground/60"
                   />
                 </div>
@@ -128,19 +186,30 @@ const Contact = () => {
                     id="message"
                     placeholder="Write your message here..."
                     required
+                    value={message}
+                    onChange={(e) => setMessage(e.target.value)}
+                    disabled={isSubmitting}
                     className="min-h-36 resize-none rounded-none border-0 border-b border-border bg-transparent px-0 py-3 shadow-none focus-visible:ring-0 focus-visible:border-primary placeholder:text-muted-foreground/60"
                   />
                 </div>
+
+                {error && (
+                  <p role="alert" className="text-sm text-destructive">
+                    {error}
+                  </p>
+                )}
 
                 {/* Submit */}
                 <Button
                   type="submit"
                   size="lg"
+                  disabled={isSubmitting}
                   className="bg-primary text-primary-foreground hover:bg-primary/90 px-8 my-20"
                 >
-                  Send Message
+                  {isSubmitting ? "Sending…" : "Send Message"}
                 </Button>
               </form>
+              )}
             </div>
 
             {/* Connect With Us */}

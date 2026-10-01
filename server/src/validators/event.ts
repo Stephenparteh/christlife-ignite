@@ -1,9 +1,5 @@
 import { z } from "zod";
-
-const urlOrEmpty = z.string().trim().max(2048).refine(
-  (value) => value === "" || /^https?:\/\//i.test(value),
-  "Must be a full http(s) URL.",
-);
+import { optionalUrlOrPath, optionalUrl } from "./shared";
 
 export const eventCreateSchema = z.object({
   title: z.string().trim().min(1, "Title is required.").max(200),
@@ -12,9 +8,11 @@ export const eventCreateSchema = z.object({
   eventDate: z.coerce.date().nullable().optional(),
   time: z.string().trim().max(200).optional().default(""),
   location: z.string().trim().max(200).optional().default(""),
+  // Free text, not a strict enum — see server/README.md "Event categories"
+  // for why existing/legacy values are never rejected outright.
   category: z.string().trim().max(200).optional().default(""),
-  coverImageUrl: urlOrEmpty.optional().default(""),
-  link: urlOrEmpty.optional().default(""),
+  coverImageUrl: optionalUrlOrPath(),
+  link: optionalUrl(),
   featured: z.boolean().optional().default(false),
   published: z.boolean().optional().default(true),
 });

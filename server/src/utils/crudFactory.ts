@@ -3,6 +3,7 @@ import type { Model } from "mongoose";
 import type { ZodType } from "zod";
 import { ApiError } from "./ApiError";
 import { asyncHandler } from "./asyncHandler";
+import { firstZodIssueMessage } from "./zodError";
 
 interface CrudFactoryOptions<TCreate, TUpdate> {
   createSchema: ZodType<TCreate>;
@@ -46,7 +47,7 @@ export const createCrudController = <TDoc, TCreate, TUpdate>(
   const create = asyncHandler(async (req: Request, res: Response) => {
     const parsed = createSchema.safeParse(req.body);
     if (!parsed.success) {
-      throw new ApiError(400, parsed.error.issues[0]?.message ?? "Invalid request.");
+      throw new ApiError(400, firstZodIssueMessage(parsed.error));
     }
     const item = await model.create(parsed.data as Record<string, unknown>);
     res.status(201).json({ item });
@@ -55,7 +56,7 @@ export const createCrudController = <TDoc, TCreate, TUpdate>(
   const update = asyncHandler(async (req: Request, res: Response) => {
     const parsed = updateSchema.safeParse(req.body);
     if (!parsed.success) {
-      throw new ApiError(400, parsed.error.issues[0]?.message ?? "Invalid request.");
+      throw new ApiError(400, firstZodIssueMessage(parsed.error));
     }
     const item = await model.findByIdAndUpdate(req.params.id, parsed.data as Record<string, unknown>, {
       new: true,

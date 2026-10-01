@@ -1,13 +1,14 @@
 import { useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
-import { Images, Plus, Upload, Video as VideoIcon } from "lucide-react";
+import { Images, Plus, Video as VideoIcon } from "lucide-react";
 import PageHeader from "@/components/dashboard/PageHeader";
 import EmptyState from "@/components/dashboard/EmptyState";
 import StatusBadge from "@/components/dashboard/StatusBadge";
 import ActionMenu from "@/components/dashboard/ActionMenu";
 import ConfirmDialog from "@/components/dashboard/ConfirmDialog";
 import FormDialog from "@/components/dashboard/FormDialog";
+import MediaUploadField from "@/components/dashboard/MediaUploadField";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -20,10 +21,12 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { ApiClientError } from "@/lib/apiClient";
+import { parseFieldError } from "@/lib/fieldError";
 import { galleryService } from "@/services/gallery";
 import type { GalleryItem, GalleryItemInput } from "@/types/cms";
 
 const QUERY_KEY = ["gallery", "dashboard"];
+const FORM_FIELDS = ["title", "caption", "mediaUrl", "thumbnailUrl"] as const;
 
 interface GalleryFormState {
   type: "photo" | "video";
@@ -67,8 +70,16 @@ const DashboardGallery = () => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [deletingItem, setDeletingItem] = useState<GalleryItem | null>(null);
   const [form, setForm] = useState<GalleryFormState>(emptyForm("photo"));
+  const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
 
   const invalidate = () => queryClient.invalidateQueries({ queryKey: QUERY_KEY });
+
+  const handleError = (error: unknown) => {
+    const message = errorMessage(error);
+    const parsed = parseFieldError(message, FORM_FIELDS);
+    setFieldErrors(parsed.field ? { [parsed.field]: parsed.message } : {});
+    toast.error(parsed.message);
+  };
 
   const createMutation = useMutation({
     mutationFn: (input: Partial<GalleryItemInput>) => galleryService.create(input),
@@ -76,7 +87,7 @@ const DashboardGallery = () => {
       invalidate();
       toast.success("Added to the gallery.");
     },
-    onError: (error) => toast.error(errorMessage(error)),
+    onError: handleError,
   });
 
   const updateMutation = useMutation({
@@ -86,7 +97,7 @@ const DashboardGallery = () => {
       invalidate();
       toast.success("Gallery item updated.");
     },
-    onError: (error) => toast.error(errorMessage(error)),
+    onError: handleError,
   });
 
   const deleteMutation = useMutation({
@@ -105,6 +116,7 @@ const DashboardGallery = () => {
   const openAddDialog = () => {
     setEditingItem(null);
     setForm(emptyForm(activeTab));
+    setFieldErrors({});
     setIsDialogOpen(true);
   };
 
@@ -166,6 +178,7 @@ const DashboardGallery = () => {
                   onEdit={() => {
                     setEditingItem(item);
                     setForm(toFormState(item));
+                    setFieldErrors({});
                     setIsDialogOpen(true);
                   }}
                   onDelete={() => setDeletingItem(item)}
@@ -223,6 +236,7 @@ const DashboardGallery = () => {
             onChange={(e) => setForm({ ...form, title: e.target.value })}
             placeholder="e.g. Fellowship gathering"
           />
+          {fieldErrors.title && <p className="text-xs text-destructive">{fieldErrors.title}</p>}
         </div>
 
         <div className="space-y-1.5">
@@ -233,6 +247,7 @@ const DashboardGallery = () => {
             onChange={(e) => setForm({ ...form, caption: e.target.value })}
             placeholder="What does this show?"
           />
+          {fieldErrors.caption && <p className="text-xs text-destructive">{fieldErrors.caption}</p>}
         </div>
 
         <div className="space-y-1.5">
@@ -251,30 +266,35 @@ const DashboardGallery = () => {
           </Select>
         </div>
 
-        <div className="space-y-1.5">
-          <Label htmlFor="gallery-media-url">{form.type === "photo" ? "Image" : "Video"} URL</Label>
-          <Input
-            id="gallery-media-url"
-            value={form.mediaUrl}
-            onChange={(e) => setForm({ ...form, mediaUrl: e.target.value })}
-            placeholder="/gallery/photos/example.jpeg or https://…"
-          />
-          <div className="flex items-center gap-2 pt-1 text-xs text-muted-foreground">
-            <Upload className="h-3.5 w-3.5" aria-hidden="true" />
-            File upload isn't available yet — paste a URL or site path.
-          </div>
-        </div>
+        <MediaUploadField
+          id="gallery-media"
+          label={form.type === "photo" ? "Photo" : "Video"}
+          value={form.mediaUrl}
+          onChange={(value) => setForm({ ...form, mediaUrl: value })}
+          folder="gallery"
+          accept={form.type === "photo" ? "image" : "video"}
+          allowExternalUrl
+          helperText={
+            form.type === "video"
+              ? "Upload the video, or use External URL if it's hosted elsewhere (e.g. YouTube)."
+              : undefined
+          }
+        />
+        {fieldErrors.mediaUrl && <p className="text-xs text-destructive">{fieldErrors.mediaUrl}</p>}
 
         {form.type === "video" && (
-          <div className="space-y-1.5">
-            <Label htmlFor="gallery-thumbnail-url">Thumbnail URL (optional)</Label>
-            <Input
-              id="gallery-thumbnail-url"
+          <>
+            <MediaUploadField
+              id="gallery-thumbnail"
+              label="Thumbnail (optional)"
               value={form.thumbnailUrl}
-              onChange={(e) => setForm({ ...form, thumbnailUrl: e.target.value })}
-              placeholder="/gallery/photos/example.jpeg"
+              onChange={(value) => setForm({ ...form, thumbnailUrl: value })}
+              folder="gallery-thumbnails"
+              accept="image"
+              allowExternalUrl
             />
-          </div>
+            {fieldErrors.thumbnailUrl && <p className="text-xs text-destructive">{fieldErrors.thumbnailUrl}</p>}
+          </>
         )}
 
         <div className="space-y-1.5">

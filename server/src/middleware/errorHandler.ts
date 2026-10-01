@@ -1,4 +1,5 @@
 import type { NextFunction, Request, Response } from "express";
+import multer from "multer";
 import { ApiError } from "../utils/ApiError";
 
 export const notFoundHandler = (req: Request, res: Response) => {
@@ -14,6 +15,12 @@ export const notFoundHandler = (req: Request, res: Response) => {
 export const errorHandler = (err: unknown, req: Request, res: Response, _next: NextFunction) => {
   if (err instanceof ApiError) {
     return res.status(err.status).json({ message: err.message });
+  }
+
+  if (err instanceof multer.MulterError) {
+    const message =
+      err.code === "LIMIT_FILE_SIZE" ? "That file is too large." : "There was a problem with the upload.";
+    return res.status(400).json({ message });
   }
 
   console.error(`Unhandled error on ${req.method} ${req.originalUrl}:`, err);

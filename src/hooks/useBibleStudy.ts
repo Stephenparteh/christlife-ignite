@@ -4,18 +4,22 @@ import { siteConfig } from "@/config/site";
 import type { BibleStudy } from "@/types/cms";
 
 /** Same values the CMS is seeded with — see server/src/scripts/seedContent.ts. */
-const STATIC_FALLBACK: BibleStudy = {
-  _id: "static-fallback",
-  sessions: [
-    { day: "Monday", title: "Monday Female Bible Study" },
-    { day: "Tuesday", title: "Tuesday Bible Study" },
-    { day: "Thursday", title: "Thursday Prayer" },
-  ],
+const sharedMeetingInfo = {
   time: siteConfig.bibleStudy.time,
   platform: siteConfig.bibleStudy.platform,
   meetUrl: siteConfig.meetUrl,
   whatsappUrl: siteConfig.whatsapp.channelUrl,
   description: "",
+};
+
+const STATIC_FALLBACK: BibleStudy = {
+  _id: "static-fallback",
+  sessions: [
+    { day: "Monday", title: "Monday Female Bible Study", ...sharedMeetingInfo },
+    { day: "Tuesday", title: "Tuesday Bible Study", ...sharedMeetingInfo },
+    { day: "Thursday", title: "Thursday Prayer", ...sharedMeetingInfo },
+  ],
+  ...sharedMeetingInfo,
   published: true,
   createdAt: "",
   updatedAt: "",

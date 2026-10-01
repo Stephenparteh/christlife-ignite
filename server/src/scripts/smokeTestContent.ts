@@ -101,6 +101,35 @@ const main = async () => {
 
   await admin.delete(`/api/events/${draftEventId}`); // cleanup
 
+  // ---- RSVP URL regression (reported bug) ----------------------------
+  // Create without a link, then edit to add a valid one — the exact
+  // sequence reported as broken. See validators/shared.ts for the fix.
+  res = await admin.post("/api/events").send({
+    title: "RSVP Regression Event",
+    description: "x",
+    dateLabel: "TBA",
+  });
+  const rsvpEventId = res.body?.item?._id;
+  check("create event with no RSVP link -> 201", res.status === 201 && res.body?.item?.link === "");
+
+  res = await admin.patch(`/api/events/${rsvpEventId}`).send({ link: "https://example.com/rsvp" });
+  check(
+    "editing to ADD a valid RSVP link -> 200 (previously reported broken)",
+    res.status === 200 && res.body?.item?.link === "https://example.com/rsvp",
+  );
+
+  res = await admin.patch(`/api/events/${rsvpEventId}`).send({ link: "not-a-url" });
+  check("editing to an invalid RSVP link -> 400", res.status === 400);
+  check(
+    "the 400's message names the failing field",
+    typeof res.body?.message === "string" && res.body.message.startsWith("link:"),
+  );
+
+  res = await admin.patch(`/api/events/${rsvpEventId}`).send({ link: "" });
+  check("clearing the RSVP link back to empty -> 200", res.status === 200 && res.body?.item?.link === "");
+
+  await admin.delete(`/api/events/${rsvpEventId}`); // cleanup
+
   // ---- Gallery ------------------------------------------------------
   res = await admin.post("/api/gallery").send({ type: "photo", title: "Test photo", mediaUrl: "/gallery/photos/group1.jpeg" });
   check("authenticated POST /api/gallery -> 201", res.status === 201);
@@ -138,9 +167,18 @@ const main = async () => {
 
   res = await admin.patch("/api/bible-study").send({
     time: "10:00 – 11:00 PM",
-    sessions: [{ day: "Monday", title: "Monday Female Bible Study" }],
+    sessions: [
+      { day: "Monday", title: "Monday Female Bible Study", meetUrl: "https://meet.google.com/aaa-bbbb-ccc" },
+      { day: "Saturday", title: "Saturday Debate", time: "4:00 PM", platform: "Zoom" },
+    ],
   });
   check("authenticated PATCH /api/bible-study -> 200", res.status === 200 && res.body?.bibleStudy?.time === "10:00 – 11:00 PM");
+  check(
+    "each session keeps its own meeting info",
+    res.body?.bibleStudy?.sessions?.[0]?.meetUrl === "https://meet.google.com/aaa-bbbb-ccc" &&
+      res.body?.bibleStudy?.sessions?.[1]?.time === "4:00 PM" &&
+      res.body?.bibleStudy?.sessions?.[1]?.platform === "Zoom",
+  );
 
   res = await anon.get("/api/bible-study");
   check("Bible Study change persists on next GET", res.body?.bibleStudy?.sessions?.[0]?.title === "Monday Female Bible Study");
@@ -154,6 +192,73 @@ const main = async () => {
 
   res = await admin.patch("/api/settings").send({ email: "not-an-email" });
   check("invalid email in PATCH /api/settings -> 400", res.status === 400);
+
+  // ---- Team ------------------------------------------------------------
+  res = await anon.post("/api/team").send({ name: "Should be rejected", role: "x" });
+  check("unauthenticated POST /api/team -> 401", res.status === 401);
+
+  res = await admin.post("/api/team").send({ name: "Test Leader", role: "Volunteer", order: 99 });
+  check("authenticated POST /api/team -> 201", res.status === 201);
+  const teamId = res.body?.item?._id;
+
+  res = await anon.get("/api/team");
+  check("public GET /api/team sees the published member", (res.body?.items ?? []).some((t: { _id: string }) => t._id === teamId));
+
+  res = await admin.delete(`/api/team/${teamId}`);
+  check("authenticated DELETE /api/team/:id -> 200", res.status === 200);
+
+  // ---- Contact messages --------------------------------------------------
+  res = await anon.post("/api/contact-messages").send({
+    name: "Jane Visitor",
+    email: "jane@example.com",
+    subject: "Prayer request",
+    message: "Please pray for my family.",
+  });
+  check("public POST /api/contact-messages -> 201", res.status === 201);
+
+  res = await anon.get("/api/contact-messages");
+  check("unauthenticated GET /api/contact-messages -> 401 (never public)", res.status === 401);
+
+  res = await admin.get("/api/contact-messages");
+  const messageId = (res.body?.items ?? [])[0]?._id;
+  check("authenticated GET /api/contact-messages sees the new message", res.status === 200 && Boolean(messageId));
+  check("new message starts unread", res.body.items[0].read === false);
+
+  res = await admin.patch(`/api/contact-messages/${messageId}`).send({ read: true });
+  check("authenticated PATCH marks it read", res.status === 200 && res.body?.item?.read === true);
+
+  res = await admin.delete(`/api/contact-messages/${messageId}`);
+  check("authenticated DELETE /api/contact-messages/:id -> 200", res.status === 200);
+
+  res = await anon
+    .post("/api/contact-messages")
+    .send({ name: "x", email: "not-an-email", message: "x" });
+  check("invalid email in contact form -> 400", res.status === 400);
+
+  // ---- Uploads ----------------------------------------------------------
+  res = await anon.post("/api/uploads?folder=events").attach("file", Buffer.from("fake"), "test.png");
+  check("unauthenticated POST /api/uploads -> 401", res.status === 401);
+
+  res = await admin.post("/api/uploads?folder=not-a-real-folder").attach("file", Buffer.from("fake"), "test.png");
+  check("upload with an invalid folder -> 400", res.status === 400);
+
+  res = await admin.post("/api/uploads?folder=events").attach("file", Buffer.from("not really a pdf"), "test.pdf");
+  check("upload with an unsupported file type -> 400", res.status === 400);
+
+  // A minimal real 1x1 PNG, so this exercises the actual dev-mode local
+  // storage fallback (NODE_ENV=test here, same as development) end to end.
+  const onePixelPng = Buffer.from(
+    "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk+A8AAQUBAScY42YAAAAASUVORK5CYII=",
+    "base64",
+  );
+  res = await admin.post("/api/uploads?folder=events").attach("file", onePixelPng, "pixel.png");
+  check(
+    "valid authenticated image upload -> 201 with a URL",
+    res.status === 201 && typeof res.body?.url === "string" && res.body.url.startsWith("/uploads/events/"),
+  );
+
+  const { LOCAL_UPLOAD_DIR } = await import("../services/uploadService");
+  await (await import("node:fs")).promises.rm(LOCAL_UPLOAD_DIR, { recursive: true, force: true });
 
   await mongoose.disconnect();
   await mem.stop();

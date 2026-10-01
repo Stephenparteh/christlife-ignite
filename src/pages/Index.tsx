@@ -199,7 +199,12 @@ const Index = () => {
 
             {/* Study schedule */}
             <div className="">
-              {bibleStudy.sessions.map((session, index) => (
+              {bibleStudy.sessions.map((session, index) => {
+                const time = session.time || bibleStudy.time;
+                const platform = session.platform || bibleStudy.platform;
+                const meetUrl = session.meetUrl || bibleStudy.meetUrl;
+
+                return (
                 <div key={`${session.day}-${session.title}`}>
                   <div className="py-8 md:py-10 grid md:grid-cols-[180px_1fr_auto] gap-6 md:gap-10 items-center">
                     <div>
@@ -216,7 +221,7 @@ const Index = () => {
                         {session.title}
                       </p>
                       <p className="text-muted-foreground">
-                        {[bibleStudy.time, bibleStudy.platform].filter(Boolean).join(" · ")}
+                        {[time, platform].filter(Boolean).join(" · ")}
                       </p>
                     </div>
 
@@ -226,7 +231,7 @@ const Index = () => {
                         className="bg-primary text-primary-foreground hover:bg-primary/90"
                         size="lg"
                       >
-                        <a href={bibleStudy.meetUrl} target="_blank" rel="noopener noreferrer">
+                        <a href={meetUrl} target="_blank" rel="noopener noreferrer">
                           {session.title.toLowerCase().includes("prayer") ? "Join Prayer" : "Join Study"}
                         </a>
                       </Button>
@@ -237,7 +242,8 @@ const Index = () => {
                     <div className="border-t border-border" />
                   )}
                 </div>
-              ))}
+                );
+              })}
             </div>
           </div>
         </div>

@@ -45,51 +45,59 @@ const BibleStudy = () => {
               isLoading ? "opacity-60" : ""
             }`}
           >
-            {bibleStudy.sessions.map((session, index) => (
-              <div
-                key={`${session.day}-${session.title}`}
-                className={`flex flex-col md:flex-row md:items-center justify-between gap-6 py-8 ${
-                  index !== bibleStudy.sessions.length - 1 ? "border-b border-border" : ""
-                }`}
-              >
-                <div className="flex items-start gap-5">
-                  <div className="flex-shrink-0 w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
-                    <Calendar className="h-6 w-6 text-primary" />
-                  </div>
+            {bibleStudy.sessions.map((session, index) => {
+              // Each session can override the shared time/platform/link;
+              // fall back to the singleton's shared defaults when it hasn't.
+              const time = session.time || bibleStudy.time;
+              const platform = session.platform || bibleStudy.platform;
+              const meetUrl = session.meetUrl || bibleStudy.meetUrl;
 
-                  <div>
-                    <h3 className="text-2xl font-heading font-bold text-foreground mb-2">
-                      {session.title}
-                    </h3>
+              return (
+                <div
+                  key={`${session.day}-${session.title}`}
+                  className={`flex flex-col md:flex-row md:items-center justify-between gap-6 py-8 ${
+                    index !== bibleStudy.sessions.length - 1 ? "border-b border-border" : ""
+                  }`}
+                >
+                  <div className="flex items-start gap-5">
+                    <div className="flex-shrink-0 w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
+                      <Calendar className="h-6 w-6 text-primary" />
+                    </div>
 
-                    <div className="flex flex-wrap items-center gap-4 text-muted-foreground">
-                      {bibleStudy.time && (
-                        <span className="flex items-center gap-2">
-                          <Clock className="h-4 w-4 text-primary" />
-                          {bibleStudy.time}
-                        </span>
-                      )}
+                    <div>
+                      <h3 className="text-2xl font-heading font-bold text-foreground mb-2">
+                        {session.title}
+                      </h3>
 
-                      {bibleStudy.platform && (
-                        <span className="flex items-center gap-2">
-                          <MessageCircle className="h-4 w-4 text-primary" />
-                          {bibleStudy.platform}
-                        </span>
-                      )}
+                      <div className="flex flex-wrap items-center gap-4 text-muted-foreground">
+                        {time && (
+                          <span className="flex items-center gap-2">
+                            <Clock className="h-4 w-4 text-primary" />
+                            {time}
+                          </span>
+                        )}
+
+                        {platform && (
+                          <span className="flex items-center gap-2">
+                            <MessageCircle className="h-4 w-4 text-primary" />
+                            {platform}
+                          </span>
+                        )}
+                      </div>
                     </div>
                   </div>
-                </div>
 
-                <Button
-                  asChild
-                  className="bg-primary text-primary-foreground hover:bg-primary/90 w-full md:w-auto"
-                >
-                  <a href={bibleStudy.meetUrl} target="_blank" rel="noopener noreferrer">
-                    Get {session.day} Link
-                  </a>
-                </Button>
-              </div>
-            ))}
+                  <Button
+                    asChild
+                    className="bg-primary text-primary-foreground hover:bg-primary/90 w-full md:w-auto"
+                  >
+                    <a href={meetUrl} target="_blank" rel="noopener noreferrer">
+                      Get {session.day} Link
+                    </a>
+                  </Button>
+                </div>
+              );
+            })}
           </div>
         </div>
       </section>

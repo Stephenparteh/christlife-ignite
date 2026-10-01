@@ -18,6 +18,18 @@ export default defineConfig(({ mode }) => ({
         target: process.env.VITE_API_PROXY_TARGET || "http://localhost:4000",
         changeOrigin: true,
       },
+      // The local-disk media upload fallback (server/src/services/uploadService.ts,
+      // dev-only — production requires Cloudinary) returns site-relative
+      // URLs like "/uploads/team/xxx.jpeg", the same convention as the
+      // static assets this dev server already serves from public/. Without
+      // this rule, the browser resolves that path against ITSELF (this
+      // dev server) instead of the API that actually wrote the file, and
+      // gets the SPA's index.html back instead of the image — the exact
+      // same target as /api, so dev stays in sync automatically.
+      "/uploads": {
+        target: process.env.VITE_API_PROXY_TARGET || "http://localhost:4000",
+        changeOrigin: true,
+      },
     },
   },
   plugins: [

@@ -6,6 +6,7 @@ import { asyncHandler } from "../utils/asyncHandler";
 import { signAuthToken } from "../utils/jwt";
 import { setAuthCookie, clearAuthCookie } from "../utils/cookies";
 import { loginSchema } from "../validators/auth";
+import { firstZodIssueMessage } from "../utils/zodError";
 
 /** Never send more than this back to the browser for an admin. */
 const toSafeUser = (admin: { _id: unknown; name: string; email: string; role: string }) => ({
@@ -22,7 +23,7 @@ const INVALID_CREDENTIALS = "Invalid email or password.";
 export const login = asyncHandler(async (req: Request, res: Response) => {
   const parsed = loginSchema.safeParse(req.body);
   if (!parsed.success) {
-    throw new ApiError(400, parsed.error.issues[0]?.message ?? "Invalid request.");
+    throw new ApiError(400, firstZodIssueMessage(parsed.error));
   }
   const { email, password } = parsed.data;
 

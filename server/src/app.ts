@@ -8,8 +8,12 @@ import galleryRoutes from "./routes/gallery.routes";
 import testimonialsRoutes from "./routes/testimonials.routes";
 import bibleStudyRoutes from "./routes/bibleStudy.routes";
 import settingsRoutes from "./routes/settings.routes";
+import uploadsRoutes from "./routes/uploads.routes";
+import contactMessagesRoutes from "./routes/contactMessages.routes";
+import teamRoutes from "./routes/team.routes";
 import { errorHandler, notFoundHandler } from "./middleware/errorHandler";
 import { ApiError } from "./utils/ApiError";
+import { LOCAL_UPLOAD_DIR } from "./services/uploadService";
 
 /**
  * Builds the Express app without starting it listening, so both
@@ -41,6 +45,13 @@ export const createApp = () => {
   app.use(express.json({ limit: "16kb" }));
   app.use(cookieParser());
 
+  // Dev-only local upload fallback (see services/uploadService.ts) — a
+  // no-op in production, where Cloudinary is required and nothing is ever
+  // written to this server's own filesystem.
+  if (!env.IS_PRODUCTION) {
+    app.use("/uploads", express.static(LOCAL_UPLOAD_DIR));
+  }
+
   app.get("/api/health", (_req, res) => res.json({ status: "ok" }));
   app.use("/api/auth", authRoutes);
   app.use("/api/events", eventsRoutes);
@@ -48,6 +59,9 @@ export const createApp = () => {
   app.use("/api/testimonials", testimonialsRoutes);
   app.use("/api/bible-study", bibleStudyRoutes);
   app.use("/api/settings", settingsRoutes);
+  app.use("/api/uploads", uploadsRoutes);
+  app.use("/api/contact-messages", contactMessagesRoutes);
+  app.use("/api/team", teamRoutes);
 
   app.use("/api", notFoundHandler);
   app.use(errorHandler);

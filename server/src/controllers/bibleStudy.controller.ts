@@ -3,6 +3,7 @@ import { BibleStudy, BIBLE_STUDY_SINGLETON_ID } from "../models/BibleStudy";
 import { bibleStudyUpdateSchema } from "../validators/bibleStudy";
 import { asyncHandler } from "../utils/asyncHandler";
 import { ApiError } from "../utils/ApiError";
+import { firstZodIssueMessage } from "../utils/zodError";
 
 /**
  * Singleton "get or create" — there is exactly one Bible Study document
@@ -26,7 +27,7 @@ export const getBibleStudy = asyncHandler(async (_req: Request, res: Response) =
 export const updateBibleStudy = asyncHandler(async (req: Request, res: Response) => {
   const parsed = bibleStudyUpdateSchema.safeParse(req.body);
   if (!parsed.success) {
-    throw new ApiError(400, parsed.error.issues[0]?.message ?? "Invalid request.");
+    throw new ApiError(400, firstZodIssueMessage(parsed.error));
   }
 
   await getOrCreate();

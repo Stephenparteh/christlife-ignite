@@ -25,6 +25,8 @@ import DashboardEvents from "./pages/dashboard/DashboardEvents";
 import DashboardBibleStudy from "./pages/dashboard/DashboardBibleStudy";
 import DashboardGallery from "./pages/dashboard/DashboardGallery";
 import DashboardTestimonials from "./pages/dashboard/DashboardTestimonials";
+import DashboardTeam from "./pages/dashboard/DashboardTeam";
+import DashboardMessages from "./pages/dashboard/DashboardMessages";
 import DashboardContact from "./pages/dashboard/DashboardContact";
 import DashboardSettings from "./pages/dashboard/DashboardSettings";
 
@@ -87,6 +89,8 @@ const App = () => (
               <Route path="bible-study" element={<DashboardBibleStudy />} />
               <Route path="gallery" element={<DashboardGallery />} />
               <Route path="testimonials" element={<DashboardTestimonials />} />
+              <Route path="team" element={<DashboardTeam />} />
+              <Route path="messages" element={<DashboardMessages />} />
               <Route path="contact" element={<DashboardContact />} />
               <Route path="settings" element={<DashboardSettings />} />
             </Route>

@@ -22,6 +22,7 @@ import { GalleryItem } from "../models/GalleryItem";
 import { Testimonial } from "../models/Testimonial";
 import { BibleStudy, BIBLE_STUDY_SINGLETON_ID } from "../models/BibleStudy";
 import { SiteSettings, SITE_SETTINGS_SINGLETON_ID } from "../models/SiteSettings";
+import { TeamMember } from "../models/TeamMember";
 
 // The real WhatsApp link every "Join WhatsApp" button on the live site
 // points to today (see src/components/Navigation.tsx, src/pages/*.tsx).
@@ -194,21 +195,50 @@ const seedBibleStudy = async () => {
     return;
   }
 
-  await BibleStudy.create({
-    _id: BIBLE_STUDY_SINGLETON_ID,
-    sessions: [
-      { day: "Monday", title: "Monday Female Bible Study" },
-      { day: "Tuesday", title: "Tuesday Bible Study" },
-      { day: "Thursday", title: "Thursday Prayer" },
-    ],
+  // Every session shares the same real meeting info today — each still
+  // gets its own copy of it (rather than relying only on the top-level
+  // shared fields below) so the schema's per-session override actually
+  // has real starting data or a future divergent session immediately.
+  const sharedMeetingInfo = {
     time: "10:00 – 11:00 PM",
     platform: "Google Meet / WhatsApp",
     meetUrl: MEET_URL,
     whatsappUrl: WHATSAPP_GROUP_URL,
+  };
+
+  await BibleStudy.create({
+    _id: BIBLE_STUDY_SINGLETON_ID,
+    sessions: [
+      { day: "Monday", title: "Monday Female Bible Study", ...sharedMeetingInfo },
+      { day: "Tuesday", title: "Tuesday Bible Study", ...sharedMeetingInfo },
+      { day: "Thursday", title: "Thursday Prayer", ...sharedMeetingInfo },
+    ],
+    ...sharedMeetingInfo,
     description: "",
     published: true,
   });
   console.log("Bible Study: seeded the Monday/Tuesday/Thursday schedule.");
+};
+
+const seedTeam = async () => {
+  if ((await TeamMember.countDocuments()) > 0) {
+    console.log("Team: already has data, skipping.");
+    return;
+  }
+
+  await TeamMember.insertMany([
+    { name: "Phil Julius Railey", role: "CEO/Founder", imageUrl: "/team/phil.jpeg", order: 0 },
+    { name: "Ma-Lois D Cheyee", role: "Executive Director", imageUrl: "/team/ma-lois.jpeg", order: 1 },
+    {
+      name: "Min. Blessing M Jonah",
+      role: "Worship & Women's Ministry Leader",
+      imageUrl: "/team/blessing.jpeg",
+      order: 2,
+    },
+    { name: "Jorii S. Kullie", role: "Secretary", imageUrl: "/team/jorii.jpeg", order: 3 },
+    { name: "Gracesia Angel Vienn", role: "Chief Operating Officer", imageUrl: "/team/gracesia.jpeg", order: 4 },
+  ].map((member) => ({ ...member, published: true })));
+  console.log("Team: seeded 5 leadership profiles.");
 };
 
 const seedSettings = async () => {
@@ -237,6 +267,7 @@ const run = async () => {
   await seedTestimonials();
   await seedBibleStudy();
   await seedSettings();
+  await seedTeam();
 };
 
 run()
