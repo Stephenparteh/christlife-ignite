@@ -9,6 +9,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { ApiClientError } from "@/lib/apiClient";
 import { settingsService } from "@/services/settings";
+import ChangePasswordForm from "@/components/dashboard/ChangePasswordForm";
 
 const QUERY_KEY = ["settings", "dashboard"];
 
@@ -78,6 +79,15 @@ const DashboardSettings = () => {
             {updateMutation.isPending ? "Saving…" : "Save changes"}
           </Button>
         </div>
+      </section>
+
+      <section className="mt-6 max-w-2xl rounded-lg border border-border p-5">
+        <h2 className="font-heading text-base font-semibold text-foreground">Security</h2>
+        <p className="mb-5 text-sm text-muted-foreground">
+          Change the password you use to sign in to this dashboard.
+        </p>
+        <h3 className="mb-4 text-sm font-medium text-foreground">Change Password</h3>
+        <ChangePasswordForm />
       </section>
 
       <div className="mt-6 flex items-start gap-3 rounded-lg border border-dashed border-border p-5 text-sm text-muted-foreground">

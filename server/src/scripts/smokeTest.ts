@@ -19,6 +19,7 @@ process.env.AUTH_SESSION_DAYS = "7";
 process.env.MONGODB_DB_NAME = "christ_life_test";
 
 const main = async () => {
+  const ADMIN_TEST_PASSWORD = (await import("node:crypto")).randomBytes(16).toString("hex");
   const { MongoMemoryServer } = await import("mongodb-memory-server");
   const mem = await MongoMemoryServer.create();
   process.env.MONGODB_URI = mem.getUri();
@@ -36,7 +37,7 @@ const main = async () => {
   const app = createApp();
 
   const email = "admin@example.com";
-  const password = "Sup3rSecret!";
+  const password = ADMIN_TEST_PASSWORD;
   await Admin.create({
     name: "Test Admin",
     email,
@@ -57,7 +58,7 @@ const main = async () => {
 
   // 2. Wrong password fails, with a generic message (no "password is wrong"
   //    vs "email not found" distinction).
-  res = await agent.post("/api/auth/login").send({ email, password: "wrong-password" });
+  res = await agent.post("/api/auth/login").send({ email, password: "definitely-not-the-password" });
   check("login with wrong password -> 401", res.status === 401);
   check(
     "wrong-password message is generic",
@@ -65,7 +66,7 @@ const main = async () => {
   );
 
   // 3. Unknown email fails with the exact same message as #2.
-  res = await agent.post("/api/auth/login").send({ email: "nobody@example.com", password: "whatever" });
+  res = await agent.post("/api/auth/login").send({ email: "nobody@example.com", password: "definitely-not-the-password" });
   check("login with unknown email -> 401", res.status === 401);
   check(
     "unknown-email message matches wrong-password message (no account enumeration)",
@@ -92,11 +93,67 @@ const main = async () => {
   res = await agent.get("/api/auth/me");
   check("GET /me after logout -> 401", res.status === 401);
 
+  // 6b. Password change (must run before the login rate-limit check below,
+  //     which would otherwise block further logins from this client).
+  const NEW_TEST_PASSWORD = ADMIN_TEST_PASSWORD + "-changed";
+  const changeAgent = request.agent(app);
+  res = await changeAgent.post("/api/auth/change-password").send({
+    currentPassword: ADMIN_TEST_PASSWORD,
+    newPassword: NEW_TEST_PASSWORD,
+  });
+  check("change-password without a session -> 401", res.status === 401);
+
+  res = await changeAgent.post("/api/auth/login").send({ email, password });
+  check("login before change-password -> 200", res.status === 200);
+
+  res = await changeAgent.post("/api/auth/change-password").send({
+    currentPassword: "definitely-not-the-password",
+    newPassword: NEW_TEST_PASSWORD,
+  });
+  check("change-password with a WRONG current password -> 401", res.status === 401);
+
+  res = await changeAgent.post("/api/auth/change-password").send({
+    currentPassword: ADMIN_TEST_PASSWORD,
+    newPassword: "short",
+  });
+  check("change-password with a too-short new password -> 400", res.status === 400);
+
+  res = await changeAgent.post("/api/auth/change-password").send({
+    currentPassword: ADMIN_TEST_PASSWORD,
+    newPassword: ADMIN_TEST_PASSWORD,
+  });
+  check("change-password to the SAME password -> 400", res.status === 400);
+
+  res = await changeAgent.post("/api/auth/change-password").send({
+    currentPassword: ADMIN_TEST_PASSWORD,
+    newPassword: "x".repeat(73),
+  });
+  check("change-password with a >72-byte new password -> 400", res.status === 400);
+
+  res = await changeAgent.post("/api/auth/change-password").send({
+    currentPassword: ADMIN_TEST_PASSWORD,
+    newPassword: NEW_TEST_PASSWORD,
+  });
+  check("change-password with the correct current password -> 200", res.status === 200);
+  check("change-password response never includes a password or hash", !JSON.stringify(res.body).toLowerCase().includes("$2"));
+
+  res = await changeAgent.get("/api/auth/me");
+  check("session cookie from the changing device is cleared -> /me 401", res.status === 401);
+
+  res = await request(app).post("/api/auth/login").send({ email, password: ADMIN_TEST_PASSWORD });
+  check("OLD password no longer works -> 401", res.status === 401);
+
+  res = await request(app).post("/api/auth/login").send({ email, password: NEW_TEST_PASSWORD });
+  check("NEW password works -> 200", res.status === 200 && res.body?.user?.email === email);
+
+  const adminAfter = await Admin.findOne({ email }).select("+password");
+  check("name/email/role are unchanged after password change", adminAfter?.name === "Test Admin" && adminAfter?.role === "admin" && adminAfter?.email === email);
+
   // 7. Login rate limiting kicks in after repeated failures from one client.
   const limiterAgent = request.agent(app);
   let lastStatus = 0;
   for (let i = 0; i < 12; i += 1) {
-    const attempt = await limiterAgent.post("/api/auth/login").send({ email, password: "wrong" });
+    const attempt = await limiterAgent.post("/api/auth/login").send({ email, password: "definitely-not-the-password" });
     lastStatus = attempt.status;
   }
   check("11th+ rapid login attempt from the same client -> 429", lastStatus === 429);

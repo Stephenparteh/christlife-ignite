@@ -16,10 +16,10 @@
  * the ADMIN_* lines from your local .env afterwards — the running server
  * never reads them.
  */
-import bcrypt from "bcryptjs";
 import { z } from "zod";
 import { connectToDatabase, disconnectFromDatabase } from "../config/db";
 import { Admin } from "../models/Admin";
+import { hashPassword } from "../utils/password";
 
 const seedSchema = z.object({
   ADMIN_NAME: z.string().trim().min(1, "Set ADMIN_NAME in server/.env."),
@@ -50,7 +50,7 @@ const run = async () => {
     return;
   }
 
-  const passwordHash = await bcrypt.hash(password, 12);
+  const passwordHash = await hashPassword(password);
 
   try {
     await Admin.create({ name, email, password: passwordHash, role: "admin" });

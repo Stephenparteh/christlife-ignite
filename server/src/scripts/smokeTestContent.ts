@@ -15,6 +15,7 @@ process.env.AUTH_SESSION_DAYS = "7";
 process.env.MONGODB_DB_NAME = "christ_life_content_test";
 
 const main = async () => {
+  const ADMIN_TEST_PASSWORD = (await import("node:crypto")).randomBytes(16).toString("hex");
   const { MongoMemoryServer } = await import("mongodb-memory-server");
   const mem = await MongoMemoryServer.create();
   process.env.MONGODB_URI = mem.getUri();
@@ -33,7 +34,7 @@ const main = async () => {
   await Admin.create({
     name: "Test Admin",
     email: "admin@example.com",
-    password: await bcrypt.hash("Sup3rSecret!", 4),
+    password: await bcrypt.hash(ADMIN_TEST_PASSWORD, 4),
     role: "admin",
   });
 
@@ -54,7 +55,7 @@ const main = async () => {
   });
   check("unauthenticated POST /api/events -> 401", res.status === 401);
 
-  res = await admin.post("/api/auth/login").send({ email: "admin@example.com", password: "Sup3rSecret!" });
+  res = await admin.post("/api/auth/login").send({ email: "admin@example.com", password: ADMIN_TEST_PASSWORD });
   check("admin login -> 200", res.status === 200);
 
   res = await admin.post("/api/events").send({
