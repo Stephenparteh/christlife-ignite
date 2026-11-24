@@ -147,6 +147,12 @@ export interface PublicGivingMethod {
   imageUrl: string;
 }
 
+/** One entry in a method dropdown: a recognized default key or a custom method id. */
+export interface GivingMethodOption {
+  value: string;
+  label: string;
+}
+
 export interface GivingMethod extends CmsTimestamps {
   _id: string;
   name: string;
@@ -185,7 +191,8 @@ export interface GivingRequest extends CmsTimestamps {
   customPurpose: string;
   amount: number;
   currency: GivingCurrency;
-  preferredMethodId: string;
+  /** null when the visitor picked a default method with no configured record. */
+  preferredMethodId: string | null;
   preferredMethodName: string;
   note: string;
   status: GivingRequestStatus;
@@ -206,7 +213,11 @@ export interface GivingRequestListResponse {
   items: GivingRequest[];
   pagination: { page: number; limit: number; total: number; totalPages: number };
   stats: GivingRequestStats;
+  methodOptions: GivingMethodOption[];
 }
+
+/** Short, stable, human-readable reference derived from the database id (no extra stored field). */
+export const givingReference = (id: string) => `GR-${id.slice(-10).toUpperCase()}`;
 
 export interface GivingRequestFilters {
   page: number;

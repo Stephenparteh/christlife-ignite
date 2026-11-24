@@ -13,7 +13,7 @@ import {
   GIVING_PURPOSES,
   type GivingCurrency,
   type GivingPurpose,
-  type PublicGivingMethod,
+  type GivingMethodOption,
 } from "@/types/cms";
 
 const FIELDS = [
@@ -83,12 +83,12 @@ const validate = (form: FormState): Record<string, string> => {
 };
 
 interface GivingRequestFormProps {
-  methods: PublicGivingMethod[];
+  options: GivingMethodOption[];
   methodsLoading: boolean;
   methodsError: boolean;
 }
 
-const GivingRequestForm = ({ methods, methodsLoading, methodsError }: GivingRequestFormProps) => {
+const GivingRequestForm = ({ options, methodsLoading, methodsError }: GivingRequestFormProps) => {
   const [form, setForm] = useState<FormState>(initialState);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [formError, setFormError] = useState<string | null>(null);
@@ -103,12 +103,11 @@ const GivingRequestForm = ({ methods, methodsLoading, methodsError }: GivingRequ
     setErrors((prev) => (prev[key] ? { ...prev, [key]: "" } : prev));
   };
 
-  const noMethods = !methodsLoading && !methodsError && methods.length === 0;
-  const canSubmit = methods.length > 0 && !isSubmitting;
+  const canSubmit = options.length > 0 && !isSubmitting;
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    if (inFlight.current || methods.length === 0) return;
+    if (inFlight.current || options.length === 0) return;
 
     const found = validate(form);
     setErrors(found);
@@ -188,12 +187,6 @@ const GivingRequestForm = ({ methods, methodsLoading, methodsError }: GivingRequ
         <p>Never share your PIN, password, banking credentials, OTP, or card details through this form.</p>
       </div>
 
-      {noMethods && (
-        <p className="border border-border p-4 text-sm text-muted-foreground">
-          Giving methods are being set up, so requests can't be sent just yet. Please check back soon or reach out
-          through our Contact page.
-        </p>
-      )}
       {methodsError && (
         <p role="alert" className="border border-destructive/40 p-4 text-sm text-destructive">
           We couldn't load the available giving methods. Please refresh the page and try again.
@@ -279,15 +272,15 @@ const GivingRequestForm = ({ methods, methodsLoading, methodsError }: GivingRequ
             <Select
               value={form.preferredMethodId}
               onValueChange={(v) => set("preferredMethodId", v)}
-              disabled={methods.length === 0}
+              disabled={options.length === 0}
             >
               <SelectTrigger id="gr-preferredMethodId" className={underlineTrigger} {...a11y("preferredMethodId")}>
                 <SelectValue placeholder={methodsLoading ? "Loading methods…" : "Select a method"} />
               </SelectTrigger>
               <SelectContent>
-                {methods.map((m) => (
-                  <SelectItem key={m.id} value={m.id}>
-                    {m.name}
+                {options.map((o) => (
+                  <SelectItem key={o.value} value={o.value}>
+                    {o.label}
                   </SelectItem>
                 ))}
               </SelectContent>

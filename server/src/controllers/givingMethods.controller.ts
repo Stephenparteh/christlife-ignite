@@ -9,6 +9,7 @@ import {
 import { asyncHandler } from "../utils/asyncHandler";
 import { ApiError } from "../utils/ApiError";
 import { firstZodIssueMessage } from "../utils/zodError";
+import { buildMethodOptions } from "../utils/givingMethodOptions";
 
 const SORT = { sortOrder: 1, createdAt: 1 } as const;
 
@@ -24,7 +25,10 @@ export const listPublicMethods = asyncHandler(async (_req: Request, res: Respons
     details: m.details.map((d) => ({ label: d.label, value: d.value })),
     imageUrl: m.imageUrl,
   }));
-  res.json({ items });
+  // requestOptions feeds the request form's dropdown (defaults + custom);
+  // items still lists only active, configured methods for the page itself.
+  const requestOptions = buildMethodOptions(items.map((m) => ({ id: m.id, name: m.name })));
+  res.json({ items, requestOptions });
 });
 
 export const listMethods = asyncHandler(async (_req: Request, res: Response) => {

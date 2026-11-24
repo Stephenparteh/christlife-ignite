@@ -17,10 +17,11 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { ApiClientError } from "@/lib/apiClient";
 import { cn } from "@/lib/utils";
-import { givingMethodsAdminService, givingRequestsAdminService } from "@/services/giving";
+import { givingRequestsAdminService } from "@/services/giving";
 import {
   GIVING_PURPOSES,
   GIVING_REQUEST_STATUSES,
+  givingReference,
   type GivingRequest,
   type GivingRequestFilters,
   type GivingRequestStatus,
@@ -37,7 +38,6 @@ const STATUS_LABEL: Record<GivingRequestStatus, string> = {
 const errorMessage = (error: unknown) =>
   error instanceof ApiClientError ? error.message : "Something went wrong. Please try again.";
 
-const shortId = (id: string) => id.slice(-8).toUpperCase();
 const formatAmount = (r: Pick<GivingRequest, "amount" | "currency">) =>
   `${new Intl.NumberFormat(undefined, { maximumFractionDigits: 2 }).format(r.amount)} ${r.currency}`;
 const formatDate = (iso: string | null) => (iso ? format(new Date(iso), "MMM d, yyyy · h:mm a") : "—");
@@ -113,7 +113,7 @@ const RequestDetails = ({
     <>
       <DialogHeader>
         <DialogTitle className="flex flex-wrap items-center gap-2">
-          Giving request <span className="font-mono text-sm text-muted-foreground">#{shortId(request._id)}</span>
+          Giving request <span className="font-mono text-sm text-muted-foreground">{givingReference(request._id)}</span>
           <GivingStatusBadge status={request.status} />
         </DialogTitle>
         <DialogDescription>
@@ -267,10 +267,6 @@ const DashboardGivingRequests = () => {
     queryFn: () => givingRequestsAdminService.list(filters),
     placeholderData: keepPreviousData,
   });
-  const { data: methods } = useQuery({
-    queryKey: ["giving-methods", "dashboard"],
-    queryFn: givingMethodsAdminService.list,
-  });
 
   const invalidate = () => queryClient.invalidateQueries({ queryKey: ["giving-requests", "dashboard"] });
   const setFilter = <K extends keyof GivingRequestFilters>(key: K, value: GivingRequestFilters[K]) =>
@@ -300,7 +296,7 @@ const DashboardGivingRequests = () => {
           <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" aria-hidden="true" />
           <Input
             aria-label="Search by name, phone or email"
-            placeholder="Search name, phone, email"
+            placeholder="Search name, phone, email, GR-…"
             className="pl-9"
             value={searchInput}
             onChange={(e) => setSearchInput(e.target.value)}
@@ -338,9 +334,9 @@ const DashboardGivingRequests = () => {
           </SelectTrigger>
           <SelectContent>
             <SelectItem value={ALL}>All methods</SelectItem>
-            {methods?.map((m) => (
-              <SelectItem key={m._id} value={m._id}>
-                {m.name}
+            {data?.methodOptions.map((m) => (
+              <SelectItem key={m.value} value={m.value}>
+                {m.label}
               </SelectItem>
             ))}
           </SelectContent>
@@ -371,7 +367,7 @@ const DashboardGivingRequests = () => {
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead>ID</TableHead>
+                  <TableHead>Reference</TableHead>
                   <TableHead>Name</TableHead>
                   <TableHead className="hidden md:table-cell">Phone</TableHead>
                   <TableHead className="hidden lg:table-cell">Purpose</TableHead>
@@ -385,7 +381,7 @@ const DashboardGivingRequests = () => {
               <TableBody>
                 {items.map((r) => (
                   <TableRow key={r._id} className={cn(r.status === "pending" && "bg-primary/5")}>
-                    <TableCell className="font-mono text-xs text-muted-foreground">{shortId(r._id)}</TableCell>
+                    <TableCell className="font-mono text-xs text-muted-foreground">{givingReference(r._id)}</TableCell>
                     <TableCell className={cn("max-w-[10rem] truncate", r.status === "pending" && "font-semibold")}>
                       {r.fullName}
                     </TableCell>

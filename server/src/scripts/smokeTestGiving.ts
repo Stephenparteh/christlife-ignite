@@ -195,6 +195,111 @@ const main = async () => {
   res = await admin.delete(`/api/admin/giving-requests/${firstRequestId}`);
   check("admin deletes request", res.status === 200 && (await GivingRequest.countDocuments()) === 1);
 
+  // ---- Preferred-method options: defaults + custom, dedupe, validation
+  const DEFAULT_LABELS = [
+    "Orange Money", "MTN Mobile Money", "Lonestar Cell MTN Mobile Money", "PayPal", "Zelle",
+    "Cash App", "Venmo", "Bank Transfer", "In Person", "Other",
+  ];
+  res = await anon.get("/api/giving-methods");
+  let labels: string[] = res.body.requestOptions.map((o: { label: string }) => o.label);
+  check("options include every common default with no methods configured", DEFAULT_LABELS.every((l) => labels.includes(l)), labels);
+  check("'Other' is listed last", labels[labels.length - 1] === "Other");
+  check("public items hold only configured methods, no defaults", res.body.items.length === 1 && res.body.items[0].name === "Second", res.body.items);
+
+  res = await admin.post("/api/admin/giving-methods").send({ name: "Local Bank X", isActive: true });
+  const localBankId: string = res.body.item._id;
+  res = await admin.post("/api/admin/giving-methods").send({ name: "orange money", isActive: true, details: [{ label: "Number", value: "TEST" }] });
+  const orangeId: string = res.body.item._id;
+  res = await admin.post("/api/admin/giving-methods").send({ name: "Hidden Wallet", isActive: false });
+  const hiddenId: string = res.body.item._id;
+
+  res = await anon.get("/api/giving-methods");
+  labels = res.body.requestOptions.map((o: { label: string }) => o.label);
+  const values: string[] = res.body.requestOptions.map((o: { value: string }) => o.value);
+  check("custom method appears in options", labels.includes("Local Bank X"));
+  check("inactive custom method not in options", !labels.includes("Hidden Wallet"));
+  check("same-name custom/default appears once", labels.filter((l) => l.toLowerCase().replace(/\s+/g, "") === "orangemoney").length === 1, labels);
+  check("deduped entry links to the configured method", res.body.requestOptions.find((o: { label: string }) => o.label === "Orange Money")?.value === orangeId);
+  check("no duplicate option values", new Set(values).size === values.length);
+  check("MTN and Lonestar Cell MTN stay separate", labels.includes("MTN Mobile Money") && labels.includes("Lonestar Cell MTN Mobile Money"));
+  check("public items list only configured active methods", res.body.items.length === 3 && !res.body.items.some((m: { name: string }) => m.name === "PayPal"));
+
+  const reqWith = (preferredMethodId: string, extra: Record<string, unknown> = {}) =>
+    submit({ ...valid, fullName: "Pat Default", phone: "0771112222", amount: 7, preferredMethodId, ...extra });
+
+  res = await reqWith("paypal");
+  check("predefined method with no DB record -> 201", res.status === 201, res.body);
+  let rec = await GivingRequest.findById(res.body.data?.id);
+  check("saved with name snapshot 'PayPal' and null method id", rec?.preferredMethodName === "PayPal" && rec?.preferredMethodId === null, rec);
+  const paypalReqId: string = res.body.data?.id;
+
+  res = await reqWith("other", { amount: 8 });
+  check("'Other' default accepted", res.status === 201, res.body);
+  res = await reqWith("lonestar-cell-mtn-mobile-money", { amount: 9 });
+  rec = await GivingRequest.findById(res.body.data?.id);
+  check("Lonestar default saved under its own name", res.status === 201 && rec?.preferredMethodName === "Lonestar Cell MTN Mobile Money");
+
+  res = await reqWith(localBankId, { amount: 10 });
+  rec = await GivingRequest.findById(res.body.data?.id);
+  check("active custom method -> 201 with id + name snapshot", res.status === 201 && rec?.preferredMethodName === "Local Bank X" && String(rec?.preferredMethodId) === localBankId, res.body);
+
+  res = await reqWith("orange-money", { amount: 11 });
+  rec = await GivingRequest.findById(res.body.data?.id);
+  check("default key links to same-named configured method", res.status === 201 && String(rec?.preferredMethodId) === orangeId && rec?.preferredMethodName === "orange money", rec);
+
+  res = await reqWith(hiddenId, { amount: 12 });
+  check("inactive custom method rejected", res.status === 400, res.body);
+  res = await reqWith("bitcoin-atm", { amount: 13 });
+  check("unsupported arbitrary value rejected", res.status === 400, res.body);
+  res = await reqWith("", { amount: 15 });
+  check("empty method rejected", res.status === 400);
+  res = await reqWith("<script>alert(1)</script>", { amount: 16 });
+  check("malicious string rejected", res.status === 400);
+  res = await reqWith("Orange Money", { amount: 17 });
+  check("display name (not a key/id) rejected", res.status === 400);
+
+  // Admin view
+  res = await admin.get("/api/admin/giving-requests?limit=100");
+  const methodNames = res.body.items.map((r: { preferredMethodName: string }) => r.preferredMethodName);
+  check("admin list shows default + custom method names", methodNames.includes("PayPal") && methodNames.includes("Local Bank X") && methodNames.includes("Other"), methodNames);
+  const optLabels = res.body.methodOptions.map((o: { label: string }) => o.label);
+  check("admin filter options = defaults + custom (incl. inactive)", ["PayPal", "Local Bank X", "Hidden Wallet"].every((l) => optLabels.includes(l)), optLabels);
+  res = await admin.get("/api/admin/giving-requests?methodId=paypal");
+  check("filter by predefined method", res.status === 200 && res.body.items.length === 1 && res.body.items[0].preferredMethodName === "PayPal", res.body.items?.length);
+  res = await admin.get(`/api/admin/giving-requests?methodId=${localBankId}`);
+  check("filter by custom method", res.body.items.length === 1 && res.body.items[0].preferredMethodName === "Local Bank X");
+  res = await admin.get("/api/admin/giving-requests?methodId=not-valid");
+  check("filter by invalid method -> 400", res.status === 400);
+  res = await admin.get(`/api/admin/giving-requests?methodId=${orangeId}`);
+  check("filter by configured Orange Money matches linked request", res.body.items.length === 1);
+
+  // Reference search + detail retrieval
+  const suffix = paypalReqId.slice(-10).toUpperCase();
+  res = await admin.get(`/api/admin/giving-requests?q=GR-${suffix}`);
+  check("search by reference (GR-xxxxxxxxxx) finds the request", res.body.items.length === 1 && res.body.items[0]._id === paypalReqId, res.body.items?.length);
+
+  // Legacy-shaped record (created before this change) stays readable/updatable.
+  const legacyMethodId = new mongoose.Types.ObjectId();
+  const legacy = await GivingRequest.collection.insertOne({
+    fullName: "Legacy Donor", phone: "+231770000001", email: "", purpose: "Tithes", customPurpose: "", amount: 5, currency: "LRD",
+    preferredMethodId: legacyMethodId, preferredMethodName: "Old Deleted Method", note: "", status: "pending", adminNotes: "",
+    contactedAt: null, completedAt: null, createdAt: new Date(), updatedAt: new Date(),
+  });
+  res = await admin.get(`/api/admin/giving-requests/${legacy.insertedId}`);
+  check("legacy record readable with its method name", res.status === 200 && res.body.item.preferredMethodName === "Old Deleted Method");
+  res = await admin.patch(`/api/admin/giving-requests/${legacy.insertedId}`).send({ status: "contacted" });
+  check("legacy record can be updated", res.status === 200 && res.body.item.status === "contacted");
+  res = await admin.get(`/api/admin/giving-requests?methodId=${legacyMethodId}`);
+  check("legacy record filterable by its (deleted) method id", res.body.items.length === 1);
+
+  // Existing methods management still works; snapshots are stable
+  res = await admin.patch(`/api/admin/giving-methods/${localBankId}`).send({ name: "Local Bank X2" });
+  check("editing a method still works", res.status === 200 && res.body.item.name === "Local Bank X2");
+  res = await admin.delete(`/api/admin/giving-methods/${localBankId}`);
+  check("deleting a method still works", res.status === 200);
+  res = await admin.get("/api/admin/giving-requests?q=Pat&limit=100");
+  check("request keeps original custom method name after edit + delete", res.body.items.some((r: { preferredMethodName: string }) => r.preferredMethodName === "Local Bank X"));
+
   // ---- Separation from contact messages
   res = await anon.post("/api/contact-messages").send({ name: "Jane", email: "j@example.com", message: "Hello" });
   check("contact message still works", res.status === 201);

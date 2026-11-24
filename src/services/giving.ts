@@ -1,6 +1,7 @@
 import { apiFetch } from "@/lib/apiClient";
 import type {
   GivingMethod,
+  GivingMethodOption,
   GivingMethodInput,
   GivingRequest,
   GivingRequestCreateInput,
@@ -12,7 +13,7 @@ import type {
 
 /** Public: active giving methods, public fields only. */
 export const givingMethodsPublicService = {
-  list: () => apiFetch<{ items: PublicGivingMethod[] }>("/giving-methods").then((r) => r.items),
+  list: () => apiFetch<{ items: PublicGivingMethod[]; requestOptions: GivingMethodOption[] }>("/giving-methods"),
 };
 
 export const givingRequestsPublicService = {

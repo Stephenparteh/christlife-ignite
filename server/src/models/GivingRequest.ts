@@ -16,9 +16,11 @@ const givingRequestSchema = new Schema(
     customPurpose: { type: String, trim: true, maxlength: 200, default: "" },
     amount: { type: Number, required: true, min: 0.01, max: 1_000_000_000 },
     currency: { type: String, required: true, enum: GIVING_CURRENCIES },
-    // Not a hard ref: the method may later be deleted. The name snapshot
-    // keeps historical requests understandable either way.
-    preferredMethodId: { type: Schema.Types.ObjectId, required: true, index: true },
+    // Set only when the visitor picked an admin-created method; null when
+    // they picked a recognized default (e.g. PayPal) with no configured
+    // record. Not a hard ref: the method may later be deleted. The name
+    // snapshot keeps historical requests understandable either way.
+    preferredMethodId: { type: Schema.Types.ObjectId, default: null, index: true },
     preferredMethodName: { type: String, required: true, trim: true, maxlength: 100 },
     note: { type: String, trim: true, maxlength: 1000, default: "" },
     status: { type: String, enum: GIVING_REQUEST_STATUSES, default: "pending" },

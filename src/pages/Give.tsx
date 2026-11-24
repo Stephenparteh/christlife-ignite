@@ -16,7 +16,9 @@ const scrollToRequest = () => {
 };
 
 const Give = () => {
-  const { data: methods = [], isLoading, isError } = useGivingMethods();
+  const { data, isLoading, isError } = useGivingMethods();
+  const methods = data?.items ?? [];
+  const requestOptions = data?.requestOptions ?? [];
 
   return (
     <div className="bg-background">
@@ -102,7 +104,7 @@ const Give = () => {
               </p>
             </div>
             <div className="lg:col-span-7">
-              <GivingRequestForm methods={methods} methodsLoading={isLoading} methodsError={isError} />
+              <GivingRequestForm options={requestOptions} methodsLoading={isLoading} methodsError={isError} />
             </div>
           </div>
         </div>
