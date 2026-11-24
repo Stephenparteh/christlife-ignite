@@ -66,6 +66,12 @@ export const pages: PageSeo[] = [
       "Photos and videos of Christ Life community gatherings, fellowship, prayer, and events.",
   },
   {
+    path: "/give",
+    title: "Give | Support Christ Life",
+    description:
+      "Ways to give to Christ Life. Choose the giving method that works for you, or send a giving request and our team will help you complete your gift.",
+  },
+  {
     path: "/contact",
     title: "Contact Christ Life | Connect With Our Community",
     description:

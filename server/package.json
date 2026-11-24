@@ -12,7 +12,8 @@
     "seed-content": "tsx src/scripts/seedContent.ts",
     "migrate-bible-study": "tsx src/scripts/migrateBibleStudySessions.ts",
     "smoke-test": "tsx src/scripts/smokeTest.ts",
-    "smoke-test-content": "tsx src/scripts/smokeTestContent.ts"
+    "smoke-test-content": "tsx src/scripts/smokeTestContent.ts",
+    "smoke-test-giving": "tsx src/scripts/smokeTestGiving.ts"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",

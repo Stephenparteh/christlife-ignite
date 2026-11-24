@@ -11,6 +11,8 @@ import settingsRoutes from "./routes/settings.routes";
 import uploadsRoutes from "./routes/uploads.routes";
 import contactMessagesRoutes from "./routes/contactMessages.routes";
 import teamRoutes from "./routes/team.routes";
+import { publicGivingMethodsRouter, adminGivingMethodsRouter } from "./routes/givingMethods.routes";
+import { publicGivingRequestsRouter, adminGivingRequestsRouter } from "./routes/givingRequests.routes";
 import { errorHandler, notFoundHandler } from "./middleware/errorHandler";
 import { ApiError } from "./utils/ApiError";
 import { LOCAL_UPLOAD_DIR } from "./services/uploadService";
@@ -62,6 +64,10 @@ export const createApp = () => {
   app.use("/api/uploads", uploadsRoutes);
   app.use("/api/contact-messages", contactMessagesRoutes);
   app.use("/api/team", teamRoutes);
+  app.use("/api/giving-methods", publicGivingMethodsRouter);
+  app.use("/api/giving-requests", publicGivingRequestsRouter);
+  app.use("/api/admin/giving-methods", adminGivingMethodsRouter);
+  app.use("/api/admin/giving-requests", adminGivingRequestsRouter);
 
   app.use("/api", notFoundHandler);
   app.use(errorHandler);

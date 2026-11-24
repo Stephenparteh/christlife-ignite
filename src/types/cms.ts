@@ -110,3 +110,108 @@ export interface ContactMessage extends CmsTimestamps {
 }
 
 export type ContactMessageCreateInput = Pick<ContactMessage, "name" | "email" | "subject" | "message">;
+
+/* ------------------------------------------------------------------ */
+/* Giving                                                              */
+/* ------------------------------------------------------------------ */
+
+export const GIVING_PURPOSES = [
+  "General Giving",
+  "Tithes",
+  "Offering",
+  "Missions",
+  "Building / Development",
+  "Community Outreach",
+  "Other",
+] as const;
+export const GIVING_CURRENCIES = ["LRD", "USD"] as const;
+export const GIVING_REQUEST_STATUSES = ["pending", "contacted", "completed", "closed"] as const;
+
+export type GivingPurpose = (typeof GIVING_PURPOSES)[number];
+export type GivingCurrency = (typeof GIVING_CURRENCIES)[number];
+export type GivingRequestStatus = (typeof GIVING_REQUEST_STATUSES)[number];
+
+export interface GivingMethodDetail {
+  label: string;
+  value: string;
+}
+
+/** What the public Giving page gets — no internal fields. */
+export interface PublicGivingMethod {
+  id: string;
+  name: string;
+  type: string;
+  description: string;
+  instructions: string;
+  details: GivingMethodDetail[];
+  imageUrl: string;
+}
+
+export interface GivingMethod extends CmsTimestamps {
+  _id: string;
+  name: string;
+  type: string;
+  description: string;
+  instructions: string;
+  details: GivingMethodDetail[];
+  imageUrl: string;
+  isActive: boolean;
+  sortOrder: number;
+}
+
+export type GivingMethodInput = Pick<
+  GivingMethod,
+  "name" | "type" | "description" | "instructions" | "details" | "isActive"
+>;
+
+export interface GivingRequestCreateInput {
+  fullName: string;
+  phone: string;
+  email: string;
+  purpose: GivingPurpose;
+  customPurpose: string;
+  amount: number;
+  currency: GivingCurrency;
+  preferredMethodId: string;
+  note: string;
+}
+
+export interface GivingRequest extends CmsTimestamps {
+  _id: string;
+  fullName: string;
+  phone: string;
+  email: string;
+  purpose: GivingPurpose;
+  customPurpose: string;
+  amount: number;
+  currency: GivingCurrency;
+  preferredMethodId: string;
+  preferredMethodName: string;
+  note: string;
+  status: GivingRequestStatus;
+  adminNotes: string;
+  contactedAt: string | null;
+  completedAt: string | null;
+}
+
+export interface GivingRequestStats {
+  total: number;
+  pending: number;
+  contacted: number;
+  completed: number;
+  closed: number;
+}
+
+export interface GivingRequestListResponse {
+  items: GivingRequest[];
+  pagination: { page: number; limit: number; total: number; totalPages: number };
+  stats: GivingRequestStats;
+}
+
+export interface GivingRequestFilters {
+  page: number;
+  q: string;
+  status: GivingRequestStatus | "";
+  purpose: GivingPurpose | "";
+  methodId: string;
+}

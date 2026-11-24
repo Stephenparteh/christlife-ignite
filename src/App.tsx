@@ -12,6 +12,7 @@ import Events from "./pages/Events";
 import BibleStudy from "./pages/BibleStudy";
 import Gallery from "./pages/Gallery";
 import Contact from "./pages/Contact";
+import Give from "./pages/Give";
 import GetInvolved from "./pages/GetInvolved";
 import NotFound from "./pages/NotFound";
 import ScrollToTop from "./components/ScrollToTop";
@@ -28,6 +29,8 @@ import DashboardTestimonials from "./pages/dashboard/DashboardTestimonials";
 import DashboardTeam from "./pages/dashboard/DashboardTeam";
 import DashboardMessages from "./pages/dashboard/DashboardMessages";
 import DashboardContact from "./pages/dashboard/DashboardContact";
+import DashboardGivingMethods from "./pages/dashboard/DashboardGivingMethods";
+import DashboardGivingRequests from "./pages/dashboard/DashboardGivingRequests";
 import DashboardSettings from "./pages/dashboard/DashboardSettings";
 
 const queryClient = new QueryClient();
@@ -61,6 +64,7 @@ const App = () => (
               <Route path="/events" element={<Events />} />
               <Route path="/bible-study" element={<BibleStudy />} />
               <Route path="/gallery" element={<Gallery />} />
+              <Route path="/give" element={<Give />} />
               <Route path="/contact" element={<Contact />} />
               <Route path="/get-involved" element={<GetInvolved />} />
               {/* ADD ALL CUSTOM PUBLIC ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
@@ -91,6 +95,8 @@ const App = () => (
               <Route path="testimonials" element={<DashboardTestimonials />} />
               <Route path="team" element={<DashboardTeam />} />
               <Route path="messages" element={<DashboardMessages />} />
+              <Route path="giving-requests" element={<DashboardGivingRequests />} />
+              <Route path="giving-methods" element={<DashboardGivingMethods />} />
               <Route path="contact" element={<DashboardContact />} />
               <Route path="settings" element={<DashboardSettings />} />
             </Route>

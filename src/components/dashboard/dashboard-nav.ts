@@ -6,6 +6,8 @@ import {
   MessageSquareQuote,
   Users,
   Inbox,
+  HandCoins,
+  HandHeart,
   Mail,
   Settings,
   type LucideIcon,
@@ -64,6 +66,18 @@ export const dashboardNavItems: DashboardNavItem[] = [
     description: "Messages submitted through the public Contact form.",
     path: "messages",
     icon: Inbox,
+  },
+  {
+    title: "Giving Requests",
+    description: "Requests from visitors who want help completing a gift (separate from Contact messages).",
+    path: "giving-requests",
+    icon: HandCoins,
+  },
+  {
+    title: "Giving Methods",
+    description: "Manage the ways to give shown on the public Giving page.",
+    path: "giving-methods",
+    icon: HandHeart,
   },
   {
     title: "Contact",
